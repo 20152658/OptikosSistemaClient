@@ -1,0 +1,169 @@
+/* The sidebar menu */
+.sidenav {
+    height: 100%; 
+    width: 15%; 
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #495B6C; /* Dark blue */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.menu-link a{
+	color: #8BBBCD;
+}
+
+.sidenav a:hover {
+	
+    background-color: #384652;
+}
+
+.active a{
+	background-color: #415160;
+	color: #fff;
+}
+
+.active a:hover {
+	background-color: #415160;
+	color: #fff;
+}
+
+
+/* Style of page content */
+
+.main {
+    margin-left: 15%; /* Same as the width of the sidebars */
+    padding: 1vh 1vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height:100vh;
+    width: 85%;
+    border: 1px black solid;
+    background-color: #c0c0c0;
+	
+}
+.show{
+	width: 48%;
+    height: 98vh;
+    border: 1px black solid;
+    background-color: #d2cded;
+    display: flex; 
+    flex-direction: column;
+    
+}
+
+.showWindow{
+	height:90%;
+	border: 1px black solid;
+	/*background-color: #008040;*/
+	overflow-y: scroll; 
+}
+
+.totalWindow{
+	height:10%;
+	border: 1px black solid;
+	background-color: #aca2dd;
+}
+
+.pick{
+	width: 48%;
+    height: 98vh;
+    /*border: 1px black solid;*/
+    /*background-color: #800080;*/
+    display: flex; 
+    flex-direction: column;
+    justify-content: space around;
+    background-color: #c0c0c0;
+   
+}
+.pickerHead{
+	height:5%;
+	border: 1px black solid;
+}
+.myMenuElementPickers{
+	width: 100%;
+    height: 100%;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space around;
+   
+}
+
+
+.littlePicker{
+	width:100%;
+	height:100%;
+	display: flex; 
+    flex-direction: column;
+    justify-content: space around;
+}
+
+
+
+#akiniaiPicker{
+	display: none;
+}
+#saulesPicker{
+	display:none;
+}
+#lesiaiPicker{
+	display: none;
+}
+#kitkaPicker{
+	display:none;
+}
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 12px;}
+}
+
+button {
+  display: inline-block;
+  margin: .5rem .5rem 1rem .5rem;
+  clear: both;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: initial;
+  border: none;
+  border-radius: .2rem;
+  color: #fff;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  background: #454cad;
+  border-color: #454cad;
+  cursor: pointer;
+  flex-grow:1;
+}
+
+p {
+	font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+#error {
+	height:100%;
+	width:100%;
+	margin-left: 40%;
+	margin-right: 40%; 
+	align:center;
+}

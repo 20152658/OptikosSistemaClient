@@ -1,0 +1,5 @@
+com\tajv\config\ApplicationContextConfig.class
+com\tajv\controller\ClientController.class
+com\tajv\config\SpringWebAppInitializer.class
+com\tajv\model\Client.class
+com\tajv\model\File.class

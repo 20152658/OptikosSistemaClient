@@ -1,0 +1,94 @@
+
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 20%; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #0B305D; /* Dark blue */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.menu-link a{
+	color: #8BBBCD;
+}
+
+.sidenav a:hover {
+    color: #b8c8d3;
+}
+
+.active a{
+	background-color: #fff;
+	color: #000;
+}
+
+.active a:hover {
+	background-color: #fff;
+	color: #000;
+}
+
+
+/* Style of page content */
+
+.main {
+    margin-left: 20%; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+	
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+button {
+  display: inline-block;
+  margin: .5rem .5rem 1rem .5rem;
+  clear: both;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: initial;
+  border: none;
+  border-radius: .2rem;
+  outline: none;
+  padding: 0 1rem;
+  height: 36px;
+  line-height: 36px;
+  color: #fff;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  background: #454cad;
+  border-color: #454cad;
+  cursor: pointer;
+}
+
+p {
+	font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+#error {
+	height:100%;
+	width:100%;
+	margin-left: 40%;
+	margin-right: 40%; 
+	align:center;
+}
