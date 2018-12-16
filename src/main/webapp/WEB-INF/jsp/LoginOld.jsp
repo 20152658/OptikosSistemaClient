@@ -12,11 +12,8 @@
 	
 	
 	<body>
-		<div class="grandParentContainer">
 			<div class="parentContainer">
-				<div align="center">
-					<form id = "loginForm" method = "POST" class="loginForm" role="form" action = "logingIn" modelAttribute = "client" >
-						<h2>Login</h2>
+					<div id = "loginForm" method = "POST" class="loginForm" role="form" action = "logingIn" modelAttribute = "client" >
 						<div class="form-group">
 							<input type="email" id="email" name = "email" placeholder="Email" class="form-control" >
 						</div>
@@ -25,14 +22,15 @@
 							<input type="password" id="password" name = "password" placeholder="Password" class="form-control">
 						</div>
 						
-						<div class="error ">${error}</div>
-						<button type="login" class="button -Login">Login</button>
-						<div class="col-sm-9">
-							<span class="help-block"><a href="register">I don't have an account yet! </a></span>
+						<div class="form-group">
+							<button  type="login" class="button -Login">Prisijungti</button>
 						</div>
-					</form>
+						
+					</div>
 
 					<script type="text/javascript">
+				
+					
 					$(document).ready(function(){
 						
 						$("#loginForm").validate({
@@ -63,8 +61,8 @@
 						});
 					});
 					</script>	
-				</div>
+
 			</div>
-		</div>
+	
 	</body>
 </html>

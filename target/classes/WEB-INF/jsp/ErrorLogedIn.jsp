@@ -2,6 +2,7 @@
 <html>
 	<head>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="resources/css/frame.css" rel="stylesheet">
     <link href="resources/css/side-navigation.css" rel="stylesheet">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -11,24 +12,28 @@
 		<!--- Side navigation --->
 		<div class="sidenav">
 		
-			<div class="active" >
-				<a class="activee" href="home">Home</a>
-			</div>
-			
 			<div class="menu-link" >
-				<a href="changeInformation">Change information</a>
+				<a href="home" class="fas fa-home" > Home</a>
 			</div>
 			
-		    <div class="menu-link" >
-				<a href="uploadFile">Upload file</a>
+			<div class="menu-link">
+				<a href="newOrder" class="fas fa-plus"> New Order</a>
 			</div>
 			
+			<div class="menu-link">
+				<a href="addNewItem" class="fas fa-glasses"> Add Preke</a>
+			</div>
+	
+			<div class="menu-link">
+				<a href="reviewItems" class="fas fa-file-alt"> Review Items</a>
+			</div>
+			
+			<div class="menu-link">
+				<a href="reviewOrders"  class="fas fa-file-invoice" > Review Orders</a>
+			</div>
+
 			<div class="menu-link" >
-				<a href="reviewData">Review data</a>
-			</div>
-			
-			<div class="logout" >
-				<a href="logout">Log out</a>
+				<a href="logout" class="fas fa-sign-out-alt" >Log out</a>
 			</div>
 			
 		</div>

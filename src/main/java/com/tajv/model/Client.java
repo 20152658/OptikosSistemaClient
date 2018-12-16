@@ -1,80 +1,45 @@
 package com.tajv.model;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
+/*
+create table Uzsakovas
+(
+   Uzsakovo_ID          int not null,
+   Vardas               varchar(20) not null,
+   Pavarde              varchar(20),
+   Telefono_numeris   varchar(15),
+   El_pastas            varchar(50),
+   primary key (Uzsakovo_ID)
+);
+*/
+@Entity
+@Table(name = "Uzsakovas")
 public class Client {
 
-	@JsonProperty("id")
+	@Id
+	@GeneratedValue
+	@Column(name = "Uzsakovo_ID")
 	private int id;
 
-	@JsonProperty("name")
-	@Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters")
+	@Column(name = "Vardas")
 	private String name;
 
-	@JsonProperty("surname")
-	@Size(min = 2, max = 30, message = "Surname must be between 2 and 30 characters")
+	@Column(name = "Pavarde")
 	private String surname;
 
-	@JsonProperty("email")
-	@NotBlank(message = "Please enter email")
-	@Size(min = 2, max = 50, message = "Email must be between 2 and 50 characters")
-	@Email(message = "Please enter valid email.")
+	@Column(name = "Telefono_numeris")
+	private String phoneNumber;
+
+	@Column(name = "El_pastas")
 	private String email;
-
-	@JsonProperty("password")
-	@NotBlank(message = "Please enter password")
-	private String password;
-
-	private String newPassword;
-
-	private String repeatPassword;
-
-	@JsonProperty("dateOfBirth")
-	@NotBlank(message = "Please enter password")
-	private String dateOfBirth;
-
-	@JsonProperty("phone")
-	@Size(max = 11, message = "Phone number must be up to 11 characters")
-	private String phone;
-
-	@JsonProperty("height")
-	private double height;
-
-	@JsonProperty("weight")
-	private double weight;
-
-	@JsonProperty("gender")
-	@NotBlank(message = "Please enter password")
-	private String gender;
-
-	private List<File> clientFiles;
-
-	public List<File> getClientFiles() {
-		return clientFiles;
-	}
-
-	public void setClientFiles(List<File> clientFiles) {
-		this.clientFiles = clientFiles;
-	}
 
 	public int getId() {
 		return id;
-	}
-
-	public Client() {
-	}
-
-	public Client(String email, String password) {
-		this.email = email;
-		this.password = password;
 	}
 
 	public void setId(int id) {
@@ -97,76 +62,20 @@ public class Client {
 		this.surname = surname;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
-	public String getRepeatPassword() {
-		return repeatPassword;
-	}
-
-	public void setRepeatPassword(String repeatPassword) {
-		this.repeatPassword = repeatPassword;
-	}
-
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public double getHeight() {
-		return height;
-	}
-
-	public void setHeight(double height) {
-		this.height = height;
-	}
-
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 }

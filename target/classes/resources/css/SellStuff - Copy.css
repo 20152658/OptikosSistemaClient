@@ -1,0 +1,218 @@
+#wrapper{
+	display:flex;
+	width:100%;
+	height:100vh;
+	flex-direction: column;
+	background-color: #495B6C;
+}
+#container{
+	width:100%;
+	height:85%;
+}
+/* headline */
+
+#headline{
+	width:100%;
+	height:15%;
+	background-color: #495B6C; /* Dark blue */
+	border: 1px black solid;
+	font-size: 33%;
+	
+}
+h1{
+	font: 400 40px/1.3 'Arizonia', Helvetica, sans-serif;
+  	text-shadow: 4px 4px 0px rgba(0,0,0,0.1); 
+	text-align: center;
+	letter-spacing: 3px; /*specify the space between the characters in a text*/
+	word-spacing: 10px;
+	color: white;
+	font-weight: 700; 
+}
+/* The sidebar menu */
+.sidenav {
+	/*margin-top:15%;*/
+    height: auto;
+    width: 15%; 
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    /*top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #495B6C; /* Dark blue */
+    padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.menu-link a{
+	color: #8BBBCD;
+}
+
+.sidenav a:hover {
+	
+    background-color: #384652;
+}
+
+.active a{
+	background-color: #415160;
+	color: #fff;
+}
+
+.active a:hover {
+	background-color: #415160;
+	color: #fff;
+}
+
+
+/* Style of page content */
+.main{
+	margin-left: 15%; /* Same as the width of the sidebars */
+    padding: 1vh 1vh;
+    height:100%;
+    width: 85%;
+    border: 1px black solid;
+    background-color: white;
+}
+
+#sellMain {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;	
+}
+#addingNEW{
+		text-align:center;
+}
+
+.show{
+	width: 48%;
+    height: 100%;
+    border: 1px black solid;
+    background-color: #d2cded;
+    display: flex; 
+    flex-direction: column;
+    /*background-color: #c0c0c0;*/
+    
+}
+
+.showWindow{
+	height:90%;
+	overflow-y: auto; 
+}
+
+.totalWindow{
+	height:10%;
+	background-color: #aca2dd;
+}
+
+.pick{
+	width: 48%;
+    height: 100%;
+    /*border: 1px black solid;*/
+    display: flex; 
+    flex-direction: column;
+    justify-content: space around;
+    
+   
+}
+.pickerHead{
+	height:10%;
+}
+.myMenuElementPickers{
+	width: 100%;
+    height: 90%;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space around;
+   
+}
+
+
+.littlePicker{
+	width:100%;
+	height:100%;
+	display: flex; 
+    flex-direction: column;
+    justify-content: space around;
+}
+
+
+
+#akiniaiPicker{
+	display: none;
+}
+#saulesPicker{
+	display:none;
+}
+#lesiaiPicker{
+	display: none;
+}
+#kitkaPicker{
+	display:none;
+}
+
+.newItems{
+	margin:auto;
+	width: 30%;
+	text-align: left;
+
+}
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 12px;}
+}
+
+button {
+  display: inline-block;
+  margin: .5rem .5rem 1rem .5rem;
+  clear: both;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 24px;
+  text-decoration: none;
+  text-transform: initial;
+  border: none;
+  border-radius: .2rem;
+  color: #fff;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  background: #454cad;
+  border-color: #454cad;
+  cursor: pointer;
+  flex-grow:1;
+}
+
+p {
+	font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    
+}
+
+#atgalButton{
+	
+	color: #454cad;
+	background: white;
+  	border: none;
+	border-radius: .2rem;
+	margin: .5rem .5rem 1rem .5rem;
+	letter-spacing: 1px;
+}
+
+#error {
+	height:100%;
+	width:100%;
+	margin-left: 40%;
+	margin-right: 40%; 
+	align:center;
+}

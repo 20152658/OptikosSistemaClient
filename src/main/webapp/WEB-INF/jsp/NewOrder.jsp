@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="resources/css/frame.css" rel="stylesheet">
     <link href="resources/css/SellStuff.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -17,7 +20,12 @@
 	</style>
 	</head>
 	
-	<body>	
+	<body>
+	<div id="wrapper">	
+		<div id="headline">
+		<h1>Akiu Optika</h1>
+		
+		</div>
 		<div id="container">
 			<!--- Side navigation --->
 			<div class="sidenav">
@@ -29,6 +37,10 @@
 				<div class="active">
 					<a href="newOrder" class="fas fa-plus"> New Order</a>
 				</div>
+				
+				<div class="menu-link">
+						<a href="addNewItem" class="fas fa-glasses"> Add Preke</a>
+					</div>
 		
 				<div class="menu-link">
 					<a href="reviewItems" class="fas fa-file-alt"> Review Items</a>
@@ -45,11 +57,12 @@
 			</div>
 	
 			<!--- Page content --->
-			<div class="main">
+			<div class="main" id=sellMain>
 				<div class="show">
 					
 					<div class="showWindow">
 					
+					
 						<p> Some item </p>
 						<p> one moore </p>
 						<p> Some item </p>
@@ -92,40 +105,17 @@
 						<p> one moore </p>
 						<p> Some item </p>
 						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						
 					</div>
 						
 					<div class="totalWindow">
-							<p> mewww </p>
+							<p> Iš viso:  </p>
 					</div>
 					
 				</div>
 				
 				<div class="pick">
 					<div class="pickerHead">
-							<i onclick="goBack()" class="fas fa-chevron-left"></i>
+							<button onclick="goBack()" id="atgalButton" class="fas fa-angle-left"> Atgal</button>
 					</div>
 					<div class="myMenuElementPickers">
 						<div class="littlePicker" id="mainPicker"> 
@@ -144,17 +134,25 @@
 						</div>
 						<div class="littlePicker" id="lesiaiPicker"> 
 							<p> hello </p>
+							<c:forEach items="${lesiai}" var="preke"> 
+								<p>${preke.id}</p>    
+   								<c:out value="${preke.pavadinimas}"/>
+   								<c:out value="${preke.prekesKiekis}"/>
+							</c:forEach>
+							
 						</div>
 						<div class="littlePicker" id="kitkaPicker"> 
 							<p> hello </p>
 						</div>
 					</div>
-				</div>
+				</form>
 				
 			</div>
 		</div>
+	</div>
 		
 		<script type="text/javascript" >
+			
 			function showNext(caller) {
 					
 				var mainP = document.getElementById("mainPicker");
@@ -167,21 +165,25 @@
 					case document.getElementById("akiniai"):
 						mainP.style.display = "none";
 						akiniaiP.style.display = "flex";
+						position=akiniaiP;
 						break;
 						
 					case document.getElementById("lesiai"):
 						mainP.style.display = "none";
 						lesiaiP.style.display = "flex";
+						position=lesiaiP;
 						break;
 						
 					case document.getElementById("saulesAkiniai"):
 						mainP.style.display = "none";
 						saulesP.style.display = "flex";
+						position=saulesP;
 						break;
 						
 					case document.getElementById("kitka"):
 						mainP.style.display = "none";
 						kitkaP.style.display = "flex";
+						position=kitkaP;
 						break;
 						
 					default:
@@ -189,8 +191,13 @@
 				}
 					
 			}
+			var position = document.getElementById("mainPicker");
+			
 			function goBack(){
 				var mainP = document.getElementById("mainPicker");
+				position.style.display="none";
+				mainP.style.display="flex";
+				
 			}
 		</script>
 		
