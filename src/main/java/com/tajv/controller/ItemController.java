@@ -21,7 +21,7 @@ import com.tajv.model.Item;
 public class ItemController {
 
 	@Autowired
-	private ItemDao prekeDao;
+	private ItemDao itemDao;
 
 	@RequestMapping(value = { "/addNewItem" })
 	public ModelAndView addItem(HttpServletRequest request) {
@@ -30,20 +30,22 @@ public class ItemController {
 	}
 
 	@RequestMapping(value = { "/addingNewItem" })
-	public String addingNewItem(@ModelAttribute Item preke, HttpSession session) {
-		if (preke.getType().length() != 0 && preke.getTitle().length() != 0 && preke.getPrice() != 0) {
-			prekeDao.saveItem(preke);
+	public String addingNewItem(@ModelAttribute Item item, HttpSession session) {
+		if (item.getType().length() != 0 && item.getTitle().length() != 0 && item.getPrice() != 0) {
+			itemDao.saveItem(item);
 		}
 		return "redirect:/addNewItem";
 	}
 
 	@RequestMapping(value = { "/newOrder" })
 	public ModelAndView newOrder(HttpServletRequest request) {
-		List<Item> prekes = prekeDao.getAllItems();
+		List<Item> prekes = new ArrayList<>();
+		prekes = itemDao.getAllItems();
 		ArrayList<Item> akiniai = new ArrayList<>();
 		ArrayList<Item> sAkiniai = new ArrayList<>();
 		ArrayList<Item> lesiai = new ArrayList<>();
 		ArrayList<Item> kitka = new ArrayList<>();
+
 		if (!prekes.isEmpty()) {
 			for (Item preke : prekes) {
 				switch (preke.getType()) {
@@ -74,7 +76,7 @@ public class ItemController {
 
 	@RequestMapping(value = { "/reviewItems" })
 	public ModelAndView reviewItems(HttpServletRequest request) {
-		List<Item> prekes = prekeDao.getAllItems();
+		List<Item> prekes = itemDao.getAllItems();
 		ArrayList<Item> akiniai = new ArrayList<>();
 		ArrayList<Item> sAkiniai = new ArrayList<>();
 		ArrayList<Item> lesiai = new ArrayList<>();

@@ -53,8 +53,6 @@
 		<!--- Page content --->
 			<div class="main">
 				<div class="pickPrekeType">
-				
-				
 			
 					<p>Kokias prekes norite peržiūrėti?</p>
 					
@@ -68,16 +66,15 @@
 				
 					<p id="demo"></p>
 				</div>
-				
 			</div>
 		</div>
 	</div>
 	
 	<c:forEach items="${lesiai}" var="preke"> 
-								<p>${preke.id}</p>    
-   								<c:out value="${preke.pavadinimas}"/>
-   								<c:out value="${preke.prekesKiekis}"/>
-							</c:forEach>
+		<p>${preke.id}</p>    
+			<c:out value="${item.title}"/>
+			<c:out value="${item.amount}"/>
+	</c:forEach>
 							
 	<script>
 			function whichPrekeTypeIsChosen() {

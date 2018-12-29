@@ -53,12 +53,12 @@
 		<!--- Page content --->
 			<div class="main" id="addingNEW">
 				<div class="newItems">
-					<form id="addPrekeForm" method="POST" action="addingNewItem" modelAttribute = "preke">
+					<form id="addPrekeForm" method="POST" action="addingNewItem" modelAttribute = "item">
 					
 						<div class="form-group">
 						
 							<label for="tipas" class="change-information-control-label">Prekes tipas*</label>
-							<select id="prekiuTipai" name="prekesTipas" onchange="whichPrekeTypeIsChosen()" >
+							<select id="prekiuTipai" name="type" onchange="whichPrekeTypeIsChosen()" >
 								  <option disabled selected value> -- Prekės Tipas -- </option>
 								  <option value="akiniai">Akinių remeliai</option>
 								  <option value="lesiai">Kontaktiniai lęšiai</option>
@@ -69,22 +69,22 @@
 						
 						<div class="form-group">
 							<label for="kaina" class="new-information-control-label">Kaina</label>
-							<input type="text" name= "prekesKaina" class="form-control" placeholder="Kaina">
+							<input type="text" name= "price" class="form-control" placeholder="Kaina">
 						</div>
 						
 						<div class="form-group">
 							<label for="Gamintojas" class="new-information-control-label">Gamintojas</label>
-							<input type="text" name= "gamintojas" class="form-control" placeholder="Gamintojas">
+							<input type="text" name= "brand" class="form-control" placeholder="Gamintojas">
 						</div>
 						
 						<div class="form-group">
 							<label for="Pavadinimas" class="new-information-control-label">Pavadinimas*</label>
-							<input type="text" name= "pavadinimas" class="form-control" placeholder="Pavadinimas">
+							<input type="text" name= "title" class="form-control" placeholder="Pavadinimas">
 						</div>
 						
 						<div class="form-group">
 							<label for="Kaina" class="new-information-control-label">Kiekis*</label>
-							<input type="text" name= "prekesKiekis" class="form-control" placeholder="Kiekis">
+							<input type="text" name= "amount" class="form-control" placeholder="Kiekis">
 						</div>
 						
 						<button type="submit" class="addPreke-button">Pridėti</button>

@@ -134,12 +134,11 @@
 						</div>
 						<div class="littlePicker" id="lesiaiPicker"> 
 							<p> hello </p>
-							<c:forEach items="${lesiai}" var="preke"> 
-								<p>${preke.id}</p>    
-   								<c:out value="${preke.pavadinimas}"/>
-   								<c:out value="${preke.prekesKiekis}"/>
-							</c:forEach>
-							
+							<c:forEach items="${lesiai}" var="item"> 
+								<p>${item.id}</p>    
+   								<c:out value="${item.title}"/>
+   								<c:out value="${item.amount}"/>
+							</c:forEach> 
 						</div>
 						<div class="littlePicker" id="kitkaPicker"> 
 							<p> hello </p>
