@@ -6,7 +6,7 @@
 <head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link href="resources/css/frame.css" rel="stylesheet">
-<link href="resources/css/SellStuff.css" rel="stylesheet">
+<link href="resources/css/review.css" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 <script src="https://cdn.plot.ly/plotly-latest.min.js" type="text/javascript"></script>
@@ -65,7 +65,41 @@
 					</select>
 				
 					<p id="demo"></p>
+					
 				</div>
+				<div class="showItemsList" id ="akiniuList">
+					<c:forEach items="${akiniai}" var="item"> 
+						<p>${item.id}</p>    
+							<c:out value="${item.title}"/>
+							<c:out value="${item.amount}"/>
+					</c:forEach> 
+				</div>
+				
+				<div class="showItemsList" id ="lesiuList">
+					<c:forEach items="${lesiai}" var="item"> 
+						<p> ${item.id} </p>   
+							<c:out value="${item.title}"/>
+							<c:out value="${item.amount}"/>
+					</c:forEach> 
+				</div>
+				
+				<div class="showItemsList" id ="sAkiniuList">
+					<c:forEach items="${sAkiniai}" var="item"> 
+						<p>${item.id}</p>    
+							<c:out value="${item.title}"/>
+							<c:out value="${item.amount}"/>
+					</c:forEach> 
+				</div>
+				
+				<div class="showItemsList" id ="kitkaList">
+					<c:forEach items="${kitka}" var="item"> 
+						<p>${item.id}</p>    
+							<c:out value="${item.title}"/>
+							<c:out value="${item.amount}"/>
+					</c:forEach> 
+				</div>
+				
+				
 			</div>
 		</div>
 	</div>
@@ -78,13 +112,37 @@
 							
 	<script>
 			function whichPrekeTypeIsChosen() {
+				
+			    var akiniaiP = document.getElementById("akiniuList");
+			    var saulesP = document.getElementById("sAkiniuList");
+				var lesiaiP = document.getElementById("lesiuList");
+				var kitkaP = document.getElementById("kitkaList");
+				akiniaiP.style.display = "none";
+				saulesP.style.display = "none";
+				lesiaiP.style.display = "none";
+				kitkaP.style.display = "none";
 			    var x = document.getElementById("prekiuTipai").value;
-			    if (x==="kitka"){
-			    	document.getElementById("demo").innerHTML = "Paragraph changed!";
-			    }else{
-			    document.getElementById("demo").innerHTML = x;
+			    switch (x){
+				    case "akiniai":
+				    	akiniaiP.style.display = "flex";
+				    	break;
+				    
+					case "sAkiniai":
+				    	saulesP.style.display = "flex";
+				    	break;
+				    
+					case "lesiai":
+				    	lesiaiP.style.display = "flex";
+				    	break;
+				    
+				    case "kitka":
+				    	kitkaP.style.display = "flex";
+				    	break;
+				    	
+				    default:
+				    	break;
+				  
 			    }
-			    
 			}
 	</script>
 </body>
