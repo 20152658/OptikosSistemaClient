@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tajv.dao.ItemDao;
@@ -35,6 +36,48 @@ public class ItemController {
 			itemDao.saveItem(item);
 		}
 		return "redirect:/addNewItem";
+	}
+
+	@RequestMapping(value = { "/deletingItem" })
+	public String deletingItem(@ModelAttribute Item item, HttpSession session) {
+		Item goingToBeDeleted = itemDao.getItemById(item.getId());
+		itemDao.deleteItem(goingToBeDeleted);
+		return "redirect:/reviewItems";
+	}
+
+	@RequestMapping(value = { "/edittingItem" }, method = RequestMethod.POST)
+	public String edittingItem(@ModelAttribute Item item, HttpSession session) {
+		if (item.getType().length() != 0 && item.getTitle().length() != 0 && item.getPrice() != 0) {
+			itemDao.updateItem(item);
+		}
+		return "redirect:/reviewItems";
+	}
+
+	@RequestMapping(value = { "/editItem" })
+	public ModelAndView editItem(@RequestParam("itemId") int id, HttpSession session) {
+		// if (item.getType().length() != 0 && item.getTitle().length() != 0 &&
+		// item.getPrice() != 0) {
+		// itemDao.updateItem(item);
+		// }
+		// ModelAndView model = new ModelAndView("AddNewItem");
+		System.out.println(id);
+		ModelAndView model = new ModelAndView("EditItem");
+		Item item = itemDao.getItemById(id);
+		model.addObject("item", item);
+		return model;
+		// return "redirect:/editingItem";
+	}
+
+	@RequestMapping(value = { "/updateItem" })
+	public ModelAndView updateItem(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("UpdateItem");
+		return model;
+	}
+
+	@RequestMapping(value = { "/belenkas" })
+	public String belenkas(HttpServletRequest request) {
+
+		return "belenkas";
 	}
 
 	@RequestMapping(value = { "/newOrder" })
@@ -106,6 +149,7 @@ public class ItemController {
 		model.addObject("sAkiniai", sAkiniai);
 		model.addObject("lesiai", lesiai);
 		model.addObject("kitka", kitka);
+
 		return model;
 	}
 

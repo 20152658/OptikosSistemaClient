@@ -60,56 +60,18 @@
 			<div class="main" id=sellMain>
 				<div class="show">
 					
-					<div class="showWindow">
+					<div class="showWindow" id="showWindow">
 					
-					
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
-						<p> Some item </p>
-						<p> one moore </p>
 					</div>
 						
-					<div class="totalWindow">
-							<p> Iš viso:  </p>
+					<div class="totalWindow" id= "totalWindow">
+						<p> Iš viso:  </p>
+						
 					</div>
+					<form>
+							<input type="hidden" id="idArray" name="idArray" value=""/>
+							<button type="submit" class="kazkas">Done</button> 
+					</form>							
 					
 				</div>
 				
@@ -125,32 +87,37 @@
 							<button onclick="showNext(this)" id="kitka" class="button -kitka">Kitos prekės</button> 
 						</div>
 						<div class="littlePicker" id="akiniaiPicker"> 
-							<button onclick="showNext(this)" id="akiniaiSu" class="button -akiniai -Su">Su Dioptrijomis</button> 
-							<button onclick="showNext(this)" id="akiniaiBe" class="button -akiniai -Be">Be Dioptrijų</button> 
+							<c:forEach items="${akiniai}" var="item">
+	  								<button onclick="addItem(${item.id}, '${item.title}',${item.price})"> ${item.title} ${item.price} </button>
+							</c:forEach> 	
 						</div>
 						<div class="littlePicker" id="saulesPicker"> 
-							<button onclick="showNext(this)" id="saulesSu" class="button -saules -Su">Su Dioptrijomis</button> 
-							<button onclick="showNext(this)" id="saulesBe" class="button -saules -Be">Be Dioptrijų</button> 
+							<c:forEach items="${sAkiniai}" var="item">
+	  								<button onclick="addItem(${item.id}, '${item.title}',${item.price} )"> ${item.title} ${item.price} </button>
+							</c:forEach> 
 						</div>
 						<div class="littlePicker" id="lesiaiPicker"> 
 							<p> hello </p>
-							<c:forEach items="${lesiai}" var="item"> 
-								<p>${item.id}</p>    
-   								<c:out value="${item.title}"/>
-   								<c:out value="${item.amount}"/>
+							<c:forEach items="${lesiai}" var="item">
+	  								<button onclick="addItem(${item.id}, '${item.title}',${item.price})"> ${item.title} ${item.price} </button>
 							</c:forEach> 
 						</div>
 						<div class="littlePicker" id="kitkaPicker"> 
-							<p> hello </p>
-						</div>
-					</div>
-				</form>
-				
+							<c:forEach items="${kitka}" var="item">   
+	  								<button onclick="addItem(${item.id}, '${item.title}' ,${item.price})"> ${item.title} ${item.price} </button>
+							</c:forEach> 
+					   </div>
+				</div>
 			</div>
 		</div>
 	</div>
 		
 		<script type="text/javascript" >
+		
+			var itemList="";
+			var price =0;
+			var totalWindow = document.getElementById("totalWindow");
+			var showWindow = document.getElementById("showWindow");
 			
 			function showNext(caller) {
 					
@@ -191,6 +158,16 @@
 					
 			}
 			var position = document.getElementById("mainPicker");
+			
+			function addItem(id,title, pprice){
+				var node = document.createElement("p");
+				node.textContent= title+ " "+ pprice;
+				showWindow.appendChild(node);
+				itemList=itemList + id+ ",";
+				
+				price=parseFloat(price)+parseFloat(pprice);
+				totalWindow.textContent="Iš viso: "+price.toFixed(2);
+			}
 			
 			function goBack(){
 				var mainP = document.getElementById("mainPicker");

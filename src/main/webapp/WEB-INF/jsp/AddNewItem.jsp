@@ -71,7 +71,7 @@
 						
 						<div class="form-group">
 							<label for="kaina" class="new-information-control-label">Kaina</label>
-							<input type="text" name= "price" id="price" class="form-control" placeholder="Kaina">
+							<input type="number" name= "price" id="price" class="form-control" placeholder="Kaina">
 						</div>
 						
 						<div class="form-group">
@@ -86,7 +86,7 @@
 						
 						<div class="form-group">
 							<label for="kiekis" class="new-information-control-label">Kiekis*</label>
-							<input type="text" name= "amount" id="amount" class="form-control" placeholder="Kiekis">
+							<input type="number" name= "amount" id="amount" class="form-control" placeholder="Kiekis">
 						</div>
 						
 						<button type="submit" id="submitButton" class="addPreke-button">Pridėti</button>

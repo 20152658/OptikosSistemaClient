@@ -64,7 +64,7 @@
 					</select>
 				</div>
 				
-				<div class="showItemsList" id ="akiniuList">
+				<form class="showItemsList" id ="akiniuList">
 					<c:forEach items="${akiniai}" var="item"> 
 						<div id="products" class="row list-group">
 					        <div class="item  col-xs-4 col-lg-4">
@@ -80,7 +80,7 @@
 										Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
 					                        <div class="col-xs-12 col-md-6">
-					                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Atnaujinti</a>
+					                            <a href="editItem?itemId=${item.id}" class="btn btn-success">Atnaujinti</a>
 					                        </div>
 					                    </div>
 					                </div>
@@ -88,7 +88,7 @@
 					        </div>
 					     </div>
 					</c:forEach> 
-				</div>
+				</form>
 				
 				<div class="showItemsList" id ="lesiuList">
 					<c:forEach items="${lesiai}" var="item">
@@ -106,7 +106,11 @@
 										Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
 					                        <div class="col-xs-12 col-md-6">
-					                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Atnaujinti</a>
+					                            <a href="editItem?itemId=${item.id}" class="btn btn-success">Atnaujinti</a>
+					                             <form id="delete" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            	<input type="hidden" value="${item.id}" name="id"> </input>
+					                            	<button type="submit">Istrinti</button>
+					                            </form>
 					                        </div>
 					                    </div>
 					                </div>
@@ -132,7 +136,7 @@
 										Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
 					                        <div class="col-xs-12 col-md-6">
-					                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Atnaujinti</a>
+					                            <a href="editItem?itemId=${item.id}" class="btn btn-success">Atnaujinti</a>
 					                        </div>
 					                    </div>
 					                </div>
@@ -157,8 +161,10 @@
 									    Kiekis: ${item.amount} 
 										Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
+					                 
 					                        <div class="col-xs-12 col-md-6">
-					                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Atnaujinti</a>
+					                            <a href="editItem?itemId=${item.id}" class="btn btn-success">Atnaujinti</a>
+	
 					                        </div>
 					                    </div>
 					                </div>
