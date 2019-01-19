@@ -130,11 +130,11 @@
 					},
 			        brand: {
 						required: 'Įveskite prekės gamintoją',
-						maxlenght: 'Prekės brand negali viršyti 30 simbolių'
+						maxlength: 'Prekės gamintojas negali viršyti 30 simbolių'
 					},
 					title: {
 						required: 'Įveskite prekės pavadinimą',
-						maxlenght: 'Prekės title negali viršyti 50 simbolių'
+						maxlength: 'Prekės pavadinimas negali viršyti 50 simbolių'
 					},
 					amount: {
 						required:'Įveskite prekės kiekį'

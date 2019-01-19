@@ -55,7 +55,6 @@
 				<div class="pickPrekeType">
 			
 					<p>Kokias prekes norite peržiūrėti?</p>
-					
 					<select id="prekiuTipai" name="prekiuTipai" onchange="whichPrekeTypeIsChosen()" >
 						  <option disabled selected value> -- Prekės Tipas -- </option>
 						  <option value="akiniai">Akinių remeliai</option>
@@ -63,39 +62,109 @@
 						  <option value="sAkinai">Akiniai nuo saulės</option>
 						  <option value="kitka">Kita</option>
 					</select>
-				
-					<p id="demo"></p>
-					
 				</div>
+				
 				<div class="showItemsList" id ="akiniuList">
 					<c:forEach items="${akiniai}" var="item"> 
-						<p>${item.id}</p>    
-							<c:out value="${item.title}"/>
-							<c:out value="${item.amount}"/>
+						<div id="products" class="row list-group">
+					        <div class="item  col-xs-4 col-lg-4">
+					            <div class="thumbnail">
+					                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+					                <div class="caption">
+					                    <h4 class="group inner list-group-item-heading">
+					                        ${item.title}</h4>
+					                    <p class="group inner list-group-item-text">
+					                    Gamintojas: ${item.brand} 
+				                        Kaina: ${item.price} 
+									    Kiekis: ${item.amount} 
+										Rezervuotas kiekis: ${item.reserved} </p>
+					                    <div class="row">
+					                        <div class="col-xs-12 col-md-6">
+					                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Atnaujinti</a>
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					     </div>
 					</c:forEach> 
 				</div>
 				
 				<div class="showItemsList" id ="lesiuList">
-					<c:forEach items="${lesiai}" var="item"> 
-						<p> ${item.id} </p>   
-							<c:out value="${item.title}"/>
-							<c:out value="${item.amount}"/>
+					<c:forEach items="${lesiai}" var="item">
+						<div id="products" class="row list-group">
+					        <div class="item  col-xs-4 col-lg-4">
+					            <div class="thumbnail">
+					                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+					                <div class="caption">
+					                    <h4 class="group inner list-group-item-heading">
+					                        ${item.title}</h4>
+					                    <p class="group inner list-group-item-text">
+					                    Gamintojas: ${item.brand} 
+				                        Kaina: ${item.price} 
+									    Kiekis: ${item.amount} 
+										Rezervuotas kiekis: ${item.reserved} </p>
+					                    <div class="row">
+					                        <div class="col-xs-12 col-md-6">
+					                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Atnaujinti</a>
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					        </div>
 					</c:forEach> 
 				</div>
 				
 				<div class="showItemsList" id ="sAkiniuList">
 					<c:forEach items="${sAkiniai}" var="item"> 
-						<p>${item.id}</p>    
-							<c:out value="${item.title}"/>
-							<c:out value="${item.amount}"/>
+						<div id="products" class="row list-group">
+					        <div class="item  col-xs-4 col-lg-4">
+					            <div class="thumbnail">
+					                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+					                <div class="caption">
+					                    <h4 class="group inner list-group-item-heading">
+					                        ${item.title}</h4>
+					                    <p class="group inner list-group-item-text">
+					                    Gamintojas: ${item.brand} 
+				                        Kaina: ${item.price} 
+									    Kiekis: ${item.amount} 
+										Rezervuotas kiekis: ${item.reserved} </p>
+					                    <div class="row">
+					                        <div class="col-xs-12 col-md-6">
+					                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Atnaujinti</a>
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					        </div>
 					</c:forEach> 
 				</div>
 				
 				<div class="showItemsList" id ="kitkaList">
 					<c:forEach items="${kitka}" var="item"> 
-						<p>${item.id}</p>    
-							<c:out value="${item.title}"/>
-							<c:out value="${item.amount}"/>
+						<div id="products" class="row list-group">
+					        <div class="item  col-xs-4 col-lg-4">
+					            <div class="thumbnail">
+					                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+					                <div class="caption">
+					                    <h4 class="group inner list-group-item-heading">
+					                        ${item.title}</h4>
+					                    <p class="group inner list-group-item-text">
+					                    Gamintojas: ${item.brand} 
+				                        Kaina: ${item.price} 
+									    Kiekis: ${item.amount} 
+										Rezervuotas kiekis: ${item.reserved} </p>
+					                    <div class="row">
+					                        <div class="col-xs-12 col-md-6">
+					                            <a class="btn btn-success" href="http://www.jquery2dotnet.com">Atnaujinti</a>
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					        </div>
 					</c:forEach> 
 				</div>
 				
@@ -103,13 +172,7 @@
 			</div>
 		</div>
 	</div>
-	
-	<c:forEach items="${lesiai}" var="preke"> 
-		<p>${preke.id}</p>    
-			<c:out value="${item.title}"/>
-			<c:out value="${item.amount}"/>
-	</c:forEach>
-							
+				
 	<script>
 			function whichPrekeTypeIsChosen() {
 				

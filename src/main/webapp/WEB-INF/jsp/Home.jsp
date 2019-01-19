@@ -22,27 +22,27 @@
 				<div class="sidenav">
 				
 					<div class="active" >
-						<a href="home" class="fas fa-home" > Home</a>
+						<a href="home" class="fas fa-home" > Pagrindinis puslapis</a>
 					</div>
 					
 					<div class="menu-link">
-						<a href="newOrder" class="fas fa-plus"> New Order</a>
+						<a href="newOrder" class="fas fa-plus"> Naujas Pardavimas</a>
 					</div>
 					
 					<div class="menu-link">
-						<a href="addNewItem" class="fas fa-glasses"> Add Preke</a>
+						<a href="addNewItem" class="fas fa-glasses"> Nauja Preke</a>
 					</div>
 			
 					<div class="menu-link">
-						<a href="reviewItems" class="fas fa-file-alt"> Review Items</a>
+						<a href="reviewItems" class="fas fa-file-alt"> Inventorius </a>
 					</div>
 					
 					<div class="menu-link">
-						<a href="reviewOrders"  class="fas fa-file-invoice" > Review Orders</a>
+						<a href="reviewOrders"  class="fas fa-file-invoice" > Pardavimu istorija</a>
 					</div>
 		
 					<div class="menu-link" >
-						<a href="logout" class="fas fa-sign-out-alt" >Log out</a>
+						<a href="logout" class="fas fa-sign-out-alt" > Atsijungti</a>
 					</div>
 					
 				</div>
