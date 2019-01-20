@@ -29,37 +29,36 @@
 		<div id="container">
 			<!--- Side navigation --->
 			<div class="sidenav">
+				
+					<div class="menu-link" >
+						<a href="home" class="fas fa-home" > Pagrindinis puslapis</a>
+					</div>
+					
+					<div class="active">
+						<a href="newOrder" class="fas fa-plus"> Naujas Pardavimas</a>
+					</div>
+					
+					<div class="menu-link">
+						<a href="addNewItem" class="fas fa-glasses"> Nauja Preke</a>
+					</div>
 			
-				<div class="menu-link" >
-					<a href="home" class="fas fa-home" > Home</a>
-				</div>
-				
-				<div class="active">
-					<a href="newOrder" class="fas fa-plus"> New Order</a>
-				</div>
-				
-				<div class="menu-link">
-						<a href="addNewItem" class="fas fa-glasses"> Add Preke</a>
+					<div class="menu-link">
+						<a href="reviewItems" class="fas fa-file-alt"> Inventorius </a>
+					</div>
+					
+					<div class="menu-link">
+						<a href="reviewOrders"  class="fas fa-file-invoice" > Pardavimu istorija</a>
 					</div>
 		
-				<div class="menu-link">
-					<a href="reviewItems" class="fas fa-file-alt"> Review Items</a>
+					<div class="menu-link" >
+						<a href="logout" class="fas fa-sign-out-alt" > Atsijungti</a>
+					</div>
+					
 				</div>
-				
-				<div class="menu-link">
-					<a href="reviewOrders"  class="fas fa-file-invoice" > Review Orders</a>
-				</div>
-	
-				<div class="menu-link" >
-					<a href="logout" class="fas fa-sign-out-alt" >Log out</a>
-				</div>
-				
-			</div>
 	
 			<!--- Page content --->
 			<div class="main" id=sellMain>
 				<div class="show">
-					
 					<div class="showWindow" id="showWindow">
 					
 					</div>
@@ -67,24 +66,25 @@
 					<div class="totalWindow" id= "totalWindow">
 						<p> Iš viso:  </p>
 						
-					</div>
-					<form>
-							<input type="hidden" id="idArray" name="idArray" value=""/>
-							<button type="submit" class="kazkas">Done</button> 
-					</form>							
-					
+					</div>					
 				</div>
 				
 				<div class="pick">
 					<div class="pickerHead">
-							<button onclick="goBack()" id="atgalButton" class="fas fa-angle-left"> Atgal</button>
+						<button onclick="goBack()" id="atgalButton" class="fas fa-angle-left"> Atgal</button>
+						<form id="sellPrekeForm" name="sellPrekeForm" role="form" method="POST" action="sellingItem" modelAttribute = "item">
+							<input type="hidden" type="text" id="title" name="title"/>
+							<input type="hidden" type="number" id="price" name="price"/>
+							<button type="submit" id="doneButton" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')">Done</button> 
+						</form>	
 					</div>
 					<div class="myMenuElementPickers">
 						<div class="littlePicker" id="mainPicker"> 
-							<button onclick="showNext(this)" id="akiniai" class="button -akiniai">Akiniai</button> 
-							<button onclick="showNext(this)" id="lesiai" class="button -lesiai">Lęšiai</button> 
-							<button onclick="showNext(this)" id="saulesAkiniai" class="button -saules akiniai">Saulės Akiniai</button> 
-							<button onclick="showNext(this)" id="kitka" class="button -kitka">Kitos prekės</button> 
+							<button onclick="showNext(this)" id="akiniai" class="button -akiniai">Remeliai</button> 
+							<button onclick="showNext(this)" id="lesiai" class="button -lesiai">Kontaktinai lęšiai</button> 
+							<button onclick="showNext(this)" id="saulesAkiniai" class="button -saules akiniai">Saulės akiniai</button> 
+							<button onclick="showNext(this)" id="kitka" class="button -kitka">Kitos prekės</button>
+							<button onclick="showNext(this)" id="dioptrija" class="button -dioptrija">Akinių lęšiai</button>  
 						</div>
 						<div class="littlePicker" id="akiniaiPicker"> 
 							<c:forEach items="${akiniai}" var="item">
@@ -97,7 +97,6 @@
 							</c:forEach> 
 						</div>
 						<div class="littlePicker" id="lesiaiPicker"> 
-							<p> hello </p>
 							<c:forEach items="${lesiai}" var="item">
 	  								<button onclick="addItem(${item.id}, '${item.title}',${item.price})"> ${item.title} ${item.price} </button>
 							</c:forEach> 
@@ -107,6 +106,25 @@
 	  								<button onclick="addItem(${item.id}, '${item.title}' ,${item.price})"> ${item.title} ${item.price} </button>
 							</c:forEach> 
 					   </div>
+					   <div class="littlePicker" id="dioptrijuPicker">
+					   		<p>hello</p>
+					   		
+					   		
+					   	   Uzsakovo_ID          int,
+						   Desines_akies_sfera  decimal not null,
+						   Kaires_akies_sfera   decimal not null,
+						   Desines_akies_cilindras decimal,
+						   Kaires_akies_cilindras decimal,
+						   Desines_akies_asis   int,
+						   Kaires_akies_asis    int,
+						   Desines_akies_prizme decimal,
+						   Kaires_akies_prizme  decimal,
+						   Atstumas_tarp_vyzdziu_centru int not null,
+						   Paskirtis            varchar(25) not null,
+						   primary key (Recepto_ID)
+					   		
+					   </div>
+					   
 				</div>
 			</div>
 		</div>
@@ -126,6 +144,7 @@
 			    var saulesP = document.getElementById("saulesPicker");
 				var lesiaiP = document.getElementById("lesiaiPicker");
 				var kitkaP = document.getElementById("kitkaPicker");
+				var dioptrijaP = document.getElementById("dioptrijuPicker");
 				
 				switch (caller){
 					case document.getElementById("akiniai"):
@@ -152,6 +171,12 @@
 						position=kitkaP;
 						break;
 						
+					case document.getElementById("dioptrija"):
+						mainP.style.display = "none";
+						dioptrijaP.style.display = "flex";
+						position=dioptrijaP;
+						break;
+						
 					default:
 					break;
 				}
@@ -163,10 +188,11 @@
 				var node = document.createElement("p");
 				node.textContent= title+ " "+ pprice;
 				showWindow.appendChild(node);
-				itemList=itemList + id+ ",";
-				
+				itemList=itemList + parseInt(id) + ",";
+				document.getElementById("title").value=itemList;
 				price=parseFloat(price)+parseFloat(pprice);
 				totalWindow.textContent="Iš viso: "+price.toFixed(2);
+				document.getElementById("price").value=price;
 			}
 			
 			function goBack(){

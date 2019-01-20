@@ -23,7 +23,7 @@ create table Darbuotojas
 /*==============================================================*/
 create table Pardavimas
 (
-   Pardavimo_ID         int not null,
+   Pardavimo_ID         int not null auto_increment,
    Suma                 float(8,2) not null,
    Pardavimo_data       timestamp not null,
    Prekes				varchar(100),
@@ -51,7 +51,7 @@ create table Preke
 /*==============================================================*/
 create table Receptas
 (
-   Recepto_ID           int not null,
+   Recepto_ID           int not null auto_increment,
    Uzsakovo_ID          int,
    Desines_akies_sfera  decimal not null,
    Kaires_akies_sfera   decimal not null,
@@ -71,7 +71,7 @@ create table Receptas
 /*==============================================================*/
 create table Uzsakovas
 (
-   Uzsakovo_ID          int not null,
+   Uzsakovo_ID          int not null auto_increment,
    Vardas               varchar(20) not null,
    Pavarde              varchar(20),
    Telefono_numeris   varchar(15),
@@ -84,7 +84,7 @@ create table Uzsakovas
 /*==============================================================*/
 create table Uzsakymas
 (
-   Uzsakymo_ID          int not null,
+   Uzsakymo_ID          int not null auto_increment,
    Uzsakovo_ID          int,
    Pagaminimo_data      date,
    Uzsakymo_kaina       float(8,2) not null,

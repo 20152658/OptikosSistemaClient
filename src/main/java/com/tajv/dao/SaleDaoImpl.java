@@ -50,4 +50,19 @@ public class SaleDaoImpl implements SaleDao {
 		sessionFactory.getCurrentSession().update(sale);
 	}
 
+	@Override
+	@Transactional
+	public List<Sale> getAllSales() {
+		String hql = "from Sale";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+
+		@SuppressWarnings("unchecked")
+		List<Sale> salesList = query.list();
+
+		if (salesList != null && !salesList.isEmpty()) {
+			return salesList;
+		}
+		return null;
+	}
+
 }
