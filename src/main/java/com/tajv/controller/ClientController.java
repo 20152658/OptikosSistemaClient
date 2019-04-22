@@ -29,7 +29,6 @@ public class ClientController {
 
 	@RequestMapping(value = { "/clients" })
 	public ModelAndView clients(HttpServletRequest request) {
-		System.out.println("hey client 24");
 		ArrayList<Client> clients = (ArrayList<Client>) clientDao.getAllClients();
 		System.out.println("clients list size is: " + clients.size());
 		ModelAndView model = new ModelAndView("Clients");
@@ -50,7 +49,6 @@ public class ClientController {
 		String clientSurname = client.getSurname();
 		String clientEmail = client.getEmail();
 		String clientPhone = client.getPhoneNumber();
-		System.out.println("xxl" + clientName + " " + clientSurname + " " + clientEmail + " " + clientPhone);
 
 		Client newClient = new Client();
 		newClient.setName(clientName);
@@ -83,8 +81,6 @@ public class ClientController {
 
 	@RequestMapping(value = { "/edittingClient" }, method = RequestMethod.POST)
 	public String edittingClient(@ModelAttribute Client client, HttpSession session) {
-		System.out.println("hello " + client.getId() + " " + client.getName() + " " + client.getSurname() + " "
-				+ client.getPhoneNumber() + " " + client.getEmail());
 		if (client.getName() != null && client.getName().length() < 20) {
 			clientDao.updateClient(client);
 		}
@@ -94,7 +90,6 @@ public class ClientController {
 	@RequestMapping(value = { "/addingPrescription" }, method = RequestMethod.POST)
 	public String addingPrescription(@ModelAttribute Prescription prescription, HttpSession session) {
 
-		System.out.println(prescription.getClientId() + " " + prescription.getDistanceBetweenPupils());
 		try {
 			prescriptionDao.updatePrescription(prescription);
 		} catch (Exception e) {

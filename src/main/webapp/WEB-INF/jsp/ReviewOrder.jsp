@@ -1,5 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,15 +17,16 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
 
 </head>
-
-<body>
-	<div id="wrapper">	
-		<div id="headline">
-			<h1>Akiu Optika</h1>
-		</div>
-				
-		<div id="container">
-		<!--- Side navigation --->
+	
+	<body>	
+		<div id="wrapper">	
+		
+			<div id="headline">
+				<h1>Akiu Optika</h1>
+			</div>
+			
+			<div id="container">
+				<!--- Side navigation --->
 				<div class="sidenav">
 				
 					<div class="menu-link" >
@@ -47,7 +49,7 @@
 						<a href="reviewItems" class="fas fa-file-alt"> Inventorius </a>
 					</div>
 					
-					<div class="active">
+					<div class="menu-link">
 						<a href="reviewOrders"  class="fas fa-file-invoice" > Pardavimu istorija</a>
 					</div>
 		
@@ -56,41 +58,40 @@
 					</div>
 					
 				</div>
-
-		<!--- Page content --->
-			<div class="main">		
-				<div class="kontainer">
-				    <div class="row col-md-6 col-md-offset-2 custyle">
-					    <table class="table table-striped custab">
-						    <thead>
-						        <tr>
-						            <th>Pardavimo nr</th>
-						            <th>Data ir laikas</th>
-						            <th>Pardavimo suma</th>
-						            <th class="text-center">Peržiūra</th>
-						        </tr>
-						    </thead>
-						    
-				            <c:forEach items="${sales}" var="sale"> 
-							<fmt:parseDate value="${sale.date}" var="dateObject" pattern="yyyy-MM-dd HH:mm:ss" />
-				             <tr>
-				            	<td> ${sale.id} </td>
-				            	<td> <fmt:formatDate value="${dateObject }" pattern="yyyy-MM-dd HH:mm" /> </td>
-				            	<td class="sumTd"> <fmt:formatNumber value="${sale.sum}" type="currency" currencySymbol=""/> </td>
-				            	<td  class="text-center"><a href="reviewOrder?saleId=${sale.id}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span> Peržiūrėti</a></td>
-				            </tr>
-				            </c:forEach>
-					    </table>
-				    </div>
-				</div>
+	
+			<!--- Page content --->
+				<div class="main">
+				<fmt:parseDate value="${sale.date}" var="dateObject" pattern="yyyy-MM-dd HH:mm:ss" />
+					<p>Pardavimo data: <fmt:formatDate value="${dateObject }" pattern="yyyy-MM-dd" /></p>	
+					<p>Pardavimo laikas: <fmt:formatDate value="${dateObject }" pattern="HH:mm " /></p>		
+					<p>Užsakymai: ${sale.orders}</p> 	
+					
+					<table class="table table-striped custab">
+					    <thead>
+					        <tr>
+					            <th>Pavadinimas</th>
+					            <th>Gamintojas</th>
+					            <th>Kaina</th>
+					        </tr>
+					    </thead>
 				
+						<c:forEach items="${items}" var="item"> 
+				             <tr>
+				            	<td> ${item.title} </td>
+				            	<td> ${item.brand} </td>
+				            	<td class="sumTd"> <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> </td>
+				            	
+				            </tr>
+			            </c:forEach>
+			             <tr>
+			            	<td class="font-weight-bold" >Iš viso: </td>
+			            	<td>  </td>
+			            	<td class="sumTd"> <fmt:formatNumber value="${sale.sum}" type="currency" currencySymbol=""/> </td>
+				         </tr>
+		            </table>
+				</div>
 			</div>
-			
-			
 		</div>
-	</div>
-
-
-</body>
-
+	</body>
+	
 </html>

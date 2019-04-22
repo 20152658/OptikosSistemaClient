@@ -1,5 +1,4 @@
-
-<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -62,26 +61,26 @@
 			<div class="main">		
 				<div class="kontainer">
 				    <div class="row col-md-6 col-md-offset-2 custyle">
-				    <table class="table table-striped custab">
-					    <thead>
-					        <tr>
-					            <th>Pardavimo nr</th>
-					            <th>Data ir laikas</th>
-					            <th>Pardavimo suma</th>
-					            <th class="text-center">Peržiūra</th>
-					        </tr>
-					    </thead>
-					    
-			            <c:forEach items="${sales}" var="sale"> 
-			             <tr>
-			            	<td> ${sale.id} </td>
-			            	<td> ${sale.date} </td>
-			            	<td class="sumTd"'> ${sale.sum} </td>
-			            	
-			            	<td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Peržiūrėti</a></td>
-			            </tr>
-			            </c:forEach>
-				    </table>
+					    <table class="table table-striped custab">
+						    <thead>
+						        <tr>
+						            <th>Pardavimo nr</th>
+						            <th>Data ir laikas</th>
+						            <th>Pardavimo suma</th>
+						            <th class="text-center">Peržiūra</th>
+						        </tr>
+						    </thead>
+						    
+				            <c:forEach items="${sales}" var="sale"> 
+							<fmt:parseDate value="${sale.date}" var="dateObject" pattern="yyyy-MM-dd HH:mm:ss" />
+				             <tr>
+				            	<td> ${sale.id} </td>
+				            	<td> <fmt:formatDate value="${dateObject }" pattern="yyyy-MM-dd HH:mm" /> </td>
+				            	<td class="sumTd"> <fmt:formatNumber value="${sale.sum}" type="currency" currencySymbol=""/> </td>
+				            	<td  class="text-center"><a href="reviewOrder?saleId=${sale.id}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span> Peržiūrėti</a></td>
+				            </tr>
+				            </c:forEach>
+					    </table>
 				    </div>
 				</div>
 				

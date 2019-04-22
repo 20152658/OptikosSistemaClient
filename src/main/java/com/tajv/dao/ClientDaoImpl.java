@@ -53,20 +53,14 @@ public class ClientDaoImpl implements ClientDao {
 	@Override
 	@Transactional
 	public List<Client> getAllClients() {
-		System.out.println("hey client 56");
 		String hql = "from Client";
-		System.out.println("hey client 58");
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		System.out.println("hey client 60");
 		@SuppressWarnings("unchecked")
 		List<Client> clientList = query.list();
-		System.out.println("hey client 63");
 		if (clientList != null && !clientList.isEmpty()) {
-			System.out.println("hey client 65");
 			return clientList;
 		}
 
-		System.out.println("hey client 69");
 		return null;
 	}
 

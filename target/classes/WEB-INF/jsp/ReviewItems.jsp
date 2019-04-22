@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +76,7 @@
 					                    <h4 class="group inner grid-group-item-heading">
 					                        ${item.title}</h4>
 						                    <p class="group inner grid-group-item-text"> Gamintojas: ${item.brand}  </p>
-					                        <p class="group inner grid-group-item-text">  Kaina: ${item.price}  </p>
+					                        <p class="group inner grid-group-item-text">  Kaina: <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </p>
 										    <p class="group inner grid-group-item-text"> Kiekis: ${item.amount}  </p>
 											<p class="group inner grid-group-item-text">Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
@@ -102,7 +102,7 @@
 					                    <h4 class="group inner grid-group-item-heading">
 					                        ${item.title}</h4>
 						                    <p class="group inner grid-group-item-text"> Gamintojas: ${item.brand}  </p>
-					                        <p class="group inner grid-group-item-text">  Kaina: ${item.price}  </p>
+					                        <p class="group inner grid-group-item-text">  Kaina: <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </p>
 										    <p class="group inner grid-group-item-text"> Kiekis: ${item.amount}  </p>
 											<p class="group inner grid-group-item-text">Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
@@ -129,7 +129,7 @@
 					                    <h4 class="group inner grid-group-item-heading">
 					                        ${item.title}</h4>
 						                    <p class="group inner grid-group-item-text"> Gamintojas: ${item.brand}  </p>
-					                        <p class="group inner grid-group-item-text">  Kaina: ${item.price}  </p>
+					                        <p class="group inner grid-group-item-text">  Kaina: <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> €  </p>
 										    <p class="group inner grid-group-item-text"> Kiekis: ${item.amount}  </p>
 											<p class="group inner grid-group-item-text">Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
@@ -156,7 +156,7 @@
 					                    <h4 class="group inner grid-group-item-heading">
 					                        ${item.title}</h4>
 						                    <p class="group inner grid-group-item-text"> Gamintojas: ${item.brand}  </p>
-					                        <p class="group inner grid-group-item-text">  Kaina: ${item.price}  </p>
+					                        <p class="group inner grid-group-item-text">  Kaina: <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </p>
 										    <p class="group inner grid-group-item-text"> Kiekis: ${item.amount}  </p>
 											<p class="group inner grid-group-item-text">Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">

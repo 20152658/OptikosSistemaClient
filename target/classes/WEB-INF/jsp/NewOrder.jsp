@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -93,22 +93,22 @@
 						</div>
 						<div class="littlePicker" id="akiniaiPicker"> 
 							<c:forEach items="${akiniai}" var="item">
-	  								<button onclick="addItem(${item.id}, '${item.title}',${item.price})"> ${item.title} ${item.price} </button>
+  								<button onclick="addItem(${item.id}, '${item.title}' ,${item.price})"> ${item.title}  <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> €  </button>
 							</c:forEach> 	
 						</div>
 						<div class="littlePicker" id="saulesPicker"> 
 							<c:forEach items="${sAkiniai}" var="item">
-	  								<button onclick="addItem(${item.id}, '${item.title}',${item.price} )"> ${item.title} ${item.price} </button>
+  								<button onclick="addItem(${item.id}, '${item.title}',${item.price} )"> ${item.title} <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </button>
 							</c:forEach> 
 						</div>
 						<div class="littlePicker" id="lesiaiPicker"> 
 							<c:forEach items="${lesiai}" var="item">
-	  								<button onclick="addItem(${item.id}, '${item.title}',${item.price})"> ${item.title} ${item.price} </button>
+  								<button onclick="addItem(${item.id}, '${item.title}',${item.price})"> ${item.title} <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </button>
 							</c:forEach> 
 						</div>
 						<div class="littlePicker" id="kitkaPicker"> 
 							<c:forEach items="${kitka}" var="item">   
-	  								<button onclick="addItem(${item.id}, '${item.title}' ,${item.price})"> ${item.title} ${item.price} </button>
+  								<button onclick="addItem(${item.id}, '${item.title}' ,${item.price})"> ${item.title} <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </button>
 							</c:forEach> 
 					   </div>
 					    
