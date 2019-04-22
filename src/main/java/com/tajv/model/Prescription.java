@@ -10,7 +10,7 @@ import javax.persistence.Table;
 create table Receptas
 (
    Recepto_ID           int not null,
-   Uzsakovo_ID          int,
+   Uzsakovo_ID          int, //INT NOT  NULL PADARYT
    Desines_akies_sfera  decimal not null,
    Kaires_akies_sfera   decimal not null,
    Desines_akies_cilindras decimal,
@@ -60,7 +60,7 @@ public class Prescription {
 	@Column(name = "Kaires_akies_prizme")
 	private double leftEyePrism;
 
-	@Column(name = "Atstumas_tarp_vyzdziu")
+	@Column(name = "Atstumas_tarp_vyzdziu_centru")
 	private int distanceBetweenPupils;
 
 	@Column(name = "Paskirtis")

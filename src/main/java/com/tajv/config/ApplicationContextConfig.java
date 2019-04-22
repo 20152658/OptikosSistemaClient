@@ -22,7 +22,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.mysql.fabric.xmlrpc.Client;
 import com.tajv.dao.ClientDao;
 import com.tajv.dao.ClientDaoImpl;
 import com.tajv.dao.EmployeeDao;
@@ -35,6 +34,7 @@ import com.tajv.dao.PrescriptionDao;
 import com.tajv.dao.PrescriptionDaoImpl;
 import com.tajv.dao.SaleDao;
 import com.tajv.dao.SaleDaoImpl;
+import com.tajv.model.Client;
 import com.tajv.model.Employee;
 import com.tajv.model.Item;
 import com.tajv.model.Order;

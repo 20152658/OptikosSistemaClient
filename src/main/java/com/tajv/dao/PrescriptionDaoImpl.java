@@ -34,6 +34,19 @@ public class PrescriptionDaoImpl implements PrescriptionDao {
 
 	@Override
 	@Transactional
+	public Prescription getPrescriptionByClientId(int clientId) {
+		String hql = "from Prescription where clientId=" + clientId;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<Prescription> prescriptionList = query.list();
+		if (prescriptionList != null && !prescriptionList.isEmpty()) {
+			return prescriptionList.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional
 	public void savePrescription(Prescription prescription) {
 		sessionFactory.getCurrentSession().save(prescription);
 	}

@@ -1,71 +1,15 @@
-.showItemsList{
-	
-    display:flex;
-    align-items: row;
-    justify-content: space-around;
-    display: none;
+.custab{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5% 0;
+    box-shadow: 3px 3px 2px #ccc;
+    transition: 0.5s;
+    }
+.custab:hover{
+    box-shadow: 3px 3px 0px transparent;
+    transition: 0.5s;
+    }
+    
+.sumTd:after{
+	content:'‎€';
 }
-
-.glyphicon {
-	margin-right:5px; 
-}
-
-.thumbnail
-{
-    margin-bottom: 5px;
-    padding: 0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
-}
-
-.item.list-group-item
-{
-    float: none;
-    width: 100%;
-    background-color: #fff;
-    margin-bottom: 10px;
-}
-.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
-{
-    background: #428bca;
-}
-
-.item.list-group-item .list-group-image
-{
-    margin-right: 1px;
-}
-.item.list-group-item .thumbnail
-{
-    margin-bottom: 0px;
-}
-.item.list-group-item .caption
-{
-    padding: 1px 1px 0px 1px;
-}
-.item.list-group-item:nth-of-type(odd)
-{
-    background: #eeeeee;
-}
-
-.item.list-group-item:before, .item.list-group-item:after
-{
-    display: table;
-    content: " ";
-}
-
-.item.list-group-item img
-{
-    float: left;
-}
-.item.list-group-item:after
-{
-    clear: both;
-}
-.list-group-item-text
-{
-    margin: 0 0 2px;
-}
-
-
-

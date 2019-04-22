@@ -32,7 +32,7 @@
 						<a href="home" class="fas fa-home" > Pagrindinis puslapis</a>
 					</div>
 					
-					<div class="menu-link">
+					<div class="active">
 						<a href="clients" class="fas fa-users"> Klientai</a>
 					</div>
 					
@@ -48,7 +48,7 @@
 						<a href="reviewItems" class="fas fa-file-alt"> Inventorius </a>
 					</div>
 					
-					<div class="active">
+					<div class="menu-link">
 						<a href="reviewOrders"  class="fas fa-file-invoice" > Pardavimu istorija</a>
 					</div>
 		
@@ -63,24 +63,34 @@
 				<div class="kontainer">
 				    <div class="row col-md-6 col-md-offset-2 custyle">
 				    <table class="table table-striped custab">
-					    <thead>
-					        <tr>
-					            <th>Pardavimo nr</th>
-					            <th>Data ir laikas</th>
-					            <th>Pardavimo suma</th>
-					            <th class="text-center">Peržiūra</th>
-					        </tr>
-					    </thead>
-					    
-			            <c:forEach items="${sales}" var="sale"> 
-			             <tr>
-			            	<td> ${sale.id} </td>
-			            	<td> ${sale.date} </td>
-			            	<td class="sumTd"'> ${sale.sum} </td>
+				    <thead>
+				        <tr>
+				            <th>Vardas ir pavarde</th>
+				            <th>Tel nr.</th>
+				            <th>El. paštas</th>
+				            <th class="text-center">Veiksmas</th>
+				        </tr>
+				    </thead>
+				    
+				        <tr>
+			            	<td> ... </td>
+			            	<td> ... </td>
+			            	<td> ... </td>
 			            	
-			            	<td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Peržiūrėti</a></td>
+			            	<td class="text-center"><a href="addNewClient" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus-sign"></span> Pridėti</a></td>
 			            </tr>
+				           
+			            <c:forEach items="${clients}" var="client"> 
+			              <tr>
+			            	<td> ${client.name} ${client.surname} </td>
+			            	<td> ${client.phoneNumber} </td>
+			            	<td> ${client.email} </td>			            	
+			            	<td class="text-center"><a href="editClient?clientId=${client.id}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span> Peržiūra</a></td>
+			              </tr>
 			            </c:forEach>
+			            
+			           
+					            
 				    </table>
 				    </div>
 				</div>

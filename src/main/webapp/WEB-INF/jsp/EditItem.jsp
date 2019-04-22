@@ -31,6 +31,10 @@
 					</div>
 					
 					<div class="menu-link">
+						<a href="clients" class="fas fa-users"> Klientai</a>
+					</div>
+					
+					<div class="menu-link">
 						<a href="newOrder" class="fas fa-plus"> Naujas Pardavimas</a>
 					</div>
 					

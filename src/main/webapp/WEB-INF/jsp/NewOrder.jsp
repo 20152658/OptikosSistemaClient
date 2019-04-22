@@ -34,6 +34,10 @@
 						<a href="home" class="fas fa-home" > Pagrindinis puslapis</a>
 					</div>
 					
+					<div class="menu-link">
+						<a href="clients" class="fas fa-users"> Klientai</a>
+					</div>
+					
 					<div class="active">
 						<a href="newOrder" class="fas fa-plus"> Naujas Pardavimas</a>
 					</div>
@@ -71,13 +75,14 @@
 				
 				<div class="pick">
 					<div class="pickerHead">
-						<button onclick="goBack()" id="atgalButton" class="fas fa-angle-left"> Atgal</button>
-						<form id="sellPrekeForm" name="sellPrekeForm" role="form" method="POST" action="sellingItem" modelAttribute = "item">
+						<button onclick="goBack()" id="atgalButton" class="fas fa-angle-left  text-left"> Atgal</button>
+						<form id="sellPrekeForm" name="sellPrekeForm" role="form" method="POST" action="sellingItem" modelAttribute="item">
 							<input type="hidden" type="text" id="title" name="title"/>
 							<input type="hidden" type="number" id="price" name="price"/>
-							<button type="submit" id="doneButton" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')">Done</button> 
+							<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 
 						</form>	
 					</div>
+					
 					<div class="myMenuElementPickers">
 						<div class="littlePicker" id="mainPicker"> 
 							<button onclick="showNext(this)" id="akiniai" class="button -akiniai">Remeliai</button> 
@@ -106,104 +111,90 @@
 	  								<button onclick="addItem(${item.id}, '${item.title}' ,${item.price})"> ${item.title} ${item.price} </button>
 							</c:forEach> 
 					   </div>
-					   <div class="littlePicker" id="dioptrijuPicker">
-					   		<p>hello</p>
-					   		
-					   		
-					   	   Uzsakovo_ID          int,
-						   Desines_akies_sfera  decimal not null,
-						   Kaires_akies_sfera   decimal not null,
-						   Desines_akies_cilindras decimal,
-						   Kaires_akies_cilindras decimal,
-						   Desines_akies_asis   int,
-						   Kaires_akies_asis    int,
-						   Desines_akies_prizme decimal,
-						   Kaires_akies_prizme  decimal,
-						   Atstumas_tarp_vyzdziu_centru int not null,
-						   Paskirtis            varchar(25) not null,
-						   primary key (Recepto_ID)
-					   		
-					   </div>
-					   
+					    
+					    <div class="littlePicker" id="dioptrijuPicker">
+							<p> me exists! </p>
+					    </div>
 				</div>
 			</div>
 		</div>
 	</div>
 		
-		<script type="text/javascript" >
+	<script type="text/javascript" >
+
+	
+		var itemList="";
+		var price =0;
+		var totalWindow = document.getElementById("totalWindow");
+		var showWindow = document.getElementById("showWindow");
 		
-			var itemList="";
-			var price =0;
-			var totalWindow = document.getElementById("totalWindow");
-			var showWindow = document.getElementById("showWindow");
-			
-			function showNext(caller) {
-					
-				var mainP = document.getElementById("mainPicker");
-			    var akiniaiP = document.getElementById("akiniaiPicker");
-			    var saulesP = document.getElementById("saulesPicker");
-				var lesiaiP = document.getElementById("lesiaiPicker");
-				var kitkaP = document.getElementById("kitkaPicker");
-				var dioptrijaP = document.getElementById("dioptrijuPicker");
+		function showNext(caller) {
 				
-				switch (caller){
-					case document.getElementById("akiniai"):
-						mainP.style.display = "none";
-						akiniaiP.style.display = "flex";
-						position=akiniaiP;
-						break;
-						
-					case document.getElementById("lesiai"):
-						mainP.style.display = "none";
-						lesiaiP.style.display = "flex";
-						position=lesiaiP;
-						break;
-						
-					case document.getElementById("saulesAkiniai"):
-						mainP.style.display = "none";
-						saulesP.style.display = "flex";
-						position=saulesP;
-						break;
-						
-					case document.getElementById("kitka"):
-						mainP.style.display = "none";
-						kitkaP.style.display = "flex";
-						position=kitkaP;
-						break;
-						
-					case document.getElementById("dioptrija"):
-						mainP.style.display = "none";
-						dioptrijaP.style.display = "flex";
-						position=dioptrijaP;
-						break;
-						
-					default:
+			var mainP = document.getElementById("mainPicker");
+		    var akiniaiP = document.getElementById("akiniaiPicker");
+		    var saulesP = document.getElementById("saulesPicker");
+			var lesiaiP = document.getElementById("lesiaiPicker");
+			var kitkaP = document.getElementById("kitkaPicker");
+			var dioptrijaP = document.getElementById("dioptrijuPicker");
+			
+			switch (caller){
+				
+				case document.getElementById("akiniai"):
+					mainP.style.display = "none";
+					akiniaiP.style.display = "flex";
+					position=akiniaiP;
 					break;
-				}
 					
+				case document.getElementById("lesiai"):
+					mainP.style.display = "none";
+					lesiaiP.style.display = "flex";
+					position=lesiaiP;
+					break;
+					
+				case document.getElementById("saulesAkiniai"):
+					mainP.style.display = "none";
+					saulesP.style.display = "flex";
+					position=saulesP;
+					break;
+					
+				case document.getElementById("kitka"):
+					mainP.style.display = "none";
+					kitkaP.style.display = "flex";
+					position=kitkaP;
+					break;
+					
+				case document.getElementById("dioptrija"):
+					mainP.style.display = "none";
+					dioptrijaP.style.display = "flex";
+					position=dioptrijaP;
+					break;
+					
+				default:
+				break;
 			}
-			var position = document.getElementById("mainPicker");
-			
-			function addItem(id,title, pprice){
-				var node = document.createElement("p");
-				node.textContent= title+ " "+ pprice;
-				showWindow.appendChild(node);
-				itemList=itemList + parseInt(id) + ",";
-				document.getElementById("title").value=itemList;
-				price=parseFloat(price)+parseFloat(pprice);
-				totalWindow.textContent="Iš viso: "+price.toFixed(2);
-				document.getElementById("price").value=price;
-			}
-			
-			function goBack(){
-				var mainP = document.getElementById("mainPicker");
-				position.style.display="none";
-				mainP.style.display="flex";
 				
-			}
-		</script>
+		}
+		var position = document.getElementById("mainPicker");
 		
-	</body>
-	
-	
+		function addItem(id,title, pprice){
+			var node = document.createElement("p");
+			node.textContent= title+ " "+ pprice;
+			showWindow.appendChild(node);
+			itemList=itemList + parseInt(id) + ",";
+			document.getElementById("title").value=itemList;
+			price=parseFloat(price)+parseFloat(pprice);
+			totalWindow.textContent="Iš viso: "+price.toFixed(2);
+			document.getElementById("price").value=price;
+		}
+		
+		function goBack(){
+			var mainP = document.getElementById("mainPicker");
+			position.style.display="none";
+			mainP.style.display="flex";
+			
+		}
+		
+	</script>
+		
+</body>
 </html>

@@ -31,6 +31,10 @@
 					</div>
 					
 					<div class="menu-link">
+						<a href="clients" class="fas fa-users"> Klientai</a>
+					</div>
+					
+					<div class="menu-link">
 						<a href="newOrder" class="fas fa-plus"> Naujas Pardavimas</a>
 					</div>
 					
@@ -121,30 +125,31 @@
 				}
 				
 			},
-				messages:{
-					type: {
-						required: 'Pasirinkite prekės tipą'
-					},
-					price: {
-						required:'Įveskite prekės kainą'
-					},
-			        brand: {
-						required: 'Įveskite prekės gamintoją',
-						maxlength: 'Prekės gamintojas negali viršyti 30 simbolių'
-					},
-					title: {
-						required: 'Įveskite prekės pavadinimą',
-						maxlength: 'Prekės pavadinimas negali viršyti 50 simbolių'
-					},
-					amount: {
-						required:'Įveskite prekės kiekį'
-					}
+			messages:
+			{
+				type: {
+					required: 'Pasirinkite prekės tipą'
+				},
+				price: {
+					required:'Įveskite prekės kainą'
+				},
+		        brand: {
+					required: 'Įveskite prekės gamintoją',
+					maxlength: 'Prekės gamintojas negali viršyti 30 simbolių'
+				},
+				title: {
+					required: 'Įveskite prekės pavadinimą',
+					maxlength: 'Prekės pavadinimas negali viršyti 50 simbolių'
+				},
+				amount: {
+					required:'Įveskite prekės kiekį'
 				}
+			}
 		        
 				
 		});
 		 $('#submitButton').click(function() {
-		        $("#adddPrekeForm").valid();
+		        $("#addPrekeForm").valid();
 		    });
 	});
 	

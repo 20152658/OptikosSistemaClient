@@ -21,7 +21,7 @@
 		<div id="headline">
 			<h1>Akiu Optika</h1>
 		</div>
-						
+				
 		<div id="container">
 		<!--- Side navigation --->
 				<div class="sidenav">
@@ -59,43 +59,26 @@
 		<!--- Page content --->
 			<div class="main" id="addingNEW">
 				<div class="newItems">
-					<form id="editPrekeForm" name="editPrekeForm" role="form" method="POST" action="edittingItem" modelAttribute = "item">
 					
+					<form id="addClientForm" name="addClientForm" method="POST" role="form" action="addingNewClient" modelAttribute="client">
 						<div class="form-group">
-						
-							<label for="tipas" class="change-information-control-label">Prekes tipas*</label>
-							<select value="${item.type}" id="type" name="type" onchange="whichPrekeTypeIsChosen()" >
-								  <option value="akiniai">Akinių remeliai</option>
-								  <option value="lesiai">Kontaktiniai lęšiai</option>
-								  <option value="sAkiniai">Akiniai nuo saulės</option>
-								  <option value="kitka">Kita</option>
-							</select>
+							<label for="Vardas*" class="new-information-control-label">Pavadinimas*</label>
+							<input type="text" name="name" id="name" class="form-control" />
 						</div>
-						
 						<div class="form-group">
-							<label for="kaina" class="new-information-control-label">Kaina</label>
-							<input type="text" name= "price" id="price" class="form-control" value="${item.price}" placeholder="Kaina">
-							<input type="hidden" name= "id" id="price" class="form-control" value="${item.id}" placeholder="Kaina">
-							
+							<label for="Pavardė" class="new-information-control-label">Pavardė</label>
+							<input type="text" name="surname" id="surname" class="form-control" />
 						</div>
-						
 						<div class="form-group">
-							<label for="gamintojas" class="new-information-control-label">Gamintojas</label>
-							<input type="text" name= "brand" id="brand" class="form-control"value="${item.brand}" placeholder="Gamintojas">
+							<label for="El. paštas" class="new-information-control-label">El. paštas</label>
+							<input type="text" name="email" id="email" class="form-control" placeholder="el@pastas.lt"/>
 						</div>
-						
 						<div class="form-group">
-							<label for="pavadinimas" class="new-information-control-label">Pavadinimas*</label>
-							<input type="text" name= "title" id="title" class="form-control" value="${item.title}" placeholder="Pavadinimas">
+							<label for="Telefono numeris" class="new-information-control-label">Telefono_numeris</label>
+							<input type="text" name="phoneNumber" id="phoneNumber" class="form-control" placeholder="+370..."/>
 						</div>
-						
-						<div class="form-group">
-							<label for="kiekis" class="new-information-control-label">Kiekis*</label>
-							<input type="text" name= "amount" id="amount" class="form-control" value="${item.amount}" placeholder="Kiekis">
-						</div>
-						
-						<button type="submit" id="editButton" class="editPreke-button" onclick="return confirm('Ar tikrai norite redaguoti šią prekę?')">Redaguoti</button>
-					
+						<button type="submit" id="addClientButton" class="addClient-button" onclick="return confirm('Ar tikrai norite pridėti šį klientą?')">Pridėti</button>
+			
 					</form>
 				</div>
 				
@@ -104,54 +87,27 @@
 	</div>
 	<script type="text/javascript" >
 	$(document).ready(function (){   
-		$("#addPrekeForm").validate({
+		$("#addClientForm").validate({
 			rules:
 			{	
-				type: {
-					required: true
-				},
-				price: {
-					required: true
-				},
-				brand: {
+				name: {
 					required: true,
-					maxlength: 30
-				},
-				title: {
-					required: true,
-					maxlength: 50
-				},
-				amount: {
-					required: true
+					maxlength: 20
 				}
-				
 			},
-				messages:{
-					type: {
-						required: 'Pasirinkite prekės tipą'
-					},
-					price: {
-						required:'Įveskite prekės kainą'
-					},
-			        brand: {
-						required: 'Įveskite prekės gamintoją',
-						maxlength: 'Prekės gamintojas negali viršyti 30 simbolių'
-					},
-					title: {
-						required: 'Įveskite prekės pavadinimą',
-						maxlength: 'Prekės pavadinimas negali viršyti 50 simbolių'
-					},
-					amount: {
-						required:'Įveskite prekės kiekį'
-					}
+			messages:
+			{
+				name: {
+					required: 'Nurodykite kliento vardą',
+					maxlength: 'Vardas negali viršyti 20 simbolių'
 				}
-		        
-				
+			}
 		});
-		 $('#editButton').click(function() {
-		        $("#editPrekeForm").valid();
-		    });
+		 $('#addClientButton').click(function() {
+		        $("#addClientForm").valid();
+		});
 	});
+	
 	
 	</script>
 </body>

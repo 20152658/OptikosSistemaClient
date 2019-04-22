@@ -6,6 +6,8 @@ public interface PrescriptionDao {
 
 	public Prescription getPrescriptionById(int id);
 
+	public Prescription getPrescriptionByClientId(int clientId);
+
 	public void savePrescription(Prescription prescription);
 
 	public void deletePrescription(Prescription prescription);

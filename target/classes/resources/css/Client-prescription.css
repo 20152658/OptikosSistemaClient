@@ -1,0 +1,44 @@
+.editingClient-Prescription{
+	display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-self:center;
+    height:100%;
+}
+#hiddenId{
+	display:none;
+}
+
+/* client adding or picking stuff start*/
+
+#addClientForm{
+	display:flex;
+	flex-direction: column;
+	color: #ff8008;
+}
+#addPrescriptionForm{
+	flex-direction: column;
+}
+	/* prescription part start*/
+	#ClientPicker{
+		flex-direction:column;
+		height:100%;
+	}
+	
+	.Akys {
+		display:flex;
+		flex-direction:row-reverse;
+		justify-content:space-between;
+		width:100%;
+	}
+	.Kaire{
+		width:45%;
+	}
+	.Desine{
+		width:45%;
+	}
+	#submitPrescriptionButton{
+		width:100%;
+	}
+	/* prescription part end*/
+/* client adding or picking stuff end*/
