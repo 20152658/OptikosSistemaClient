@@ -106,11 +106,13 @@ public class OrderController {
 			}
 		}
 
-		// saugom sale ir order
-		saleDao.saveSale(newSale);
+		System.out.println("your id1 is: " + newOrder.getId());
 		if (!newSale.getOrders().equals("null")) {
 			orderDao.saveOrder(newOrder);
+			newSale.setId(newOrder.getId());
 		}
+
+		saleDao.saveSale(newSale);
 
 		return "redirect:/reviewOrders";
 

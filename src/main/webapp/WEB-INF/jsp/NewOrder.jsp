@@ -79,6 +79,7 @@
 						<form id="sellPrekeForm" name="sellPrekeForm" role="form" method="POST" action="sellingItem" modelAttribute="sale">
 							<input type="hidden" type="text" id="items" name="items"/>
 							<input type="hidden" type="number" id="sum" name="sum"/>
+							<input type="hidden" type="text" id="orders" name="orders"/>
 							<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 
 						</form>	
 					</div>
@@ -113,7 +114,8 @@
 					   </div>
 					    
 					    <div class="littlePicker" id="dioptrijuPicker">
-							<p> me exists! </p>
+							<input class="number" id="lesioKaina" label="Lęšio kaina">
+							<button onclick="addLesis()"> Pridėti </button>
 					    </div>
 				</div>
 			</div>
@@ -186,6 +188,17 @@
 			price=parseFloat(price)+parseFloat(pprice);
 			totalWindow.textContent="Iš viso: "+price.toFixed(2);
 			document.getElementById("sum").value=price;
+		}
+		
+		function addLesis(){
+			var node = document.createElement("p");
+			pprice = parseFloat(document.getElementById("lesioKaina").value);
+			node.textContent= "Lęšiai akiniams" + " " + pprice.toFixed(1);
+			showWindow.appendChild(node);
+			price=parseFloat(price)+parseFloat(pprice);
+			totalWindow.textContent="Iš viso: "+price.toFixed(2);
+			document.getElementById("sum").value=price;
+			document.getElementById("orders").value = "order";
 		}
 		
 		function goBack(){

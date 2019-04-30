@@ -69,7 +69,7 @@
 			<!--- Page content --->
 			<div class="main" >
 				
-				<form id="OrderForm" name="OrderForm" role="form" method="POST" action="sellingSaleOrOrder" modelAttribute="order">
+				<form id="clientsWindow" name="OrderForm" role="form" method="POST" action="sellingSaleOrOrder" modelAttribute="order">
 					<div id="clientsWindow">
 						<select id="clientId" name="clientId" onchange="IsClientChosen()" >
 						<p> Ar norėtumetė pasirinkti klientą?</p>
@@ -95,14 +95,14 @@
 							<h5></h5>
 						</div>
 						
-						<div class="avansasStuff">
+						<div class="avansasStuff" id="avansasStuff">
 							<input type="number" name= "deposit" id="deposit" class="form-control" value="${order.deposit}" placeholder="Avansas" onchange="onavansaschange()">
 							<div id = "priceLeftToPay">
 								<h5> Bus likę sumokėti: <fmt:formatNumber value="${newSale.sum}" type="currency" currencySymbol=""/> € </h5>
 							</div>
 						</div>
 						
-						<div class="salePayment">
+						<div class="salePayment" id="salePayment" >
 							<input type="number" name= "clientMoney" id="clientMoney" placeholder="Duota pinigų suma" onchange="onclientmoneychange()">
 							<div id = "changeForClient">
 								<h5> </h5>
@@ -135,17 +135,17 @@
 		  document.getElementById("paymentTotal").textContent =  "Mokėti iš viso:" + totalPrice.toFixed(2)+" €";
 	      
 	      
-	      //paziuret ar yra orderis, jei taip showint klientus, avansa, likutine verte, jei ne - showint kiek moka ir kokia graža.
 		  var order;
 		  order= "${newSale.orders}";
 		  if (order=="null"){
-			  //atkomentuot kai sutvarkysiu null orders.
-		    //  document.getElementById("avansasStuff").style.display = "none";
-			//  document.getElementById("clientsWindow").style.display = "none";
+			  var depositW = document.getElementById("avansasStuff");
+			  depositW.style.display = "none";
+			  var clientW = document.getElementById("clientsWindow");
+			  clientW.style.display = "none";
 			  
 		  }else{
-			 //atkomentuot kai sutvarkysiu null orders.
-		    //  document.getElementById("salePayment").style.display = "none";
+			  var saleW = document.getElementById("salePayment");
+			  saleW.style.display = "none";
 		  }
 		 
 		});

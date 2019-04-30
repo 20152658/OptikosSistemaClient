@@ -13,7 +13,6 @@ create table Uzsakymas
    Uzsakovo_ID          int,
    Uzsakymo_data        timestamp not null,
    Pagaminimo_data      date,
-   Uzsakymo_kaina       float(8,2) not null,
    Avansas              float(8,2) not null,
    Lesio_rusis          varchar(50),
    Uzsakymas_gaminamas  bool not null,
@@ -35,9 +34,6 @@ public class Order {
 
 	@Column(name = "Pagaminimo_data")
 	private String estimatedDate;
-
-	@Column(name = "Uzsakymo_kaina")
-	private double orderPrice;
 
 	@Column(name = "Avansas")
 	private double deposit;
@@ -73,14 +69,6 @@ public class Order {
 
 	public void setEstimatedDate(String estimatedDate) {
 		this.estimatedDate = estimatedDate;
-	}
-
-	public double getOrderPrice() {
-		return orderPrice;
-	}
-
-	public void setOrderPrice(double orderPrice) {
-		this.orderPrice = orderPrice;
 	}
 
 	public double getDeposit() {
