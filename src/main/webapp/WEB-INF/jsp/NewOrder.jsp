@@ -76,9 +76,9 @@
 				<div class="pick">
 					<div class="pickerHead">
 						<button onclick="goBack()" id="atgalButton" class="fas fa-angle-left  text-left"> Atgal</button>
-						<form id="sellPrekeForm" name="sellPrekeForm" role="form" method="POST" action="sellingItem" modelAttribute="item">
-							<input type="hidden" type="text" id="title" name="title"/>
-							<input type="hidden" type="number" id="price" name="price"/>
+						<form id="sellPrekeForm" name="sellPrekeForm" role="form" method="POST" action="sellingItem" modelAttribute="sale">
+							<input type="hidden" type="text" id="items" name="items"/>
+							<input type="hidden" type="number" id="sum" name="sum"/>
 							<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 
 						</form>	
 					</div>
@@ -118,6 +118,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 		
 	<script type="text/javascript" >
@@ -181,10 +182,10 @@
 			node.textContent= title+ " "+ pprice;
 			showWindow.appendChild(node);
 			itemList=itemList + parseInt(id) + ",";
-			document.getElementById("title").value=itemList;
+			document.getElementById("items").value=itemList;
 			price=parseFloat(price)+parseFloat(pprice);
 			totalWindow.textContent="Iš viso: "+price.toFixed(2);
-			document.getElementById("price").value=price;
+			document.getElementById("sum").value=price;
 		}
 		
 		function goBack(){

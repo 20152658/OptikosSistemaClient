@@ -62,7 +62,7 @@ public class ClientController {
 		System.out.println("Client was saved succesfully: " + clientName + " " + clientSurname + " " + clientEmail + " "
 				+ clientPhone);
 
-		return "redirect:/addPrescription";
+		return "redirect:/clients";
 	}
 
 	@RequestMapping(value = { "/editClient" })

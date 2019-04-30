@@ -110,3 +110,9 @@
 	letter-spacing: 1px;
 	width: 70%;
 }
+
+<!--   -->
+.itIsPrescription{
+	width: 30%;
+	display:none;
+}

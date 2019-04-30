@@ -4,20 +4,26 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<link href="resources/css/frame.css" rel="stylesheet">
-    <link href="resources/css/SellStuff.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
-	<style>
-	input {
-		width: 50%;
-	}
-	</style>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" /> 
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" >
+		<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+		<link href="resources/css/frame.css" rel="stylesheet">
+	    <link href="resources/css/SellStuff.css" rel="stylesheet">
+	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+ 
+		<link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
+	     
+		<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+   	
+		<!-- date picker stuff -->	   	
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>	   	
+
 	</head>
 	
 	<body>
@@ -62,24 +68,133 @@
 	
 			<!--- Page content --->
 			<div class="main" >
-				<p>id ${newSale.id}</p>
-				<p>orders ${newSale.orders}</p>
-				<p>items ${newSale.items}</p>
-				<p>date ${newSale.date}</p>
-				<p>sum ${newSale.sum}</p>
-				<p> Ar noretumete pasirinkti klienta?</p>
-				<p> //kliento dropdown su option blank</p>
-				<p> Pasirinkus klienta pasirodo laukai siulantys ivest atsiemimo data. </p>
-				<p> Ir kazkas su bendra suma, avansu, likutine verte. </p>
 				
-				
-				<p> Parodo kiek reikia moketi. Leidzia ivest kiek klientas sumokejo, parodo graza. </p>
+				<form id="OrderForm" name="OrderForm" role="form" method="POST" action="sellingSaleOrOrder" modelAttribute="order">
+					<div id="clientsWindow">
+						<select id="clientId" name="clientId" onchange="IsClientChosen()" >
+						<p> Ar norėtumetė pasirinkti klientą?</p>
+							  <option value="null"> -- Pasirinkite klientą -- </option>
+							  <c:forEach items="${clients}" var="client" >
+							  	<option value="${client.id}">${client.surname} ${client.name} </option>
+							  </c:forEach>
+						</select>
+					</div>
+					
+					<div class="itIsPrescription" id="calendarDIV">
+					<p> Kada klientas galės atsiimti užsakymą? </p>
+						<div class="form-group">
+						  <div id="datepicker-group" class="input-group date" data-date-format="mm-dd-yyyy">
+						    <input class="form-control" name="estimatedDate" id="estimatedDate" type="text" placeholder="YYYY/MM/DD"  />
+						    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						  </div>
+						</div>
+					</div>
+						
+					<div class="payment">	
+						<div class="paymentTotal">
+							<h5></h5>
+						</div>
+						
+						<div class="avansasStuff">
+							<input type="number" name= "deposit" id="deposit" class="form-control" value="${order.deposit}" placeholder="Avansas" onchange="onavansaschange()">
+							<div id = "priceLeftToPay">
+								<h5> Bus likę sumokėti: <fmt:formatNumber value="${newSale.sum}" type="currency" currencySymbol=""/> € </h5>
+							</div>
+						</div>
+						
+						<div class="salePayment">
+							<input type="number" name= "clientMoney" id="clientMoney" placeholder="Duota pinigų suma" onchange="onclientmoneychange()">
+							<div id = "changeForClient">
+								<h5> </h5>
+							</div>
+						</div>
+	
+					</div>
+						<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 
+				</form>
 			</div>
-	</div>
-		
-	<script type="text/javascript" >
+		</div>
+    </div>
+	<script type="text/javascript">
+	var totalPrice = parseFloat("${newSale.sum}");
+	var deposit = 0;
+	var priceLeftToPay = totalPrice;
+	
+	
+	$(document).ready(function() {
+		  $("#datepicker-group").datepicker({
+		    format: "yyyy-mm-dd",
+		    todayHighlight: true,
+		    autoclose: true,
+		    clearBtn: true,
+		    weekStart: 1
+		  });
+		  
+		  
+		  // atvaizduoti kiek reikia sumoketi kiek reikia sumoketi.
+		  document.getElementById("paymentTotal").textContent =  "Mokėti iš viso:" + totalPrice.toFixed(2)+" €";
+	      
+	      
+	      //paziuret ar yra orderis, jei taip showint klientus, avansa, likutine verte, jei ne - showint kiek moka ir kokia graža.
+		  var order;
+		  order= "${newSale.orders}";
+		  if (order=="null"){
+			  //atkomentuot kai sutvarkysiu null orders.
+		    //  document.getElementById("avansasStuff").style.display = "none";
+			//  document.getElementById("clientsWindow").style.display = "none";
+			  
+		  }else{
+			 //atkomentuot kai sutvarkysiu null orders.
+		    //  document.getElementById("salePayment").style.display = "none";
+		  }
+		 
+		});
+	
+	 function IsClientChosen(){ //rodyt kalendoriu kai pasirenki klienta
+		 var x = document.getElementById("clientId").value;
+		 var cald = document.getElementById("calendarDIV");
+		 if (x === "null") {
+			 cald.style.display = "none";
+		 }else{
+			 cald.style.display = "flex";
+		 }
+		 
+	 }
+	 
+	 function onavansaschange(){ //rodyt kokia bus orderio likutine verte
+		  var leftToPayWindow = document.getElementById("priceLeftToPay");
+            deposit = parseFloat(document.getElementById("deposit").value);
+            if(deposit < 0 ){
+            	leftToPayWindow.textContent = "Avansas mažesnis už 0!";
+            }else if (deposit){ 
+	            priceLeftToPay = parseFloat(totalPrice) - deposit;
+	            if(priceLeftToPay < 0 ){
+	            	leftToPayWindow.textContent = "Avansas negali būti didesnis negu mokėtina suma!";
+	            }else {
+	            	leftToPayWindow.textContent = "Bus likę sumokėti: "+ priceLeftToPay.toFixed(2) + " €";
+	            }
+            }else{
+            	leftToPayWindow.textContent = "Bus likę sumokėti: "+ totalPrice.toFixed(2) + " €";
+            }
+     }
+	 
+	 function onclientmoneychange(){ //rodyt graza
+		  var changeForClient = document.getElementById("changeForClient");
+          var change = parseFloat(document.getElementById("clientMoney").value);
+          if(change < 0 ){
+          	changeForClient.textContent = "Negalimos neigiamos reikšmės";
+          }else if (change){ 
+	            change = change - parseFloat(totalPrice) ;
+	            if(change < 0 ){
+	            	changeForClient.textContent = "Duota pinigų suma nepakankama";
+	            }else {
+	            	changeForClient.textContent = "Grąža: "+ change.toFixed(2) + " €";
+	            }
+          }else{
+          	changeForClient.textContent = "Įveskite duotą pinigų sumą";
+          }
+	 }
 
-		
 	</script>
 		
 </body>

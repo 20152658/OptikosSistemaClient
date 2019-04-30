@@ -13,13 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tajv.dao.ClientDao;
 import com.tajv.dao.ItemDao;
+import com.tajv.dao.OrderDao;
 import com.tajv.dao.SaleDao;
+import com.tajv.model.Client;
 import com.tajv.model.Item;
+import com.tajv.model.Order;
 import com.tajv.model.Sale;
 
 @Controller
 public class OrderController {
+
+	@Autowired
+	private OrderDao orderDao;
 
 	@Autowired
 	private SaleDao saleDao;
@@ -27,28 +34,8 @@ public class OrderController {
 	@Autowired
 	private ItemDao itemDao;
 
-	// @RequestMapping(value = { "/sellingItem" })
-	// public String sellingItem(@ModelAttribute Item item, HttpSession session) {
-	// String newString = item.getTitle();
-	// Double amount = item.getPrice();
-	// String ids[] = newString.split(",");
-	// Sale newSale = new Sale();
-	// newSale.setItems(newString);
-	// newSale.setSum(amount);
-	// saleDao.saveSale(newSale);
-	//
-	// for (int i = 0; i < ids.length; i++) {
-	// try {
-	// int id = Integer.parseInt(ids[i]);
-	// System.out.println("Asd" + id);
-	// Item it = itemDao.getItemById(id);
-	// int amountt = it.getAmount() - 1;
-	// it.setAmount(amountt);
-	// } catch (Exception e) {
-	// }
-	// }
-	// return "redirect:/home";
-	// }
+	@Autowired
+	private ClientDao clientDao;
 
 	@RequestMapping(value = { "/newOrder" })
 	public ModelAndView newOrder(HttpServletRequest request) {
@@ -97,24 +84,53 @@ public class OrderController {
 		return model;
 	}
 
+	@RequestMapping(value = { "/sellingSaleOrOrder" })
+	public String something(@ModelAttribute Order newOrder, HttpSession session) {
+		Sale newSale = (Sale) session.getAttribute("newSale");
+		System.out.println("Somehow I managed to get 85 too :o :O ");
+
+		System.out
+				.println("ORDER: estimatedDate: " + newOrder.getEstimatedDate() + " deposit: " + newOrder.getDeposit());
+		System.out.println("SALE: items: " + newSale.getItems() + " sum: " + newSale.getSum());
+
+		// visu pirma numazinam item'u kieki
+		String ids[] = newSale.getItems().split(",");
+		for (int i = 0; i < ids.length; i++) {
+			try {
+				int id = Integer.parseInt(ids[i]);
+				System.out.println("Asd" + id);
+				Item it = itemDao.getItemById(id);
+				int amountt = it.getAmount() - 1;
+				it.setAmount(amountt);
+			} catch (Exception e) {
+			}
+		}
+
+		// saugom sale ir order
+		saleDao.saveSale(newSale);
+		if (!newSale.getOrders().equals("null")) {
+			orderDao.saveOrder(newOrder);
+		}
+
+		return "redirect:/reviewOrders";
+
+	}
+
 	@RequestMapping(value = { "/sellingItem" })
-	public ModelAndView sellingItem2(@ModelAttribute Item item, HttpSession session) {
+	public ModelAndView sellingItem(@ModelAttribute Sale newSale, HttpSession session) {
 		ModelAndView model = new ModelAndView("AddPrescriptionToSale");
-		String newString = item.getTitle();
-		Double amount = item.getPrice();
-		String ids[] = newString.split(",");
-		Sale newSale = new Sale();
-		newSale.setItems(newString);
-		newSale.setSum(amount);
-		/*
-		 * sita gal nukelt po CONFIRM. kuri dar reik sukurt saleDao.saveSale(newSale);
-		 * 
-		 * for (int i = 0; i < ids.length; i++) { try { int id =
-		 * Integer.parseInt(ids[i]); System.out.println("Asd" + id); Item it =
-		 * itemDao.getItemById(id); int amountt = it.getAmount() - 1;
-		 * it.setAmount(amountt); } catch (Exception e) { } }
-		 */
+
+		ArrayList<Client> clients = new ArrayList<>();
+		clients = (ArrayList<Client>) clientDao.getAllClients();
+		// gal pasisortint pagal abecele pavarde.
+
+		if (newSale.getOrders() == null) {
+			newSale.setOrders("null");
+		}
+		session.setAttribute("newSale", newSale);
+
 		model.addObject("newSale", newSale);
+		model.addObject("clients", clients);
 		return model;
 	}
 

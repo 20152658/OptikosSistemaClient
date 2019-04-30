@@ -34,7 +34,7 @@ public class Order {
 	private int clientId;
 
 	@Column(name = "Pagaminimo_data")
-	private String estimatedDate; // sueis? (sql - date, or better util? or even String?)
+	private String estimatedDate;
 
 	@Column(name = "Uzsakymo_kaina")
 	private double orderPrice;
