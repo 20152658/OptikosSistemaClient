@@ -61,12 +61,12 @@
 	
 			<!--- Page content --->
 				<div class="main">
-				<fmt:parseDate value="${sale.date}" var="dateObject" pattern="yyyy-MM-dd HH:mm:ss" />
+					<fmt:parseDate value="${sale.date}" var="dateObject" pattern="yyyy-MM-dd HH:mm:ss" />
 					<p>Pardavimo data: <fmt:formatDate value="${dateObject }" pattern="yyyy-MM-dd" /></p>	
 					<p>Pardavimo laikas: <fmt:formatDate value="${dateObject }" pattern="HH:mm " /></p>		
 					<p>Užsakymai: ${sale.orders}</p> 	
 					
-					<table class="table table-striped custab">
+					<table class="table table-striped custab" id = "orders">
 					    <thead>
 					        <tr>
 					            <th>Pavadinimas</th>
@@ -80,7 +80,6 @@
 				            	<td> ${item.title} </td>
 				            	<td> ${item.brand} </td>
 				            	<td class="sumTd"> <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> </td>
-				            	
 				            </tr>
 			            </c:forEach>
 			             <tr>

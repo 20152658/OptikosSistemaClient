@@ -81,6 +81,9 @@
 				            </tr>
 				            </c:forEach>
 					    </table>
+					    <a href="downloadPDF">
+					    	<button class="btn"> PDF </button>
+						</a>
 				    </div>
 				</div>
 				

@@ -199,6 +199,11 @@
 			<version>6.0.2.Final</version>
 		</dependency>
 
- 
-	</dependencies>
+
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.10</version>
+		</dependency>
+  </dependencies>
 </project>

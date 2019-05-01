@@ -69,7 +69,7 @@
 			<!--- Page content --->
 			<div class="main" >
 				
-				<form id="clientsWindow" name="OrderForm" role="form" method="POST" action="sellingSaleOrOrder" modelAttribute="order">
+				<form id="sellOrder" name="OrderForm" role="form" method="POST" action="sellingOrder" modelAttribute="order">
 					<div id="clientsWindow">
 						<select id="clientId" name="clientId" onchange="IsClientChosen()" >
 						<p> Ar norėtumetė pasirinkti klientą?</p>
@@ -90,8 +90,8 @@
 						</div>
 					</div>
 						
-					<div class="payment">	
-						<div class="paymentTotal">
+					<div class="payment" id="payment">	
+						<div class="paymentTotal" id = "paymentTotal">
 							<h5></h5>
 						</div>
 						
@@ -102,6 +102,16 @@
 							</div>
 						</div>
 						
+
+					</div>
+						<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 
+				</form>
+				<form  id="sellSale" name="OrderForm" role="form" method="POST" action="sellingSale" modelAttribute="sale">
+					<div class="payment" id="payment">	
+						<div class="paymentTotal" id = "paymentTotal">
+							<h5></h5>
+						</div>
+						
 						<div class="salePayment" id="salePayment" >
 							<input type="number" name= "clientMoney" id="clientMoney" placeholder="Duota pinigų suma" onchange="onclientmoneychange()">
 							<div id = "changeForClient">
@@ -110,7 +120,7 @@
 						</div>
 	
 					</div>
-						<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 
+					<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 				
 				</form>
 			</div>
 		</div>
@@ -122,6 +132,8 @@
 	
 	
 	$(document).ready(function() {
+		prepareStuff();
+          
 		  $("#datepicker-group").datepicker({
 		    format: "yyyy-mm-dd",
 		    todayHighlight: true,
@@ -130,24 +142,6 @@
 		    weekStart: 1
 		  });
 		  
-		  
-		  // atvaizduoti kiek reikia sumoketi kiek reikia sumoketi.
-		  document.getElementById("paymentTotal").textContent =  "Mokėti iš viso:" + totalPrice.toFixed(2)+" €";
-	      
-	      
-		  var order;
-		  order= "${newSale.orders}";
-		  if (order=="null"){
-			  var depositW = document.getElementById("avansasStuff");
-			  depositW.style.display = "none";
-			  var clientW = document.getElementById("clientsWindow");
-			  clientW.style.display = "none";
-			  
-		  }else{
-			  var saleW = document.getElementById("salePayment");
-			  saleW.style.display = "none";
-		  }
-		 
 		});
 	
 	 function IsClientChosen(){ //rodyt kalendoriu kai pasirenki klienta
@@ -177,6 +171,20 @@
             	leftToPayWindow.textContent = "Bus likę sumokėti: "+ totalPrice.toFixed(2) + " €";
             }
      }
+	 
+	 function prepareStuff(){
+		 document.getElementById("paymentTotal").textContent =  "Mokėti iš viso:" + totalPrice.toFixed(2)+" €";
+	      
+		  var order;
+		  order= "${newSale.orders}";
+		  if (order=="null"){
+			  var orderW = document.getElementById("sellOrder");
+			  orderW.style.display = "none";
+		  }else{
+			  var saleW = document.getElementById("sellSale");
+			  saleW.style.display = "none";
+		  }
+	 }
 	 
 	 function onclientmoneychange(){ //rodyt graza
 		  var changeForClient = document.getElementById("changeForClient");
