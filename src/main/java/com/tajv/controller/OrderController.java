@@ -1,6 +1,5 @@
 package com.tajv.controller;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +29,7 @@ import com.tajv.model.Client;
 import com.tajv.model.Item;
 import com.tajv.model.Order;
 import com.tajv.model.Sale;
+import com.tajv.model.SalesDate;
 
 @Controller
 public class OrderController {
@@ -168,6 +168,54 @@ public class OrderController {
 		return model;
 	}
 
+	@RequestMapping(value = { "/reviewOrdersFiltered" })
+	public ModelAndView reviewOrder(@ModelAttribute SalesDate salesDate, HttpSession session) {
+		ArrayList<Sale> sales = (ArrayList<Sale>) saleDao.getAllSales();
+		if (sales == null) {
+			sales = new ArrayList<>();
+		}
+		ArrayList<Sale> salesFiltered = new ArrayList<>();
+		ModelAndView model = new ModelAndView("ReviewOrders");
+
+		if (salesDate.getDateFrom() != null && salesDate.getDateTo() != null) {
+			for (Sale sale : sales) {
+				String dateS[] = sale.getDate().split(" ")[0].split("-");
+				String yearS = dateS[0];
+				String monthS = dateS[1];
+				String dayS = dateS[2];
+				try {
+					int year = Integer.parseInt(yearS);
+					int month = Integer.parseInt(monthS);
+					int day = Integer.parseInt(dayS);
+
+					int yearTo = Integer.parseInt(salesDate.getDateTo().split("-")[0]);
+					int monthTo = Integer.parseInt(salesDate.getDateTo().split("-")[1]);
+					int dayTo = Integer.parseInt(salesDate.getDateTo().split("-")[2]);
+
+					int yearFrom = Integer.parseInt(salesDate.getDateFrom().split("-")[0]);
+					int monthFrom = Integer.parseInt(salesDate.getDateFrom().split("-")[1]);
+					int dayFrom = Integer.parseInt(salesDate.getDateFrom().split("-")[2]);
+
+					int date = day + month * 100 + year * 10000;
+					int dateTo = dayTo + monthTo * 100 + yearTo * 10000;
+					int dateFrom = dayFrom + monthFrom * 100 + yearFrom * 10000;
+
+					if (date > dateFrom && date < dateTo) {
+						salesFiltered.add(sale);
+					}
+
+				} catch (Exception e) {
+					System.out.println("Something really wrong with dates :)");
+				}
+
+			}
+			session.setAttribute("listForPdf", salesFiltered);
+			model.addObject("sales", salesFiltered);
+		}
+
+		return model;
+	}
+
 	@RequestMapping(value = "/downloadPDF")
 	public void getLogFile(HttpSession session, HttpServletResponse response) throws Exception {
 
@@ -228,7 +276,6 @@ public class OrderController {
 				table.addCell(cell1);
 				table.addCell(cell2);
 				table.addCell(cell3);
-				DecimalFormat df = new DecimalFormat("#.##");
 
 				for (Sale sale : sales) {
 					System.out.println("heyy" + sale.getId() + " " + sale.getDate());

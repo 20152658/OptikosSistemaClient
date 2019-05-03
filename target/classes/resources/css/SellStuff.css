@@ -1,3 +1,19 @@
+.datePickingContainer{
+	display: flex;
+	flex-direction:column;
+	justify-content: center;
+	align-content: center;
+	
+}
+.datePicking {
+	display:flex;
+	flex-direction:row;
+	width:55%;
+	justify-content: flex-end;
+}
+
+
+
 #sellMain {
     display: flex;
     flex-direction: row;
