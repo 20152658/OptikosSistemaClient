@@ -66,7 +66,7 @@
 					<p>Pardavimo laikas: <fmt:formatDate value="${dateObject }" pattern="HH:mm " /></p>		
 					<p>Užsakymai: ${sale.orders}</p> 	
 					
-					<table class="table table-striped custab" id = "orders">
+					<table class="table table-striped custab" id = "soldItems">
 					    <thead>
 					        <tr>
 					            <th>Pavadinimas</th>
@@ -88,9 +88,52 @@
 			            	<td class="sumTd"> <fmt:formatNumber value="${sale.sum}" type="currency" currencySymbol=""/> </td>
 				         </tr>
 		            </table>
+		            <div id="Orders">
+		            	<h2> Užsakymo informacija</h2>
+		            	<form id="sellOrder" name="OrderForm" role="form" method="POST" action="changingOrderStatus" modelAttribute="order">
+		            		<input type="hidden" type="number" id="id" name="id" value="${order.id}"/>
+		            		<input type="hidden" type="number" id="clientId" name="clientId" value="${order.clientId}"/>
+		            		<input type="hidden" type="number" id="deposit" name="deposit" value="${order.deposit}"/>
+		            		<input type="hidden" type="text" id="lensType" name="lensType" value="${order.lensType}"/>
+		            		<input type="hidden" type="text" id="estimatedDate" name="estimatedDate" value="${order.estimatedDate}"/>
+			            	<p> Klientas: ${client.name} ${client.surname}</p>
+			            	<p> Planuojama pagaminimo data: ${order.estimatedDate}</p>
+			            	<p> Pagaminta?  
+			            	<label class="switch">
+							  <input type="checkbox" value="${order.inProgress}" name="inProgress" id="inProgress" onchange="changeProgressValue()"/>
+							  <span class="slider"></span>
+							</label></p>
+							<div id="demo2"><p></p></div>
+			            	<p> Atsiimta? <label class="switch">
+							  <input type="checkbox" value="${order.completed}" name="completed" id="completed" onchange="changeComplValue()"/>
+							  <span class="slider"></span>
+							</label></p>
+							<button class="btn" onclick="return confirm('Ar tikrai norite išsaugoti pakeitimus?')" >Išsaugoti pakeitimus</button>
+						</form>
+		            </div>
 				</div>
 			</div>
-		</div>
+		</div>	
+		<script type="text/javascript">
+			function changeProgressValue(){
+				var inprogress = document.getElementById("inProgress");
+				if(inprogress.value){
+					inprogress.value = true;
+				}else{
+					inprogress.value=false;
+				}
+				
+			}
+			function changeComplValue(){
+				var compl = document.getElementById("completed");
+				if(compl.value){
+					compl.value = true;
+				}else{
+					compl.value=false;
+				}
+				
+			}
+		
+		</script>
 	</body>
-	
 </html>

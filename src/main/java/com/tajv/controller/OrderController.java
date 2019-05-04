@@ -1,7 +1,6 @@
 package com.tajv.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -119,10 +120,11 @@ public class OrderController {
 		for (int i = 0; i < ids.length; i++) {
 			try {
 				int id = Integer.parseInt(ids[i]);
-				System.out.println("Asd" + id);
-				Item it = itemDao.getItemById(id);
-				int amountt = it.getAmount() - 1;
-				it.setAmount(amountt);
+				if (id != 0) {
+					Item it = itemDao.getItemById(id);
+					int amountt = it.getAmount() - 1;
+					it.setAmount(amountt);
+				}
 			} catch (Exception e) {
 			}
 		}
@@ -139,7 +141,6 @@ public class OrderController {
 		System.out.println("fine then " + newSale.getOrders());
 		if (newSale.getOrders().equals("")) {
 			newSale.setOrders("null");
-			System.out.println("set to null");
 		}
 		session.setAttribute("newSale", newSale);
 
@@ -154,18 +155,55 @@ public class OrderController {
 		Sale sale = saleDao.getSale(id);
 		ArrayList<Item> items = new ArrayList<Item>();
 		String[] itemIds = sale.getItems().split(",");
+		Double sum = new Double("0");
 		for (String itemIdString : itemIds) {
 			try {
 				int itemId = Integer.parseInt(itemIdString);
 				Item item = itemDao.getItemById(itemId);
 				items.add(item);
+				sum += item.getPrice();
 			} catch (Exception e) {
 				System.out.println("Something wrong in Order Controller reviewOrder try/catch");
+			}
+		}
+		if (!sale.getOrders().equals("null")) {
+			Item item2 = itemDao.getItemById(0);
+			item2.setPrice(sale.getSum() - sum);
+			items.add(item2);
+			try {
+				int orderId = Integer.parseInt(sale.getOrders().split(",")[0]);
+				Order order = orderDao.getOrderById(orderId);
+				model.addObject("order", order);
+				Client client = clientDao.getClientById(order.getClientId());
+				model.addObject("client", client);
+			} catch (Exception e) {
+				System.out.println("Something wrong in Order Controller reviewOrder try/catch2");
 			}
 		}
 		model.addObject("sale", sale);
 		model.addObject("items", items);
 		return model;
+	}
+
+	@RequestMapping(value = { "/changingOrderStatus" })
+	public String changingOrderStatus(@ModelAttribute Order order, HttpSession session) {
+		ModelAndView model = new ModelAndView("reviewOrders");
+		if (order != null) {
+			try {
+				orderDao.updateOder(order);
+				if (order.isInProgress()) {
+					sendEmail();
+				}
+			} catch (Exception e) {
+				System.out.println("Something wrong with changingOrderStatus try/catch");
+			}
+		}
+
+		return "redirect:/reviewOrders";
+	}
+
+	public void sendEmail() {
+
 	}
 
 	@RequestMapping(value = { "/reviewOrdersFiltered" })
@@ -240,8 +278,12 @@ public class OrderController {
 				PdfWriter.getInstance(document, response.getOutputStream());
 				document.open();
 
-				document.add(new Paragraph("howtodoinjava.com"));
-				document.add(new Paragraph(new Date().toString()));
+				Font heading = new Font(FontFamily.TIMES_ROMAN, 30.0f, Font.BOLD);
+
+				Paragraph ataskaita = new Paragraph("Ataskaita", heading);
+				ataskaita.setAlignment(Element.ALIGN_CENTER);
+
+				document.add(ataskaita);
 
 				PdfPTable table = new PdfPTable(3); // 3 columns.
 				table.setWidthPercentage(100); // Width 100%

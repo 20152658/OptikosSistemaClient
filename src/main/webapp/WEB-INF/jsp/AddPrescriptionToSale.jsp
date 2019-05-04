@@ -84,6 +84,9 @@
 						  </div>
 						</div>
 					</div>
+					<div class ="akiniuLesiai">
+						<textarea form ="sellOrder" name="lensType" id="lensType" cols="35" rows="5" wrap="soft"></textarea>
+					</div>
 						
 					<div class="payment" id="payment">	
 						<div class="paymentTotal" id = "paymentTotal">
