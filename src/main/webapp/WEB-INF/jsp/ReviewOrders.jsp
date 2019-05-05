@@ -80,7 +80,7 @@
 							  </div>
 							</div>
 							 <a id="submitButton" href="reviewOrdersFiltered">
-					    		<button id="submitButton" class="btn"> Filtruoti </button>
+					    		<button  class="btn"> Filtruoti </button>
 							</a>
 					    </form>
 					</div>
@@ -122,38 +122,14 @@
 	
 	$(document).ready(function() {
 		
-		$("#filterDate").validate({
-			rules:
-			{	
-				dateFrom: {
-					required: true
-				},
-				dateTo: {
-					required: true
-				}
-			},
-			messages:
-			{
-				dateFrom: {
-					required: 'Laukelis yra privalomas'
-				},
-				dateTo: {
-					required:'Laukelis yra privalomas'
-				}
-			}
-		});
-		 $("#submitButton").click(function() {
-		        $("#filterDate").valid();
-		 }); 
-		 
-		  $("#datepicker-group").datepicker({
-		    format: "yyyy-mm-dd",
-		    todayHighlight: true,
-		    autoclose: true,
-		    clearBtn: true,
-		    weekStart: 1
-		  });
-		  
+		 $("#datepicker-group").datepicker({
+			    format: "yyyy-mm-dd",
+			    todayHighlight: true,
+			    autoclose: true,
+			    clearBtn: true,
+			    weekStart: 1
+			  });
+			  
 		  $("#datepicker-group2").datepicker({
 			    format: "yyyy-mm-dd",
 			    todayHighlight: true,
@@ -161,8 +137,7 @@
 			    clearBtn: true,
 			    weekStart: 1
 			  });
-		  
-
+			  
 		});
 	</script>
 

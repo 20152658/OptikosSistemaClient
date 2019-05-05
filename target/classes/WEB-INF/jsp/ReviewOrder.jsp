@@ -64,7 +64,6 @@
 					<fmt:parseDate value="${sale.date}" var="dateObject" pattern="yyyy-MM-dd HH:mm:ss" />
 					<p>Pardavimo data: <fmt:formatDate value="${dateObject }" pattern="yyyy-MM-dd" /></p>	
 					<p>Pardavimo laikas: <fmt:formatDate value="${dateObject }" pattern="HH:mm " /></p>		
-					<p>Užsakymai: ${sale.orders}</p> 	
 					
 					<table class="table table-striped custab" id = "soldItems">
 					    <thead>
@@ -111,10 +110,43 @@
 							<button class="btn" onclick="return confirm('Ar tikrai norite išsaugoti pakeitimus?')" >Išsaugoti pakeitimus</button>
 						</form>
 		            </div>
+		            <div id="demo2"><p></p></div>
 				</div>
 			</div>
 		</div>	
 		<script type="text/javascript">
+		$(document).ready(function() {
+			prepareStuff();
+		});
+		
+			 function prepareStuff(){
+			      
+				  var order;
+				  order= "${sale.orders}";
+				  var inpr = stringToBoolean("${order.inProgress}");
+				  var compl = stringToBoolean("${order.completed}");
+				  
+				  if (!order || order=="null"){
+					  var orderW = document.getElementById("Orders");
+					  orderW.style.display = "none";
+				  }else{
+					  if(inpr){
+						  document.getElementById("inProgress").checked = true;
+					  }
+					  if(compl){
+						  document.getElementById("completed").checked = true;
+					  }
+				  }
+			 }
+			 
+			 function stringToBoolean(string){
+			    switch(string.toLowerCase().trim()){
+			        case "true": case "yes": case "1": return true;
+			        case "false": case "no": case "0": case null: return false;
+			        default: return Boolean(string);
+			    }
+			}
+		 
 			function changeProgressValue(){
 				var inprogress = document.getElementById("inProgress");
 				if(inprogress.value){
@@ -122,8 +154,8 @@
 				}else{
 					inprogress.value=false;
 				}
-				
 			}
+			
 			function changeComplValue(){
 				var compl = document.getElementById("completed");
 				if(compl.value){
@@ -133,6 +165,8 @@
 				}
 				
 			}
+			
+			
 		
 		</script>
 	</body>

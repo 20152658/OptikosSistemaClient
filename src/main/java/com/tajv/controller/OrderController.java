@@ -166,20 +166,22 @@ public class OrderController {
 				System.out.println("Something wrong in Order Controller reviewOrder try/catch");
 			}
 		}
-		if (!sale.getOrders().equals("null")) {
+		Order order = null;
+		Client client = null;
+		if (sale.getOrders() != null && !sale.getOrders().equals("null")) {
 			Item item2 = itemDao.getItemById(0);
 			item2.setPrice(sale.getSum() - sum);
 			items.add(item2);
 			try {
 				int orderId = Integer.parseInt(sale.getOrders().split(",")[0]);
-				Order order = orderDao.getOrderById(orderId);
-				model.addObject("order", order);
-				Client client = clientDao.getClientById(order.getClientId());
-				model.addObject("client", client);
+				order = orderDao.getOrderById(orderId);
+				client = clientDao.getClientById(order.getClientId());
 			} catch (Exception e) {
 				System.out.println("Something wrong in Order Controller reviewOrder try/catch2");
 			}
 		}
+		model.addObject("order", order);
+		model.addObject("client", client);
 		model.addObject("sale", sale);
 		model.addObject("items", items);
 		return model;
@@ -214,6 +216,12 @@ public class OrderController {
 		}
 		ArrayList<Sale> salesFiltered = new ArrayList<>();
 		ModelAndView model = new ModelAndView("ReviewOrders");
+		if (salesDate.getDateFrom().trim().equals("")) {
+			salesDate.setDateFrom("1700-01-01");
+		}
+		if (salesDate.getDateTo().trim().equals("")) {
+			salesDate.setDateTo("4000-12-31");
+		}
 
 		if (salesDate.getDateFrom() != null && salesDate.getDateTo() != null) {
 			for (Sale sale : sales) {

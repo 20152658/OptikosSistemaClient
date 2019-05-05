@@ -108,6 +108,7 @@
 }
 #dioptrijuPicker{
 	display:none;
+	flex-direction: column;
 }
 
 

@@ -113,14 +113,14 @@
 							</c:forEach> 
 					   </div>
 					    
-					    <div class="littlePicker" id="dioptrijuPicker">
-							<input class="number" id="lesioKaina" label="Lęšio kaina">
+					    <div id="dioptrijuPicker">
+							<input type="number" id="lesioKaina"  placeholder="Lęšio kaina"/>
 							<button onclick="addLesis()"> Pridėti </button>
 					    </div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 		
 	<script type="text/javascript" >
