@@ -137,7 +137,8 @@
 		    todayHighlight: true,
 		    autoclose: true,
 		    clearBtn: true,
-		    weekStart: 1
+		    weekStart: 1,
+		    startDate: "dateToday"
 		  });
 		  
 		});
