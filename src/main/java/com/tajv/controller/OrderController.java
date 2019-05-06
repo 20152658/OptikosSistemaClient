@@ -92,6 +92,7 @@ public class OrderController {
 		ModelAndView model = new ModelAndView("ReviewOrders");
 
 		session.setAttribute("listForPdf", sales);
+		session.setAttribute("pdfDates", null);
 		model.addObject("sales", sales);
 		return model;
 	}
@@ -246,7 +247,7 @@ public class OrderController {
 					int dateTo = dayTo + monthTo * 100 + yearTo * 10000;
 					int dateFrom = dayFrom + monthFrom * 100 + yearFrom * 10000;
 
-					if (date > dateFrom && date < dateTo) {
+					if (date >= dateFrom && date <= dateTo) {
 						salesFiltered.add(sale);
 					}
 
@@ -256,6 +257,7 @@ public class OrderController {
 
 			}
 			session.setAttribute("listForPdf", salesFiltered);
+			session.setAttribute("pdfDates", salesDate);
 			model.addObject("sales", salesFiltered);
 		}
 
@@ -265,38 +267,32 @@ public class OrderController {
 	@RequestMapping(value = "/downloadPDF")
 	public void getLogFile(HttpSession session, HttpServletResponse response) throws Exception {
 
-		// Sale sale = (Sale) session.getAttribute("newSale");
-		//
-		// Document document = new Document();
-		// PdfWriter.getInstance(document,
-		// new
-		// FileOutputStream("C:\\Users\\saban\\Desktop\\mokslai\\iTextHelloWorld.pdf"));
-		// document.open();
-		// Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-		// Chunk chunk = new Chunk("Hello World", font);
-		//
-		// document.add(chunk);
-		// document.close();
-		//
 		ArrayList<Sale> sales = (ArrayList<Sale>) session.getAttribute("listForPdf");
-		if (sales != null) {
-			Document document = new Document();
-			try {
-				response.setContentType("application/pdf");
-				PdfWriter.getInstance(document, response.getOutputStream());
-				document.open();
+		SalesDate saleDates = (SalesDate) session.getAttribute("pdfDates");
 
+		Document document = new Document();
+		Double sum = new Double("0");
+		try {
+			response.setContentType("application/pdf");
+			PdfWriter.getInstance(document, response.getOutputStream());
+			document.open();
+			if (sales != null && sales.size() != 0) {
 				Font heading = new Font(FontFamily.TIMES_ROMAN, 30.0f, Font.BOLD);
 
 				Paragraph ataskaita = new Paragraph("Ataskaita", heading);
 				ataskaita.setAlignment(Element.ALIGN_CENTER);
-
 				document.add(ataskaita);
+				if (saleDates != null && !(saleDates.getDateFrom().equals("1700-01-01")
+						|| saleDates.getDateTo().equals("4000-12-31"))) {
+					Paragraph period = new Paragraph(
+							"Laikotarpis " + saleDates.getDateFrom() + " - " + saleDates.getDateTo());
+					period.setAlignment(Element.ALIGN_CENTER);
+					document.add(period);
+				}
 
 				PdfPTable table = new PdfPTable(3); // 3 columns.
 				table.setWidthPercentage(100); // Width 100%
-				table.setSpacingBefore(10f); // Space before table
-				table.setSpacingAfter(10f); // Space after table
+				table.setSpacingBefore(20f); // Space before table
 
 				// Set Column widths
 				float[] columnWidths = { 1f, 1f, 1f };
@@ -317,18 +313,15 @@ public class OrderController {
 				cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
-				// To avoid having the cell border and the content overlap, if you are having
-				// thick cell borders
-				// cell1.setUserBorderPadding(true);
-				// cell2.setUserBorderPadding(true);
-				// cell3.setUserBorderPadding(true);
+				cell1.setUseBorderPadding(true);
+				cell2.setUseBorderPadding(true);
+				cell3.setUseBorderPadding(true);
 
 				table.addCell(cell1);
 				table.addCell(cell2);
 				table.addCell(cell3);
 
 				for (Sale sale : sales) {
-					System.out.println("heyy" + sale.getId() + " " + sale.getDate());
 					String timestamp = sale.getDate();
 					String[] datetime = timestamp.split(" ");
 					cell1 = new PdfPCell(new Paragraph(datetime[0]));
@@ -337,14 +330,32 @@ public class OrderController {
 					table.addCell(cell1);
 					table.addCell(cell2);
 					table.addCell(cell3);
+					sum += sale.getSum();
 				}
+
 				document.add(table);
 
-			} catch (Exception e) {
-				e.printStackTrace();
+				Font totalF = new Font(FontFamily.TIMES_ROMAN, 12f, Font.BOLD);
+				Paragraph totalP = new Paragraph("Iš viso: " + String.format("%.2f", sum) + " €", totalF);
+				totalP.setAlignment(Element.ALIGN_RIGHT);
+				document.add(totalP);
+
+			} else {
+				String laikotarpis = "";
+				if (saleDates != null && !(saleDates.getDateFrom().equals("1700-01-01")
+						|| saleDates.getDateTo().equals("4000-12-31"))) {
+					laikotarpis = "laikotarpiu " + saleDates.getDateFrom() + " - " + saleDates.getDateTo() + " ";
+
+				}
+				Paragraph noInfo = new Paragraph("Pardavimų " + laikotarpis + "nerasta");
+				document.add(noInfo);
 			}
-			document.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		document.close();
+
 	}
 
 }
