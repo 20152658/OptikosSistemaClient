@@ -28,18 +28,26 @@ public class ClientController {
 	private PrescriptionDao prescriptionDao;
 
 	@RequestMapping(value = { "/clients" })
-	public ModelAndView clients(HttpServletRequest request) {
-		ArrayList<Client> clients = (ArrayList<Client>) clientDao.getAllClients();
-		System.out.println("clients list size is: " + clients.size());
-		ModelAndView model = new ModelAndView("Clients");
-		model.addObject("clients", clients);
-		return model;
+	public ModelAndView clients(HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("Darbuotojas") == null) {
+			return new ModelAndView("redirect:/login");
+		} else {
+			ArrayList<Client> clients = (ArrayList<Client>) clientDao.getAllClients();
+			System.out.println("clients list size is: " + clients.size());
+			ModelAndView model = new ModelAndView("Clients");
+			model.addObject("clients", clients);
+			return model;
+		}
 	}
 
 	@RequestMapping(value = { "/addNewClient" })
-	public ModelAndView addNewClient(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("AddNewClient");
-		return model;
+	public ModelAndView addNewClient(HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("Darbuotojas") == null) {
+			return new ModelAndView("redirect:/login");
+		} else {
+			ModelAndView model = new ModelAndView("AddNewClient");
+			return model;
+		}
 	}
 
 	@RequestMapping(value = { "/addingNewClient" })
@@ -66,17 +74,22 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = { "/editClient" })
-	public ModelAndView editClient(@RequestParam("clientId") int clientId, HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("EditClient");
-		Client client = clientDao.getClientById(clientId);
-		model.addObject("client", client);
-		Prescription prescription = prescriptionDao.getPrescriptionByClientId(clientId);
-		if (prescription == null) {
-			prescription = new Prescription();
-			prescription.setClientId(clientId);
+	public ModelAndView editClient(@RequestParam("clientId") int clientId, HttpServletRequest request,
+			HttpSession session) {
+		if (session.getAttribute("Darbuotojas") == null) {
+			return new ModelAndView("redirect:/login");
+		} else {
+			ModelAndView model = new ModelAndView("EditClient");
+			Client client = clientDao.getClientById(clientId);
+			model.addObject("client", client);
+			Prescription prescription = prescriptionDao.getPrescriptionByClientId(clientId);
+			if (prescription == null) {
+				prescription = new Prescription();
+				prescription.setClientId(clientId);
+			}
+			model.addObject("prescription", prescription);
+			return model;
 		}
-		model.addObject("prescription", prescription);
-		return model;
 	}
 
 	@RequestMapping(value = { "/edittingClient" }, method = RequestMethod.POST)

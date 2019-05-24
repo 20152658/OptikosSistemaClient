@@ -30,7 +30,7 @@ public class Employee {
 	@Column(name = "Darbuotojo_vardas")
 	private String name;
 
-	@Column(name = "Darbutojo_tipas")
+	@Column(name = "Darbuotojo_tipas")
 	private String type;
 
 	@Column(name = "Prisijungimo_vardas")

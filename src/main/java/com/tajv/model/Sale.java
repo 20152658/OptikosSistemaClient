@@ -38,6 +38,9 @@ public class Sale {
 	@Column(name = "Pardavimo_data")
 	private String date;
 
+	@Column(name = "pardavejas")
+	private String seller;
+
 	public int getId() {
 		return id;
 	}
@@ -76,6 +79,14 @@ public class Sale {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getSeller() {
+		return seller;
+	}
+
+	public void setSeller(String seller) {
+		this.seller = seller;
 	}
 
 }

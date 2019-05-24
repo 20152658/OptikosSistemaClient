@@ -24,9 +24,13 @@ public class ItemController {
 	private ItemDao itemDao;
 
 	@RequestMapping(value = { "/addNewItem" })
-	public ModelAndView addItem(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("AddNewItem");
-		return model;
+	public ModelAndView addItem(HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("Darbuotojas") == null) {
+			return new ModelAndView("redirect:/login");
+		} else {
+			ModelAndView model = new ModelAndView("AddNewItem");
+			return model;
+		}
 	}
 
 	@RequestMapping(value = { "/addingNewItem" })
@@ -54,52 +58,64 @@ public class ItemController {
 
 	@RequestMapping(value = { "/editItem" })
 	public ModelAndView editItem(@RequestParam("itemId") int id, HttpSession session) {
-		ModelAndView model = new ModelAndView("EditItem");
-		Item item = itemDao.getItemById(id);
-		model.addObject("item", item);
-		return model;
+		if (session.getAttribute("Darbuotojas") == null) {
+			return new ModelAndView("redirect:/login");
+		} else {
+			ModelAndView model = new ModelAndView("EditItem");
+			Item item = itemDao.getItemById(id);
+			model.addObject("item", item);
+			return model;
+		}
 	}
 
 	@RequestMapping(value = { "/updateItem" })
-	public ModelAndView updateItem(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("UpdateItem");
-		return model;
+	public ModelAndView updateItem(HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("Darbuotojas") == null) {
+			return new ModelAndView("redirect:/login");
+		} else {
+			ModelAndView model = new ModelAndView("UpdateItem");
+			return model;
+		}
 	}
 
 	@RequestMapping(value = { "/reviewItems" })
-	public ModelAndView reviewItems(HttpServletRequest request) {
-		List<Item> prekes = itemDao.getAllItems();
-		ArrayList<Item> akiniai = new ArrayList<>();
-		ArrayList<Item> sAkiniai = new ArrayList<>();
-		ArrayList<Item> lesiai = new ArrayList<>();
-		ArrayList<Item> kitka = new ArrayList<>();
-		if (!prekes.isEmpty()) {
-			for (Item preke : prekes) {
-				switch (preke.getType()) {
-				case "akiniai":
-					akiniai.add(preke);
-					break;
-				case "sAkiniai":
-					sAkiniai.add(preke);
-					break;
-				case "lesiai":
-					lesiai.add(preke);
-					break;
-				case "kitka":
-					kitka.add(preke);
-					break;
+	public ModelAndView reviewItems(HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("Darbuotojas") == null) {
+			return new ModelAndView("redirect:/login");
+		} else {
+			List<Item> prekes = itemDao.getAllItems();
+			ArrayList<Item> akiniai = new ArrayList<>();
+			ArrayList<Item> sAkiniai = new ArrayList<>();
+			ArrayList<Item> lesiai = new ArrayList<>();
+			ArrayList<Item> kitka = new ArrayList<>();
+			if (!prekes.isEmpty()) {
+				for (Item preke : prekes) {
+					switch (preke.getType()) {
+					case "akiniai":
+						akiniai.add(preke);
+						break;
+					case "sAkiniai":
+						sAkiniai.add(preke);
+						break;
+					case "lesiai":
+						lesiai.add(preke);
+						break;
+					case "kitka":
+						kitka.add(preke);
+						break;
+					}
 				}
 			}
+
+			System.out.println(akiniai.size() + "," + sAkiniai.size() + "," + lesiai.size() + "," + kitka.size());
+			ModelAndView model = new ModelAndView("ReviewItems");
+			model.addObject("akiniai", akiniai);
+			model.addObject("sAkiniai", sAkiniai);
+			model.addObject("lesiai", lesiai);
+			model.addObject("kitka", kitka);
+
+			return model;
 		}
-
-		System.out.println(akiniai.size() + "," + sAkiniai.size() + "," + lesiai.size() + "," + kitka.size());
-		ModelAndView model = new ModelAndView("ReviewItems");
-		model.addObject("akiniai", akiniai);
-		model.addObject("sAkiniai", sAkiniai);
-		model.addObject("lesiai", lesiai);
-		model.addObject("kitka", kitka);
-
-		return model;
 	}
 
 }

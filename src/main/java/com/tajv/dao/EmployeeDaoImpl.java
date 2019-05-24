@@ -35,16 +35,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	@Transactional
 	public Employee getEmployeeByNickname(String nickname) {
-		String hql = "from Employee where nickname=" + nickname;
+		String hql = "from Employee where nickname='" + nickname + "'";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-
 		@SuppressWarnings("unchecked")
 		List<Employee> employeesList = query.list();
-
+		System.out.println("44");
 		if (employeesList != null && !employeesList.isEmpty()) {
+			System.out.println("46");
 			return employeesList.get(0);
 		}
-
+		System.out.println("49");
 		return null;
 	}
 

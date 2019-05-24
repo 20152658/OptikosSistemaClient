@@ -66,18 +66,30 @@
 			<div class="main">
 				<div class="datePickingContainer">
 					<div class="datePicking" id="calendarDIV">
-						<form id="filterDate" name="filterDate" role="form" method="POST" action="reviewOrdersFiltered" modelAttribute="salesDate">
+						<form id="filterDate" name="filterDate" role="form" method="POST" action="reviewOrdersFiltered" modelAttribute="salesFiltered">
 							<div class="form-group">
 							  <div id="datepicker-group" class="input-group date" data-date-format="yyyy-mm-dd">
-							    <input class="form-control" name="dateFrom" id="dateFrom" type="text" placeholder="YYYY-MM-DD"  />
+							    <input class="form-control" name="dateFrom" id="dateFrom" type="text" value="${salesFiltered.dateFrom}" placeholder="YYYY-MM-DD"  />
 							    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 							  </div>
 							</div>
 							<div class="form-group">
 							  <div id="datepicker-group2" class="input-group date" data-date-format="yyyy-mm-dd">
-							    <input class="form-control" name="dateTo" id="dateTo" type="text" placeholder="YYYY-MM-DD"  />
+							    <input class="form-control" name="dateTo" id="dateTo" type="text" value="${salesFiltered.dateTo}" placeholder="YYYY-MM-DD"  />
 							    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 							  </div>
+							</div>
+							<div class="form-group">
+								<input type="checkbox" value="${salesFiltered.showSales}" name="showSales" id="showSales" onchange="changeSalesValue()"/> Rodyti pardavimus 
+							</div>
+							<div class="form-group">
+								<input type="checkbox" value="${salesFiltered.showOrders}" name="showOrders" id="showOrders" onchange="changeShowOrdersValue()"/> Rodyti užsakymus
+							</div>
+							<div class="form-group">
+								<input type="checkbox" value="${salesFiltered.showOrdersInProgress}" name="showOrdersInProgress" id="showOrdersInProgress" onchange= "changeProgressValue()"/> Rodyti neužbaigtus užsakymus
+							</div>
+							<div class="form-group">
+								<input type="checkbox" value="${salesFiltered.showCompletedOrders}" name="showCompletedOrders" id="showCompletedOrders" onchange="changeComplValue()"/> Rodyti įvykdytus užsakymus
 							</div>
 							 <a id="submitButton" href="reviewOrdersFiltered">
 					    		<button  class="btn"> Filtruoti </button>
@@ -137,8 +149,74 @@
 			    clearBtn: true,
 			    weekStart: 1
 			  });
-			  
+			prepareStuff();	  
 		});
+	function prepareStuff(){
+	      
+		  var showOrd = stringToBoolean("${salesFiltered.showOrders}");
+		  var showSal = stringToBoolean("${salesFiltered.showSales}");
+		  var inpr = stringToBoolean("${salesFiltered.showOrdersInProgress}");
+		  var compl = stringToBoolean("${salesFiltered.showCompletedOrders}");
+		  if(inpr){
+			  document.getElementById("showOrdersInProgress").checked = true;
+		  }
+		  if(compl){
+			  document.getElementById("showCompletedOrders").checked = true;
+		  }
+		  if(showOrd){
+			  document.getElementById("showOrders").checked = true;
+		  }
+		  if(showSal){
+			  document.getElementById("showSales").checked = true;
+		  }
+	 }
+	 
+	 function stringToBoolean(string){
+	    switch(string.toLowerCase().trim()){
+	        case "true": case "yes": case "1": return true;
+	        case "false": case "no": case "0": case null: return false;
+	        default: return Boolean(string);
+	    }
+	}
+
+	function changeShowOrdersValue(){
+		var orderval = stringToBoolean(document.getElementById("showOrders").value);
+		var orders =  document.getElementById("showOrders");
+		
+		if(orderval){
+			orders.value = false;
+		}else{
+			orders.value=true;
+			document.getElementById("showOrdersInProgress").value = true;
+			document.getElementById("showCompletedOrders").value = true;
+		}
+	}
+	
+	function changeComplValue(){
+		var inprogress = document.getElementById("showCompletedOrders");
+		if(inprogress.value){
+			inprogress.value = false;
+		}else{
+			inprogress.value=true;
+		}
+	}
+	function changeProgressValue(){
+		var inprogress = document.getElementById("showOrdersInProgress");
+		if(inprogress.value){
+			inprogress.value = false;
+		}else{
+			inprogress.value=true;
+		}
+	}
+	function changeSalesValue(){
+		var inprogress = document.getElementById("showSales");
+		if(inprogress.value){
+			inprogress.value = false;
+		}else{
+			inprogress.value=true;
+		}
+	}
+	
 	</script>
 
 </body>

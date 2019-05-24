@@ -64,7 +64,7 @@
 					<fmt:parseDate value="${sale.date}" var="dateObject" pattern="yyyy-MM-dd HH:mm:ss" />
 					<p>Pardavimo data: <fmt:formatDate value="${dateObject }" pattern="yyyy-MM-dd" /></p>	
 					<p>Pardavimo laikas: <fmt:formatDate value="${dateObject }" pattern="HH:mm " /></p>		
-					
+					<p>Pardavėjas: ${employee.nickname} </p>		
 					<table class="table table-striped custab" id = "soldItems">
 					    <thead>
 					        <tr>
@@ -92,28 +92,29 @@
 		            	<form id="sellOrder" name="OrderForm" role="form" method="POST" action="changingOrderStatus" modelAttribute="order">
 		            		<input type="hidden" type="number" id="id" name="id" value="${order.id}"/>
 		            		<input type="hidden" type="number" id="clientId" name="clientId" value="${order.clientId}"/>
-		            		<input type="hidden" type="number" id="deposit" name="deposit" value="${order.deposit}"/>
 		            		<input type="hidden" type="text" id="lensType" name="lensType" value="${order.lensType}"/>
+		            		<input type="hidden" type="number" id="deposit" name="deposit" value="${order.deposit}"/>
 		            		<input type="hidden" type="text" id="estimatedDate" name="estimatedDate" value="${order.estimatedDate}"/>
 			            	<p> Klientas: ${client.name} ${client.surname}</p>
+			            	<p class="sumTd"> Avansas: <fmt:formatNumber value="${order.deposit}" type="currency" currencySymbol=""/> </p>
 			            	<p> Planuojama pagaminimo data: ${order.estimatedDate}</p>
 			            	<p> Pagaminta?  
 			            	<label class="switch">
 							  <input type="checkbox" value="${order.inProgress}" name="inProgress" id="inProgress" onchange="changeProgressValue()"/>
 							  <span class="slider"></span>
 							</label></p>
-							<div id="demo2"><p></p></div>
 			            	<p> Atsiimta? <label class="switch">
 							  <input type="checkbox" value="${order.completed}" name="completed" id="completed" onchange="changeComplValue()"/>
 							  <span class="slider"></span>
 							</label></p>
+							<div class="sumTd" id="likutis"></div>
 							<button class="btn" onclick="return confirm('Ar tikrai norite išsaugoti pakeitimus?')" >Išsaugoti pakeitimus</button>
 						</form>
-		            </div>
-		            <div id="demo2"><p></p></div>
+		            
 				</div>
 			</div>
 		</div>	
+		</div>
 		<script type="text/javascript">
 		$(document).ready(function() {
 			prepareStuff();
@@ -149,7 +150,7 @@
 		 
 			function changeProgressValue(){
 				var inprogress = document.getElementById("inProgress");
-				if(inprogress.value){
+				if(inprogress.checked){
 					inprogress.value = true;
 				}else{
 					inprogress.value=false;
@@ -158,10 +159,15 @@
 			
 			function changeComplValue(){
 				var compl = document.getElementById("completed");
-				if(compl.value){
+				var likutis = document.getElementById("likutis");
+				if(compl.checked){
 					compl.value = true;
+					price=10;
+					likutis.style.display= "flex";
+					document.getElementById("likutis").textContent="Likutis: "+price.toFixed(2);
 				}else{
 					compl.value=false;
+					likutis.style.display = "none";
 				}
 				
 			}

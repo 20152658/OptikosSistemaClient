@@ -19,31 +19,21 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeDao employeeDao;
 
-	@RequestMapping(value = { "/", "/login" })
-	public ModelAndView login(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("Login");
-		return model;
-	}
-
 	@RequestMapping(value = "/logingIn", method = RequestMethod.POST)
 	public String logingIn(@ModelAttribute Employee employee, HttpSession session) {
 
 		// TODO: add hash coding to password
 		Employee employeeFromDatabase = employeeDao.getEmployeeByNickname(employee.getNickname());
-		if (employee.getPassword().equals(employeeFromDatabase.getPassword())) {
-			return "redirect:/home";
+		if (employeeFromDatabase != null) {
+			if (employee.getPassword().equals(employeeFromDatabase.getPassword())) {
+				session.setAttribute("Darbuotojas", employee);
+				return "redirect:/home";
+			}
 		}
 		return "redirect:/login";
 	}
 
-	@RequestMapping(value = { "/register" })
-	public ModelAndView register(HttpServletRequest request) {
-
-		ModelAndView model = new ModelAndView("Registration");
-		return model;
-	}
-
-	@RequestMapping(value = { "/loginOld" })
+	@RequestMapping(value = { "/login" })
 	public ModelAndView loginOld(HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView("LoginOld");
@@ -67,7 +57,7 @@ public class EmployeeController {
 		if (!session.isNew()) {
 			session.invalidate();
 		}
-		return new ModelAndView("redirect:/loginOld");
+		return new ModelAndView("redirect:/login");
 	}
 
 	@RequestMapping(value = { "/error" })

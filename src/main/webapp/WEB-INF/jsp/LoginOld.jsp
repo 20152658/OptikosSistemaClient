@@ -13,20 +13,18 @@
 	
 	<body>
 			<div class="parentContainer">
-					<div id = "loginForm" method = "POST" class="loginForm" role="form" action = "logingIn" modelAttribute = "client" >
+					<form id="loginForm" name="loginForm" method="POST" class="loginForm" role="form" action="logingIn" modelAttribute = "employee" >
 						<div class="form-group">
-							<input type="email" id="email" name = "email" placeholder="Email" class="form-control" >
+							<input type="text" id="nickname" name="nickname" placeholder="Prisijungimo vardas" class="form-control" >
 						</div>
 						
 						<div class="form-group">
-							<input type="password" id="password" name = "password" placeholder="Password" class="form-control">
+							<input type="password" id="password" name="password" placeholder="Slaptažodis" class="form-control">
 						</div>
 						
-						<div class="form-group">
-							<button  type="login" class="button -Login">Prisijungti</button>
-						</div>
+						<button type="submit" id="doneButton"> Prisijungti  </button> 
 						
-					</div>
+					</form>
 
 					<script type="text/javascript">
 				
@@ -37,23 +35,21 @@
 							rules:
 							{	
 								email: {
-									required: true,
-									email: true
+									required: true
 								},
 								password: {
 									required: true,
-									minlength: 5,
+									minlength: 6,
 									maxlength: 40
 								}
 							},
 								messages:{
 									
 									email: {
-										required: ' Please enter email',
-										email: ' Please enter valid email'
+										required: 'Įveskite prisijungimo vardą',
 									},
 									password: {
-										required: " Please enter password"
+										required: " Įveskite slaptažodį"
 									}
 								}
 

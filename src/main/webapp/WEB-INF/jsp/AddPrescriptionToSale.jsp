@@ -115,6 +115,9 @@
 							<div id = "changeForClient">
 								<h5> </h5>
 							</div>
+							<div id = "priceLeftToPay">
+								<h5> Bus likę sumokėti: <fmt:formatNumber value="${newSale.sum}" type="currency" currencySymbol=""/> € </h5>
+							</div>
 						</div>
 	
 					</div>

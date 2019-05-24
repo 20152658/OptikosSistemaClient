@@ -13,6 +13,9 @@
 .sumTd:after{
 	content:'‎€';
 }
+#likutis{
+	display: none;
+}
 
 .switch {
   position: relative;
