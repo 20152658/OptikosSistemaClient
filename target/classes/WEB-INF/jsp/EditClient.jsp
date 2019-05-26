@@ -66,7 +66,7 @@
 								<input type="text" name="id" id="id" class="form-control" value="${client.id}" />
 							</div>
 							<div class="form-group">
-								<label for="Vardas*" class="new-information-control-label">Pavadinimas*</label>
+								<label for="Vardas*" class="new-information-control-label">Vardas*</label>
 								<input type="text" name="name" id="name" class="form-control" value="${client.name}" />
 							</div>
 							<div class="form-group">
@@ -78,7 +78,7 @@
 								<input type="text" name="email" id="email" class="form-control" value="${client.email}" placeholder="el@pastas.lt"/>
 							</div>
 							<div class="form-group">
-								<label for="Telefono numeris" class="new-information-control-label">Telefono_numeris</label>
+								<label for="Telefono numeris" class="new-information-control-label">Telefono numeris</label>
 								<input type="text" name="phoneNumber" id="phoneNumber" class="form-control" value="${client.phoneNumber}" placeholder="+370..."/>
 							</div>
 							<button type="submit" id="addClientButton" class="addClient-button" onclick="return confirm('Ar tikrai norite koreguoti šį klientą?')">Išsaugoti kliento pakeitimus</button>

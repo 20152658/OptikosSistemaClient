@@ -64,7 +64,7 @@
 						<div class="form-group">
 						
 							<label for="tipas" class="change-information-control-label">Prekes tipas*</label>
-							<select value="${item.type}" id="type" name="type" onchange="whichPrekeTypeIsChosen()" >
+							<select class="form-control"  value="${item.type}" id="type" name="type" onchange="whichPrekeTypeIsChosen()" >
 								  <option value="akiniai">Akinių remeliai</option>
 								  <option value="lesiai">Kontaktiniai lęšiai</option>
 								  <option value="sAkiniai">Akiniai nuo saulės</option>

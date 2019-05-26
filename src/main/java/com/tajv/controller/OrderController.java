@@ -119,8 +119,10 @@ public class OrderController {
 	@RequestMapping(value = { "/sellingOrder" })
 	public String sellingSaleOrOrder(@ModelAttribute Order newOrder, HttpSession session) {
 		Sale newSale = (Sale) session.getAttribute("newSale");
-		changeAmountOfItems(newSale.getItems().split(","));
+		changeAmountOfItems(newSale.getItems().split(","), true, false);
 		orderDao.saveOrder(newOrder);
+		Employee seller = (Employee) session.getAttribute("Darbuotojas");
+		newSale.setSeller(seller.getNickname());
 		newSale.setOrders(newOrder.getId() + ",");
 		saleDao.saveSale(newSale);
 
@@ -130,24 +132,46 @@ public class OrderController {
 	@RequestMapping(value = { "/sellingSale" })
 	public String sellingSaleOrOrder(@ModelAttribute Sale sale, HttpSession session) {
 		Sale newSale = (Sale) session.getAttribute("newSale");
-		changeAmountOfItems(newSale.getItems().split(","));
+		changeAmountOfItems(newSale.getItems().split(","), false, false);
 		Employee seller = (Employee) session.getAttribute("Darbuotojas");
-		sale.setSeller(seller.getNickname());
+		newSale.setSeller(seller.getNickname());
 		saleDao.saveSale(newSale);
-
 		return "redirect:/reviewOrders";
 	}
 
-	private void changeAmountOfItems(String ids[]) {
+	private void changeAmountOfItems(String ids[], Boolean order, Boolean removeOrder) {
 		for (int i = 0; i < ids.length; i++) {
 			try {
 				int id = Integer.parseInt(ids[i]);
 				if (id != 0) {
 					Item it = itemDao.getItemById(id);
-					int amountt = it.getAmount() - 1;
-					it.setAmount(amountt);
+					if (order) {
+						if (removeOrder) {
+							if (it.getType().equals("akiniai") || it.getType().equals("sAkiniai")) {
+								System.out.println("deleting Reserved");
+								int amount = it.getReserved() - 1;
+								it.setReserved(amount);
+								int amountt = it.getAmount() - 1;
+								it.setAmount(amountt);
+							}
+						} else {
+							if (it.getType().equals("akiniai") || it.getType().equals("sAkiniai")) {
+								System.out.println("reserving");
+								int amount = it.getReserved() + 1;
+								it.setReserved(amount);
+							} else {
+								int amount = it.getAmount() - 1;
+								it.setAmount(amount);
+							}
+						}
+					} else {
+						int amount = it.getAmount() - 1;
+						it.setAmount(amount);
+					}
+					itemDao.updateItem(it);
 				}
 			} catch (Exception e) {
+				System.out.println("Something happened while change amount of items. ");
 			}
 		}
 	}
@@ -165,8 +189,29 @@ public class OrderController {
 			if (newSale.getOrders().equals("")) {
 				newSale.setOrders("null");
 			}
+
+			ArrayList<Item> items = new ArrayList<Item>();
+			String[] itemIds = newSale.getItems().split(",");
+			Double sum = new Double("0");
+			for (String itemIdString : itemIds) {
+				try {
+					int itemId = Integer.parseInt(itemIdString);
+					Item item = itemDao.getItemById(itemId);
+					items.add(item);
+					sum += item.getPrice();
+				} catch (Exception e) {
+					System.out.println("Something wrong in Order Controller reviewOrder try/catch");
+				}
+			}
+			if (newSale.getOrders() != null && !newSale.getOrders().equals("null")) {
+				Item item2 = itemDao.getItemById(0);
+				item2.setPrice(newSale.getSum() - sum);
+				items.add(item2);
+			}
+
 			session.setAttribute("newSale", newSale);
 
+			model.addObject("items", items);
 			model.addObject("newSale", newSale);
 			model.addObject("clients", clients);
 			return model;
@@ -239,12 +284,24 @@ public class OrderController {
 				if (order.isInProgress()) {
 					sendEmail();
 				}
+				if (order.isCompleted()) {
+					removeReserved(order.getId() + ",");
+				}
 			} catch (Exception e) {
 				System.out.println("Something wrong with changingOrderStatus try/catch");
 			}
 		}
 
 		return "redirect:/reviewOrders";
+	}
+
+	private void removeReserved(String orderNo) {
+		List<Sale> sales = saleDao.getAllSales();
+		for (Sale sale : sales) {
+			if (sale.getOrders().equals(orderNo)) {
+				changeAmountOfItems(sale.getItems().split(","), true, true);
+			}
+		}
 	}
 
 	private void sendEmail() {
@@ -346,7 +403,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/downloadPDF")
-	public void getLogFile(HttpSession session, HttpServletResponse response) throws Exception {
+	public void getPDFReport(HttpSession session, HttpServletResponse response) throws Exception {
 
 		ArrayList<Sale> sales = (ArrayList<Sale>) session.getAttribute("listForPdf");
 		SalesFiltered saleDates = (SalesFiltered) session.getAttribute("pdfDates");
@@ -368,6 +425,76 @@ public class OrderController {
 							"Laikotarpis " + saleDates.getDateFrom() + " - " + saleDates.getDateTo());
 					period.setAlignment(Element.ALIGN_CENTER);
 					document.add(period);
+				}
+				Boolean showOrders = nvl(saleDates.getShowOrders(), false);
+				Boolean showSales = nvl(saleDates.getShowSales(), false);
+				Boolean showProgress = nvl(saleDates.getShowOrdersInProgress(), false);
+				Boolean showCompleted = nvl(saleDates.getShowCompletedOrders(), false);
+				if (!showOrders) {
+					if (showSales) {
+						Paragraph noOrders = new Paragraph("Pardavimu ataskaita (be uzsakymu)");
+						noOrders.setAlignment(Element.ALIGN_CENTER);
+						document.add(noOrders);
+					} else {
+						Paragraph noOrdersNoSales = new Paragraph("Nepasirinkta nei pardavimu, nei uzsakymu");
+						noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+						document.add(noOrdersNoSales);
+					}
+				} else {
+					if (showSales) { // yr orderiu, yr sales
+						if (showCompleted) {
+							if (showProgress) {
+								// yra sale, visi orderiai.
+								Paragraph noOrdersNoSales = new Paragraph("Visi pardavimai ir uzsakymai");
+								noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+								document.add(noOrdersNoSales);
+							} else {
+								// yra sale, tik completed orders.
+								Paragraph noOrdersNoSales = new Paragraph("Visi pardavimai ir baigti uzsakymai");
+								noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+								document.add(noOrdersNoSales);
+							}
+						} else { //
+							if (showProgress) {
+								// yra sale, tik in progress orders
+								Paragraph noOrdersNoSales = new Paragraph(
+										"Visi pardavimai ir pagaminti, bet nebaigti uzsakymai");
+								noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+								document.add(noOrdersNoSales);
+							} else {
+								// yra sale, jokiu orders.
+								Paragraph noOrdersNoSales = new Paragraph("Visi pardavimai(be uzsakymu)");
+								noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+								document.add(noOrdersNoSales);
+							}
+						}
+					} else { // yr orderiu, ner sales
+						if (showCompleted) {
+							if (showProgress) {
+								// jokiu sale, visi orderiai.
+								Paragraph noOrdersNoSales = new Paragraph("Visi uzsakymai(be pardavimu)");
+								noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+								document.add(noOrdersNoSales);
+							} else {
+								// jokiu sale, tik completed orders.
+								Paragraph noOrdersNoSales = new Paragraph("Visi uzbaigti uzsakymai(be pardavimu)");
+								noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+								document.add(noOrdersNoSales);
+							}
+						} else { //
+							if (showProgress) {
+								// jokiu sale, tik in progress orders
+								Paragraph noOrdersNoSales = new Paragraph("Visi gaminami uzsakymai(be pardavimu)");
+								noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+								document.add(noOrdersNoSales);
+							} else {
+								Paragraph noOrdersNoSales = new Paragraph("Nepasirinkta nei pardavimu, nei uzsakymu");
+								noOrdersNoSales.setAlignment(Element.ALIGN_CENTER);
+								document.add(noOrdersNoSales);
+								// jokiu sale, jokiu orders.
+							}
+						}
+					}
 				}
 
 				PdfPTable table = new PdfPTable(3); // 3 columns.
@@ -427,7 +554,7 @@ public class OrderController {
 					laikotarpis = "laikotarpiu " + saleDates.getDateFrom() + " - " + saleDates.getDateTo() + " ";
 
 				}
-				Paragraph noInfo = new Paragraph("Pardavimų " + laikotarpis + "nerasta");
+				Paragraph noInfo = new Paragraph("Pardavimu " + laikotarpis + "nerasta");
 				document.add(noInfo);
 			}
 

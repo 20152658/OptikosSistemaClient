@@ -80,7 +80,7 @@
 							<input type="hidden" type="text" id="items" name="items"/>
 							<input type="hidden" type="number" id="sum" name="sum"/>
 							<input type="hidden" type="text" id="orders" name="orders"/>
-							<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 
+							<button type="submit" id="doneButton" class="fas fa-check"> </button> 
 						</form>	
 					</div>
 					

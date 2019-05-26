@@ -162,7 +162,8 @@
 				var likutis = document.getElementById("likutis");
 				if(compl.checked){
 					compl.value = true;
-					price=10;
+					var price = 0;
+					price=${sale.sum} - ${order.deposit};
 					likutis.style.display= "flex";
 					document.getElementById("likutis").textContent="Likutis: "+price.toFixed(2);
 				}else{

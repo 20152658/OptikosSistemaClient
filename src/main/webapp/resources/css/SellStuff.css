@@ -13,7 +13,6 @@
 }
 
 
-
 #sellMain {
     display: flex;
     flex-direction: row;
@@ -130,6 +129,17 @@
 
 <!--   -->
 .itIsPrescription{
-	width: 30%;
 	display:none;
+	flex-direction: column;
+}
+.centerMe{
+	
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+}
+.showItems{
+  margin: auto;
+  width: 60%;
+  padding: 10px;
 }

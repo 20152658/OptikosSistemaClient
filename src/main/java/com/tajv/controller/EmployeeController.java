@@ -26,7 +26,7 @@ public class EmployeeController {
 		Employee employeeFromDatabase = employeeDao.getEmployeeByNickname(employee.getNickname());
 		if (employeeFromDatabase != null) {
 			if (employee.getPassword().equals(employeeFromDatabase.getPassword())) {
-				session.setAttribute("Darbuotojas", employee);
+				session.setAttribute("Darbuotojas", employeeFromDatabase);
 				return "redirect:/home";
 			}
 		}
@@ -44,11 +44,11 @@ public class EmployeeController {
 	public ModelAndView home(HttpServletRequest request, HttpSession session) {
 		if (session.getAttribute("Darbuotojas") != null) {
 			ModelAndView model = new ModelAndView("Home");
+			Employee emp = (Employee) session.getAttribute("Darbuotojas");
+			model.addObject("employee", emp);
 			return model;
 		} else {
-			// return new ModelAndView("redirect:/login");
-			ModelAndView model = new ModelAndView("Home");
-			return model;
+			return new ModelAndView("redirect:/login");
 		}
 	}
 

@@ -64,7 +64,7 @@
 						<div class="form-group">
 						
 							<label for="tipas" class="change-information-control-label">Prekes tipas*</label>
-							<select id="type" name="type" onchange="whichPrekeTypeIsChosen()" >
+							<select class="form-control"  id="type" name="type">
 								  <option disabled selected value> -- Prekės Tipas -- </option>
 								  <option value="akiniai">Akinių remeliai</option>
 								  <option value="lesiai">Kontaktiniai lęšiai</option>
@@ -152,15 +152,6 @@
 		        $("#addPrekeForm").valid();
 		    });
 	});
-	
-		function whichPrekeTypeIsChosen() {
-		    var x = document.getElementById("prekiuTipai").value;
-		    if (x==="kitka"){
-		    	document.getElementById("demo").innerHTML = "Paragraph changed!";
-		    }else{
-		    document.getElementById("demo").innerHTML = x;
-		    }   
-		}
 	</script>
 </body>
 

@@ -9,7 +9,7 @@
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" /> 
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" >
 		<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-		<link href="resources/css/frame.css" rel="stylesheet">
+		<link href="resources/css/frame2.css" rel="stylesheet">
 	    <link href="resources/css/SellStuff.css" rel="stylesheet">
 	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
@@ -120,7 +120,7 @@
 					            </c:forEach>
 						    </table>
 						    <a href="downloadPDF">
-						    	<button class="btn"> PDF </button>
+						    	<button class="btn"> PDF Ataskaita </button>
 							</a>
 					    </div>
 					</div>
@@ -180,15 +180,27 @@
 	}
 
 	function changeShowOrdersValue(){
-		var orderval = stringToBoolean(document.getElementById("showOrders").value);
+		var demo = document.getElementById("demo");
 		var orders =  document.getElementById("showOrders");
+		var progr = document.getElementById("showOrdersInProgress");
+		var compl = document.getElementById("showCompletedOrders");
 		
-		if(orderval){
-			orders.value = false;
+		if(orders.checked){
+			orders.value = true;
+			progr.checked = true;
+			progr.disabled = false;
+			progr.value = true;
+			compl.checked = true;
+			compl.disabled = false;
+			compl.value = true;
 		}else{
-			orders.value=true;
-			document.getElementById("showOrdersInProgress").value = true;
-			document.getElementById("showCompletedOrders").value = true;
+			orders.value = false;
+			progr.disabled = true;
+			compl.disabled = true;
+			progr.checked = false;
+			compl.checked = false;
+			progr.value = true;
+			compl.value= true;
 		}
 	}
 	

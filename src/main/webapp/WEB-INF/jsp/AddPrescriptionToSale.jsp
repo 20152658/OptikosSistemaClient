@@ -63,10 +63,34 @@
 	
 			<!--- Page content --->
 			<div class="main" >
+				<div class="centerMe">
+					<table class="table table-striped custab" id = "soldItems">
+					    <thead>
+					        <tr>
+					            <th>Pavadinimas</th>
+					            <th>Gamintojas</th>
+					            <th>Kaina</th>
+					        </tr>
+					    </thead>
 				
+						<c:forEach items="${items}" var="item"> 
+				             <tr>
+				            	<td> ${item.title} </td>
+				            	<td> ${item.brand} </td>
+				            	<td class="sumTd"> <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> </td>
+				            </tr>
+			            </c:forEach>
+			             <tr>
+			            	<td class="font-weight-bold" >Iš viso: </td>
+			            	<td>  </td>
+			            	<td class="sumTd"> <fmt:formatNumber value="${sale.sum}" type="currency" currencySymbol=""/> </td>
+				         </tr>
+		            </table>
+				</div>	
+				<div class ="centerMe">
 				<form id="sellOrder" name="OrderForm" role="form" method="POST" action="sellingOrder" modelAttribute="order">
 					<div id="clientsWindow">
-						<select id="clientId" name="clientId" onchange="IsClientChosen()" >
+						<select class = "form-control" id="clientId" name="clientId" onchange="IsClientChosen()" >
 						<p> Ar norėtumetė pasirinkti klientą?</p>
 							  <option value="null"> -- Pasirinkite klientą -- </option>
 							  <c:forEach items="${clients}" var="client" >
@@ -76,7 +100,7 @@
 					</div>
 					
 					<div class="itIsPrescription" id="calendarDIV">
-					<p> Kada klientas galės atsiimti užsakymą? </p>
+					<p> Preliminari pagamininmo data </p>
 						<div class="form-group">
 						  <div id="datepicker-group" class="input-group date" data-date-format="mm-dd-yyyy">
 						    <input class="form-control" name="estimatedDate" id="estimatedDate" type="text" placeholder="YYYY/MM/DD"  />
@@ -85,7 +109,7 @@
 						</div>
 					</div>
 					<div class ="akiniuLesiai">
-						<textarea form ="sellOrder" name="lensType" id="lensType" cols="35" rows="5" wrap="soft"></textarea>
+						<textarea class="form-control" form ="sellOrder" name="lensType" id="lensType" cols="35" rows="5" wrap="soft" placeholder="Lęšio tipas"></textarea>
 					</div>
 						
 					<div class="payment" id="payment">	
@@ -94,7 +118,7 @@
 						</div>
 						
 						<div class="avansasStuff" id="avansasStuff">
-							<input type="number" name= "deposit" id="deposit" class="form-control" value="${order.deposit}" placeholder="Avansas" onchange="onavansaschange()">
+							<input type="number" class="form-control" name= "deposit" id="deposit" class="form-control" value="${order.deposit}" placeholder="Avansas" onchange="onavansaschange()">
 							<div id = "priceLeftToPay">
 								<h5> Bus likę sumokėti: <fmt:formatNumber value="${newSale.sum}" type="currency" currencySymbol=""/> € </h5>
 							</div>
@@ -102,7 +126,8 @@
 						
 
 					</div>
-						<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 
+					<button type="submit" class="btn btn-success" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> Parduoti </button> 
+					<a  href ="reviewOrders" class="btn btn-danger"> Atšaukti </a> 	
 				</form>
 				<form  id="sellSale" name="OrderForm" role="form" method="POST" action="sellingSale" modelAttribute="sale">
 					<div class="payment" id="payment">	
@@ -111,7 +136,7 @@
 						</div>
 						
 						<div class="salePayment" id="salePayment" >
-							<input type="number" name= "clientMoney" id="clientMoney" placeholder="Duota pinigų suma" onchange="onclientmoneychange()">
+							<input class = "form-control" type="number" name= "clientMoney" id="clientMoney" placeholder="Duota pinigų suma" onchange="onclientmoneychange()">
 							<div id = "changeForClient">
 								<h5> </h5>
 							</div>
@@ -121,8 +146,11 @@
 						</div>
 	
 					</div>
-					<button type="submit" id="doneButton" class="fas fa-check" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> </button> 				
+					<button type="submit" class="btn btn-success" onclick="return confirm('Ar tikrai norite parduoti šias prekes?')"> Parduoti </button> 	
+					
+					<a  href ="reviewOrders" class="btn btn-danger"> Atšaukti </a> 			
 				</form>
+				</div>
 			</div>
 		</div>
     </div>

@@ -62,7 +62,7 @@
 					
 					<form id="addClientForm" name="addClientForm" method="POST" role="form" action="addingNewClient" modelAttribute="client">
 						<div class="form-group">
-							<label for="Vardas*" class="new-information-control-label">Pavadinimas*</label>
+							<label for="Vardas*" class="new-information-control-label">Vardas*</label>
 							<input type="text" name="name" id="name" class="form-control" />
 						</div>
 						<div class="form-group">
@@ -74,7 +74,7 @@
 							<input type="text" name="email" id="email" class="form-control" placeholder="el@pastas.lt"/>
 						</div>
 						<div class="form-group">
-							<label for="Telefono numeris" class="new-information-control-label">Telefono_numeris</label>
+							<label for="Telefono numeris" class="new-information-control-label">Telefono numeris</label>
 							<input type="text" name="phoneNumber" id="phoneNumber" class="form-control" placeholder="+370..."/>
 						</div>
 						<button type="submit" id="addClientButton" class="addClient-button" onclick="return confirm('Ar tikrai norite pridėti šį klientą?')">Pridėti</button>

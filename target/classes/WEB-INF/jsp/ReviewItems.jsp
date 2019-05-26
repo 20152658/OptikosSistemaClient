@@ -5,13 +5,18 @@
 <html>
 <head>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link href="resources/css/frame.css" rel="stylesheet">
 <link href="resources/css/review2.css" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+  
 <script src="https://cdn.plot.ly/plotly-latest.min.js" type="text/javascript"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -59,7 +64,7 @@
 				<div class="pickPrekeType">
 			
 					<p>Kokias prekes norite peržiūrėti?</p>
-					<select id="prekiuTipai" name="prekiuTipai" onchange="whichPrekeTypeIsChosen()" >
+					<select class="form-control" id="prekiuTipai" name="prekiuTipai" onchange="whichPrekeTypeIsChosen()" >
 						  <option disabled selected value> -- Prekės Tipas -- </option>
 						  <option value="akiniai">Akinių remeliai</option>
 						  <option value="lesiai">Kontaktiniai lęšiai</option>
@@ -81,10 +86,13 @@
 											<p class="group inner grid-group-item-text">Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
 					                        <div class="miau">
-					                            <a href="editItem?itemId=${item.id}" class="btn btn-success">Atnaujinti</a>
-					                        	<form id="delete" class="btn btn-success" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            <form id="edit" class="btnParent" name="editForm" role="form" method="POST" action="editItem?itemId=${item.id}" modelAttribute = "item">
 					                            	<input type="hidden" value="${item.id}" name="id"> </input>
-					                            	<button type="submit" class="btn btn-success" onclick="return confirm('Ar tikrai norite ištrinti šią prekę?')">Ištrinti</button>
+					                            	<button type="submit" class="btn btn-success">Atnaujinti</button>
+					                            </form>
+					                        	<form id="delete" class="btnParent" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            	<input type="hidden" value="${item.id}" name="id"> </input>
+					                            	<button type="submit" class="btn btn-danger" onclick="return confirm('Ar tikrai norite ištrinti šią prekę?')">Ištrinti</button>
 					                            </form>
 					                        </div>
 					                    </div>
@@ -107,10 +115,13 @@
 											<p class="group inner grid-group-item-text">Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
 					                        <div class="miau">
-					                            <a href="editItem?itemId=${item.id}" class="btn btn-success">Atnaujinti</a>
-					                        	<form id="delete" class="btn btn-success" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            <form id="edit" class="btnParent" name="editForm" role="form" method="POST" action="editItem?itemId=${item.id}" modelAttribute = "item">
 					                            	<input type="hidden" value="${item.id}" name="id"> </input>
-					                            	<button type="submit" class="btn btn-success" onclick="return confirm('Ar tikrai norite ištrinti šią prekę?')">Ištrinti</button>
+					                            	<button type="submit" class="btn btn-success">Atnaujinti</button>
+					                            </form>
+					                        	<form id="delete" class="btnParent" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            	<input type="hidden" value="${item.id}" name="id"> </input>
+					                            	<button type="submit" class="btn btn-danger" onclick="return confirm('Ar tikrai norite ištrinti šią prekę?')">Ištrinti</button>
 					                            </form>
 					                        </div>
 					                    </div>
@@ -134,10 +145,13 @@
 											<p class="group inner grid-group-item-text">Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
 					                        <div class="miau">
-					                            <a href="editItem?itemId=${item.id}" class="btn btn-success">Atnaujinti</a>
-					                        	<form id="delete" class="btn btn-success" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            <form id="edit" class="btnParent" name="editForm" role="form" method="POST" action="editItem?itemId=${item.id}" modelAttribute = "item">
 					                            	<input type="hidden" value="${item.id}" name="id"> </input>
-					                            	<button type="submit" class="btn btn-success" onclick="return confirm('Ar tikrai norite ištrinti šią prekę?')">Ištrinti</button>
+					                            	<button type="submit" class="btn btn-success">Atnaujinti</button>
+					                            </form>
+					                        	<form id="delete" class="btnParent" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            	<input type="hidden" value="${item.id}" name="id"> </input>
+					                            	<button type="submit" class="btn btn-danger" onclick="return confirm('Ar tikrai norite ištrinti šią prekę?')">Ištrinti</button>
 					                            </form>
 					                        </div>
 					                    </div>
@@ -161,19 +175,20 @@
 											<p class="group inner grid-group-item-text">Rezervuotas kiekis: ${item.reserved} </p>
 					                    <div class="row">
 					                        <div class="miau">
-					                            <a href="editItem?itemId=${item.id}" class="btn btn-success">Atnaujinti</a>
-					                        	<form id="delete" class="btn btn-success" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            <form id="edit" class="btnParent" name="editForm" role="form" method="POST" action="editItem?itemId=${item.id}" modelAttribute = "item">
 					                            	<input type="hidden" value="${item.id}" name="id"> </input>
-					                            	<button type="submit" class="btn btn-success" onclick="return confirm('Ar tikrai norite ištrinti šią prekę?')">Ištrinti</button>
+					                            	<button type="submit" class="btn btn-success">Atnaujinti</button>
+					                            </form>
+					                        	<form id="delete" class="btnParent" name="deleteForm" role="form" method="POST" action="deletingItem" modelAttribute = "item">
+					                            	<input type="hidden" value="${item.id}" name="id"> </input>
+					                            	<button type="submit" class="btn btn-danger" onclick="return confirm('Ar tikrai norite ištrinti šią prekę?')">Ištrinti</button>
 					                            </form>
 					                        </div>
 					                    </div>
 					                </div>
 					            </div>
 					        </div>
-					        
 					</c:forEach> 
-					<div id="editor"></div>
 				</div>				
 			</div>
 		</div>
