@@ -65,10 +65,10 @@
 						
 							<label for="tipas" class="change-information-control-label">Prekes tipas*</label>
 							<select class="form-control"  value="${item.type}" id="type" name="type" onchange="whichPrekeTypeIsChosen()" >
-								  <option value="akiniai">Akinių remeliai</option>
-								  <option value="lesiai">Kontaktiniai lęšiai</option>
-								  <option value="sAkiniai">Akiniai nuo saulės</option>
-								  <option value="kitka">Kita</option>
+								  <option value="Remeliai">Akinių remeliai</option>
+								  <option value="Lesiai">Kontaktiniai lęšiai</option>
+								  <option value="Saules akiniai">Akiniai nuo saulės</option>
+								  <option value="Kitos prekes">Kita</option>
 							</select>
 						</div>
 						

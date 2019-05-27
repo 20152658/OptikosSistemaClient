@@ -91,16 +91,16 @@ public class ItemController {
 			if (!prekes.isEmpty()) {
 				for (Item preke : prekes) {
 					switch (preke.getType()) {
-					case "akiniai":
+					case "Remeliai":
 						akiniai.add(preke);
 						break;
-					case "sAkiniai":
+					case "Saules akiniai":
 						sAkiniai.add(preke);
 						break;
-					case "lesiai":
+					case "Lesiai":
 						lesiai.add(preke);
 						break;
-					case "kitka":
+					case "Kitos prekes":
 						kitka.add(preke);
 						break;
 					}

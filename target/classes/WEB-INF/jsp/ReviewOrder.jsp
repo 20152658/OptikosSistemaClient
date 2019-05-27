@@ -64,7 +64,8 @@
 					<fmt:parseDate value="${sale.date}" var="dateObject" pattern="yyyy-MM-dd HH:mm:ss" />
 					<p>Pardavimo data: <fmt:formatDate value="${dateObject }" pattern="yyyy-MM-dd" /></p>	
 					<p>Pardavimo laikas: <fmt:formatDate value="${dateObject }" pattern="HH:mm " /></p>		
-					<p>Pardavėjas: ${employee.nickname} </p>		
+					<p>Pardavėjas: ${employee.nickname} </p>	
+					<div id="demo" ></div>	
 					<table class="table table-striped custab" id = "soldItems">
 					    <thead>
 					        <tr>
@@ -87,6 +88,7 @@
 			            	<td class="sumTd"> <fmt:formatNumber value="${sale.sum}" type="currency" currencySymbol=""/> </td>
 				         </tr>
 		            </table>
+		            <c:if test="${order != null}">					
 		            <div id="Orders">
 		            	<h2> Užsakymo informacija</h2>
 		            	<form id="sellOrder" name="OrderForm" role="form" method="POST" action="changingOrderStatus" modelAttribute="order">
@@ -108,10 +110,10 @@
 							  <span class="slider"></span>
 							</label></p>
 							<div class="sumTd" id="likutis"></div>
-							<button class="btn" onclick="return confirm('Ar tikrai norite išsaugoti pakeitimus?')" >Išsaugoti pakeitimus</button>
+							<button type="submit" class="btn" onclick="return confirm('Ar tikrai norite išsaugoti pakeitimus?')" >Išsaugoti pakeitimus</button>
 						</form>
-		            
-				</div>
+					</div>
+				</c:if>
 			</div>
 		</div>	
 		</div>
@@ -121,16 +123,15 @@
 		});
 		
 			 function prepareStuff(){
-			      
 				  var order;
 				  order= "${sale.orders}";
-				  var inpr = stringToBoolean("${order.inProgress}");
-				  var compl = stringToBoolean("${order.completed}");
 				  
-				  if (!order || order=="null"){
+				  if (!order || order=="null"|| order=="NULL"){
 					  var orderW = document.getElementById("Orders");
 					  orderW.style.display = "none";
 				  }else{
+					  var inpr = stringToBoolean("${order.inProgress}");
+					  var compl = stringToBoolean("${order.completed}");
 					  if(inpr){
 						  document.getElementById("inProgress").checked = true;
 					  }

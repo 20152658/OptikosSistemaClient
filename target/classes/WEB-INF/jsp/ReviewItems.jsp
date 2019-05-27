@@ -66,10 +66,10 @@
 					<p>Kokias prekes norite peržiūrėti?</p>
 					<select class="form-control" id="prekiuTipai" name="prekiuTipai" onchange="whichPrekeTypeIsChosen()" >
 						  <option disabled selected value> -- Prekės Tipas -- </option>
-						  <option value="akiniai">Akinių remeliai</option>
-						  <option value="lesiai">Kontaktiniai lęšiai</option>
-						  <option value="sAkiniai">Akiniai nuo saulės</option>
-						  <option value="kitka">Kita</option>
+						  <option value="Remeliai">Akinių remeliai</option>
+						  <option value="Lesiai">Kontaktiniai lęšiai</option>
+						  <option value="Saules akiniai">Akiniai nuo saulės</option>
+						  <option value="Kitos prekes">Kita</option>
 					</select>
 				</div>
 				
@@ -207,19 +207,19 @@
 				kitkaP.style.display = "none";
 			    var x = document.getElementById("prekiuTipai").value;
 			    switch (x){
-				    case "akiniai":
+			    case "Remeliai":
 				    	akiniaiP.style.display = "flex";
 				    	break;
 				    
-					case "sAkiniai":
+					case "Saules akiniai":
 				    	saulesP.style.display = "flex";
 				    	break;
 				    
-					case "lesiai":
+					case "Lesiai":
 				    	lesiaiP.style.display = "flex";
 				    	break;
 				    
-				    case "kitka":
+				    case "Kitos prekes":
 				    	kitkaP.style.display = "flex";
 				    	break;
 				    	

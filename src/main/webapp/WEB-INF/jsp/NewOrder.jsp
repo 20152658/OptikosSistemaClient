@@ -75,7 +75,6 @@
 				
 				<div class="pick">
 					<div class="pickerHead">
-						<button onclick="goBack()" id="atgalButton" class="fas fa-angle-left  text-left"> Atgal</button>
 						<form id="sellPrekeForm" name="sellPrekeForm" role="form" method="POST" action="sellingItem" modelAttribute="sale">
 							<input type="hidden" type="text" id="items" name="items"/>
 							<input type="hidden" type="number" id="sum" name="sum"/>
@@ -83,39 +82,37 @@
 							<button type="submit" id="doneButton" class="fas fa-check"> </button> 
 						</form>	
 					</div>
+					<div class="col-lg-12 searchHead">
+			            <input type="search" class="form-control" id="input-search" placeholder="Prekių paieška..." >
+			        </div>
+			        <div class="myItems">
+						<div class="searchable-container">
+							<div class="items col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				               <div class="info-block block-info clearfix">
+				               		<h4>Pridėti lęšius</h4>
+				               		<h5>Įveskite lęšio kainą:</h5>
+				                    <input type="number" id="lesioKaina"  class= "form-control" placeholder="Lęšio kaina"/>
+									<button class="fas fa-plus" id="addButton" onclick="addLesis()"></button>
+				                </div>
+				            </div>
+							<c:forEach items="${item}" var="item"> 
+					            <div class="items col-xs-12 col-sm-6 col-md-6 col-lg-6">
+					               <div class="info-block block-info clearfix">
+					                    <h5>${item.type}</h5>
+					                    <h4>${item.title}</h4>
+					                    <p>Kaina: <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </p>
+					                    <h5 class="inStart">Kiekis: ${item.amount}</h5>
+					                    <button class="fas fa-plus inEnd" id="addButton"  onclick="addItem(${item.id}, '${item.title}' ,${item.price})"></button>
+					                    
+					                </div>
+					            </div>
+				          	</c:forEach>
+				        </div>
+			        </div>
 					
 					<div class="myMenuElementPickers">
-						<div class="littlePicker" id="mainPicker"> 
-							<button onclick="showNext(this)" id="akiniai" class="button -akiniai">Remeliai</button> 
-							<button onclick="showNext(this)" id="lesiai" class="button -lesiai">Kontaktinai lęšiai</button> 
-							<button onclick="showNext(this)" id="saulesAkiniai" class="button -saules akiniai">Saulės akiniai</button> 
-							<button onclick="showNext(this)" id="kitka" class="button -kitka">Kitos prekės</button>
-							<button onclick="showNext(this)" id="dioptrija" class="button -dioptrija">Akinių lęšiai</button>  
-						</div>
-						<div class="littlePicker" id="akiniaiPicker"> 
-							<c:forEach items="${akiniai}" var="item">
-  								<button onclick="addItem(${item.id}, '${item.title}' ,${item.price})"> ${item.title}  <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> €  </button>
-							</c:forEach> 	
-						</div>
-						<div class="littlePicker" id="saulesPicker"> 
-							<c:forEach items="${sAkiniai}" var="item">
-  								<button onclick="addItem(${item.id}, '${item.title}',${item.price} )"> ${item.title} <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </button>
-							</c:forEach> 
-						</div>
-						<div class="littlePicker" id="lesiaiPicker"> 
-							<c:forEach items="${lesiai}" var="item">
-  								<button onclick="addItem(${item.id}, '${item.title}',${item.price})"> ${item.title} <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </button>
-							</c:forEach> 
-						</div>
-						<div class="littlePicker" id="kitkaPicker"> 
-							<c:forEach items="${kitka}" var="item">   
-  								<button onclick="addItem(${item.id}, '${item.title}' ,${item.price})"> ${item.title} <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </button>
-							</c:forEach> 
-					   </div>
-					    
 					    <div id="dioptrijuPicker">
-							<input type="number" id="lesioKaina"  placeholder="Lęšio kaina"/>
-							<button onclick="addLesis()"> Pridėti </button>
+							
 					    </div>
 					</div>
 				</div>
@@ -126,57 +123,20 @@
 	<script type="text/javascript" >
 
 	
+	 $(function() {    
+	        $('#input-search').on('keyup', function() {
+	          var rex = new RegExp($(this).val(), 'i');
+	            $('.searchable-container .items').hide();
+	            $('.searchable-container .items').filter(function() {
+	                return rex.test($(this).text());
+	            }).show();
+	        });
+	    });
+	
 		var itemList="";
 		var price =0;
 		var totalWindow = document.getElementById("totalWindow");
 		var showWindow = document.getElementById("showWindow");
-		
-		function showNext(caller) {
-				
-			var mainP = document.getElementById("mainPicker");
-		    var akiniaiP = document.getElementById("akiniaiPicker");
-		    var saulesP = document.getElementById("saulesPicker");
-			var lesiaiP = document.getElementById("lesiaiPicker");
-			var kitkaP = document.getElementById("kitkaPicker");
-			var dioptrijaP = document.getElementById("dioptrijuPicker");
-			
-			switch (caller){
-				
-				case document.getElementById("akiniai"):
-					mainP.style.display = "none";
-					akiniaiP.style.display = "flex";
-					position=akiniaiP;
-					break;
-					
-				case document.getElementById("lesiai"):
-					mainP.style.display = "none";
-					lesiaiP.style.display = "flex";
-					position=lesiaiP;
-					break;
-					
-				case document.getElementById("saulesAkiniai"):
-					mainP.style.display = "none";
-					saulesP.style.display = "flex";
-					position=saulesP;
-					break;
-					
-				case document.getElementById("kitka"):
-					mainP.style.display = "none";
-					kitkaP.style.display = "flex";
-					position=kitkaP;
-					break;
-					
-				case document.getElementById("dioptrija"):
-					mainP.style.display = "none";
-					dioptrijaP.style.display = "flex";
-					position=dioptrijaP;
-					break;
-					
-				default:
-				break;
-			}
-				
-		}
 		var position = document.getElementById("mainPicker");
 		
 		function addItem(id,title, pprice){
@@ -193,21 +153,13 @@
 		function addLesis(){
 			var node = document.createElement("p");
 			pprice = parseFloat(document.getElementById("lesioKaina").value);
-			node.textContent= "Lęšiai akiniams" + " " + pprice.toFixed(1);
+			node.textContent= "Lęšiai akiniams" + " " + pprice.toFixed(2)+" €";
 			showWindow.appendChild(node);
 			price=parseFloat(price)+parseFloat(pprice);
 			totalWindow.textContent="Iš viso: "+price.toFixed(2);
 			document.getElementById("sum").value=price;
 			document.getElementById("orders").value = "order";
 		}
-		
-		function goBack(){
-			var mainP = document.getElementById("mainPicker");
-			position.style.display="none";
-			mainP.style.display="flex";
-			
-		}
-		
 	</script>
 		
 </body>

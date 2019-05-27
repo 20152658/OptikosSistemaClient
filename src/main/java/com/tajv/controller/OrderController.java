@@ -57,37 +57,14 @@ public class OrderController {
 		if (session.getAttribute("Darbuotojas") == null) {
 			return new ModelAndView("redirect:/login");
 		} else {
-			List<Item> prekes = new ArrayList<>();
-			prekes = itemDao.getAllItems();
-			ArrayList<Item> akiniai = new ArrayList<>();
-			ArrayList<Item> sAkiniai = new ArrayList<>();
-			ArrayList<Item> lesiai = new ArrayList<>();
-			ArrayList<Item> kitka = new ArrayList<>();
-
-			if (!prekes.isEmpty()) {
-				for (Item preke : prekes) {
-					switch (preke.getType()) {
-					case "akiniai":
-						akiniai.add(preke);
-						break;
-					case "sAkiniai":
-						sAkiniai.add(preke);
-						break;
-					case "lesiai":
-						lesiai.add(preke);
-						break;
-					case "kitka":
-						kitka.add(preke);
-						break;
-					}
-				}
+			List<Item> items = new ArrayList<>();
+			items = itemDao.getAllItems();
+			if (items.size() != 0) {
+				items.remove(0);
 			}
 
 			ModelAndView model = new ModelAndView("NewOrder");
-			model.addObject("akiniai", akiniai);
-			model.addObject("sAkiniai", sAkiniai);
-			model.addObject("lesiai", lesiai);
-			model.addObject("kitka", kitka);
+			model.addObject("item", items);
 			return model;
 		}
 	}
@@ -147,7 +124,7 @@ public class OrderController {
 					Item it = itemDao.getItemById(id);
 					if (order) {
 						if (removeOrder) {
-							if (it.getType().equals("akiniai") || it.getType().equals("sAkiniai")) {
+							if (it.getType().equals("Remeliai") || it.getType().equals("Saules akiniai")) {
 								System.out.println("deleting Reserved");
 								int amount = it.getReserved() - 1;
 								it.setReserved(amount);
@@ -155,7 +132,7 @@ public class OrderController {
 								it.setAmount(amountt);
 							}
 						} else {
-							if (it.getType().equals("akiniai") || it.getType().equals("sAkiniai")) {
+							if (it.getType().equals("Remeliai") || it.getType().equals("Saules akiniai")) {
 								System.out.println("reserving");
 								int amount = it.getReserved() + 1;
 								it.setReserved(amount);
@@ -203,7 +180,7 @@ public class OrderController {
 					System.out.println("Something wrong in Order Controller reviewOrder try/catch");
 				}
 			}
-			if (newSale.getOrders() != null && !newSale.getOrders().equals("null")) {
+			if (newSale.getOrders() != null && !newSale.getOrders().equalsIgnoreCase("null")) {
 				Item item2 = itemDao.getItemById(0);
 				item2.setPrice(newSale.getSum() - sum);
 				items.add(item2);
@@ -241,7 +218,8 @@ public class OrderController {
 			}
 			Order order = null;
 			Client client = null;
-			if (sale.getOrders() != null && !sale.getOrders().equals("null")) {
+			if (sale.getOrders() != null && !sale.getOrders().equalsIgnoreCase("NULL")) {
+				System.out.println("uzejau i if id: " + sale.getId());
 				Item item2 = itemDao.getItemById(0);
 				item2.setPrice(sale.getSum() - sum);
 				items.add(item2);
@@ -264,7 +242,7 @@ public class OrderController {
 
 	private Order getOrderFromSale(Sale sale) {
 		Order order = null;
-		if (sale.getOrders() != null && !sale.getOrders().equals("null")) {
+		if (sale.getOrders() != null && !sale.getOrders().equalsIgnoreCase("null")) {
 			try {
 				int orderId = Integer.parseInt(sale.getOrders().split(",")[0]);
 				order = orderDao.getOrderById(orderId);
@@ -366,7 +344,7 @@ public class OrderController {
 
 					if (date >= dateFromInt && date <= dateToInt) {
 						if (showSales) { // tada rodom pardavimus - t.y. order is null
-							if (sale.getOrders() == null || sale.getOrders().equals("null")) {
+							if (sale.getOrders() == null || sale.getOrders().equalsIgnoreCase("null")) {
 								salesAndOrdersFiltered.add(sale);
 							}
 						}

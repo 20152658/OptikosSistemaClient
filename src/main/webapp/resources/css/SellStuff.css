@@ -61,25 +61,22 @@
 	height:10%;
 	display:flex;
 	flex-direction: row;
-	justify-content: space-between;
 }
 
 #doneButton{
 	color: #2e9247;
 	background: white;
 	border: none;
-	border-radius: .2rem;
-	margin: .5rem .5rem 1rem .5rem;
-	letter-spacing: 1px;
+	position: absolute;
+	right: 10px;
 }
 
-.myMenuElementPickers{
-	width: 100%;
-    height: 90%;
-    display: flex; 
-    flex-direction: column;
-    justify-content: space around;
-   
+#addButton{
+	color: #20819e;
+	background: none;
+	border: none;
+	align-self: flex-end;
+	width: 20px;
 }
 
 
@@ -93,18 +90,6 @@
 
 
 
-#akiniaiPicker{
-	display: none;
-}
-#saulesPicker{
-	display:none;
-}
-#lesiaiPicker{
-	display: none;
-}
-#kitkaPicker{
-	display:none;
-}
 #dioptrijuPicker{
 	display:none;
 	flex-direction: column;
@@ -117,15 +102,7 @@
 	text-align: left;
 }
 
-#atgalButton{
-	color: #454cad;
-	background: white;
-  	border: none;
-	border-radius: .2rem;
-	margin: .5rem .5rem 1rem .5rem;
-	letter-spacing: 1px;
-	width: 70%;
-}
+
 
 <!--   -->
 .itIsPrescription{
@@ -133,7 +110,6 @@
 	flex-direction: column;
 }
 .centerMe{
-	
   margin: auto;
   width: 60%;
   padding: 10px;
@@ -142,4 +118,46 @@
   margin: auto;
   width: 60%;
   padding: 10px;
+}
+
+.searchHead{
+	height:10%;
+}
+.myItems{
+	height: 80%;
+	overflow-y: auto; 
+}
+
+
+
+
+.glyphicon-lg
+{
+    font-size:4em
+}
+.info-block
+{
+    border-right:5px solid #E6E6E6;
+    border-bottom:5px solid #E6E6E6;
+    margin-bottom:25px;
+    background-image: linear-gradient(to top left, #d1d0d8, white);
+    
+}
+.info-block .square-box
+{
+    width:50px;
+    min-height:55px;
+    margin-right:11px;
+    text-align:center!important;
+    background-color:#676767;
+    padding:10px 0
+}
+.info-block.block-info
+{
+    border-color:#20819e
+}
+.info-block.block-info .square-box
+{
+    background-color:#20819e;
+    color:#FFF
 }

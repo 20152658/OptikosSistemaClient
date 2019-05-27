@@ -114,7 +114,7 @@
 					             <tr>
 					            	<td> ${sale.id} </td>
 					            	<td> <fmt:formatDate value="${dateObject }" pattern="yyyy-MM-dd HH:mm" /> </td>
-					            	<td class="sumTd"> <fmt:formatNumber value="${sale.sum}" type="currency" currencySymbol=""/> </td>
+					            	<td class="sumTd"> <fmt:formatNumber value="${sale.sum}" type="currency" currencySymbol=""/> € </td>
 					            	<td  class="text-center"><a href="reviewOrder?saleId=${sale.id}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-edit"></span> Peržiūrėti</a></td>
 					            </tr>
 					            </c:forEach>
