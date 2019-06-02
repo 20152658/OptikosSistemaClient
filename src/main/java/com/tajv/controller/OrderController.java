@@ -1,8 +1,18 @@
 package com.tajv.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -259,8 +269,11 @@ public class OrderController {
 		if (order != null) {
 			try {
 				orderDao.updateOder(order);
+				System.out.println("progress: " + order.isInProgress());
 				if (order.isInProgress()) {
-					sendEmail();
+					String recipient = clientDao.getClientById(order.getClientId()).getEmail();
+					if (recipient != null && recipient.contains("@"))
+						sendEmail(recipient);
 				}
 				if (order.isCompleted()) {
 					removeReserved(order.getId() + ",");
@@ -273,6 +286,47 @@ public class OrderController {
 		return "redirect:/reviewOrders";
 	}
 
+	private void sendEmail(String recipient) {
+		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		// Get a Properties object
+		Properties props = System.getProperties();
+		props.setProperty("mail.smtp.host", "smtp.gmail.com");
+		props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+		props.setProperty("mail.smtp.socketFactory.fallback", "false");
+		props.setProperty("mail.smtp.port", "465");
+		props.setProperty("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.debug", "true");
+		props.put("mail.store.protocol", "pop3");
+		props.put("mail.transport.protocol", "smtp");
+		final String username = "akiuoptikabaigiamasis@gmail.com";//
+		final String password = "bakalauras";
+		try {
+			Session session = Session.getDefaultInstance(props, new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+
+			// -- Create a new message --
+			Message msg = new MimeMessage(session);
+
+			// -- Set the FROM and TO fields --
+			msg.setFrom(new InternetAddress("akiuoptikabaigiamasis@gmail.com"));
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient, false));
+			msg.setSubject("Pagamintas užsakymas optikoje ");
+			msg.setText("Sveiki,\n" + "Užsakymas buvo pagamintas, galite atsiimti prekes adresu Pavyzdine g.123A.\n"
+					+ "Darbo laikas: darbo dienomis 9:00 - 17:00." + " \n" + "Geros dienos! ");
+			msg.setSentDate(new Date());
+			Transport.send(msg);
+			System.out.println("Message sent.");
+		} catch (MessagingException e) {
+			System.out.println("Erreur d'envoi, cause: " + e);
+		}
+
+	}
+
 	private void removeReserved(String orderNo) {
 		List<Sale> sales = saleDao.getAllSales();
 		for (Sale sale : sales) {
@@ -280,10 +334,6 @@ public class OrderController {
 				changeAmountOfItems(sale.getItems().split(","), true, true);
 			}
 		}
-	}
-
-	private void sendEmail() {
-
 	}
 
 	private Boolean nvl(Boolean maybeNull, Boolean val) {

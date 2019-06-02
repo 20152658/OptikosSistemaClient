@@ -60,8 +60,14 @@
 
 		<!--- Page content --->
 			<div class="main">		
-				<div class="kontainer">
+				<div class="kontainer2">
+				
+					<div class="col-lg-12 searchHead">
+			            <input type="search" class="form-control" id="input-search" placeholder="Klientų paieška..." >
+			        </div>
+			        
 				    <div class="row col-md-6 col-md-offset-2 custyle">
+				    
 				    <table class="table table-striped custab">
 				    <thead>
 				        <tr>
@@ -79,9 +85,9 @@
 			            	
 			            	<td class="text-center"><a href="addNewClient" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-plus-sign"></span> Pridėti</a></td>
 			            </tr>
-				           
+			            
 			            <c:forEach items="${clients}" var="client"> 
-			              <tr>
+			              <tr class= "items">
 			            	<td> ${client.name} ${client.surname} </td>
 			            	<td> ${client.phoneNumber} </td>
 			            	<td> ${client.email} </td>			            	
@@ -100,6 +106,17 @@
 			
 		</div>
 	</div>
+	<script type="text/javascript" >
+	$(function() {    
+        $('#input-search').on('keyup', function() {
+          var rex = new RegExp($(this).val(), 'i');
+            $('.items').hide();
+            $('.items').filter(function() {
+                return rex.test($(this).text());
+            }).show();
+        });
+    });
+	</script>
 
 
 </body>

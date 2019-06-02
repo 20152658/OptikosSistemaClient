@@ -86,10 +86,10 @@
 								<input type="checkbox" value="${salesFiltered.showOrders}" name="showOrders" id="showOrders" onchange="changeShowOrdersValue()"/> Rodyti užsakymus
 							</div>
 							<div class="form-group">
-								<input type="checkbox" value="${salesFiltered.showOrdersInProgress}" name="showOrdersInProgress" id="showOrdersInProgress" onchange= "changeProgressValue()"/> Rodyti neužbaigtus užsakymus
+								<input type="checkbox" value="${salesFiltered.showOrdersInProgress}" name="showOrdersInProgress" id="showOrdersInProgress" onchange= "changeProgressValue()"/> Rodyti pagamintus užsakymus
 							</div>
 							<div class="form-group">
-								<input type="checkbox" value="${salesFiltered.showCompletedOrders}" name="showCompletedOrders" id="showCompletedOrders" onchange="changeComplValue()"/> Rodyti įvykdytus užsakymus
+								<input type="checkbox" value="${salesFiltered.showCompletedOrders}" name="showCompletedOrders" id="showCompletedOrders" onchange="changeComplValue()"/> Rodyti pabaigtus užsakymus
 							</div>
 							 <a id="submitButton" href="reviewOrdersFiltered">
 					    		<button  class="btn"> Filtruoti </button>

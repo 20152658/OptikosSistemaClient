@@ -9,6 +9,17 @@
     box-shadow: 3px 3px 0px transparent;
     transition: 0.5s;
     }
+.kontainer2{
+	display: flex;
+	flex-direction : column;
+}
+.searchHead{
+	width: 50%;
+	margin: auto;
+}    
+.custyle{
+   margin:auto;
+}
     
 .sumTd:after{
 	content:'‎€';

@@ -141,12 +141,12 @@
 		
 		function addItem(id,title, pprice){
 			var node = document.createElement("p");
-			node.textContent= title+ " "+ pprice;
+			node.textContent= title+ " "+ pprice +" €";
 			showWindow.appendChild(node);
 			itemList=itemList + parseInt(id) + ",";
 			document.getElementById("items").value=itemList;
 			price=parseFloat(price)+parseFloat(pprice);
-			totalWindow.textContent="Iš viso: "+price.toFixed(2);
+			totalWindow.textContent="Iš viso: "+price.toFixed(2)+" €";
 			document.getElementById("sum").value=price;
 		}
 		

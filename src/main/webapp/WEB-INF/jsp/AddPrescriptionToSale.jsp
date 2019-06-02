@@ -77,7 +77,7 @@
 				             <tr>
 				            	<td> ${item.title} </td>
 				            	<td> ${item.brand} </td>
-				            	<td class="sumTd"> <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> </td>
+				            	<td class="sumTd"> <fmt:formatNumber value="${item.price}" type="currency" currencySymbol=""/> € </td>
 				            </tr>
 			            </c:forEach>
 			             <tr>
