@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tajv.dao.ItemDao;
+import com.tajv.model.Employee;
 import com.tajv.model.Item;
 
 @Controller
@@ -25,10 +26,16 @@ public class ItemController {
 
 	@RequestMapping(value = { "/addNewItem" })
 	public ModelAndView addItem(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Pardavejas/konsultantas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
-			ModelAndView model = new ModelAndView("AddNewItem");
+			ModelAndView model;
+			if (emp.getType().equals("Sandelininkas")) {
+				model = new ModelAndView("AddNewItems");
+			} else {
+				model = new ModelAndView("AddNewItem");
+			}
 			return model;
 		}
 	}
@@ -58,10 +65,17 @@ public class ItemController {
 
 	@RequestMapping(value = { "/editItem" })
 	public ModelAndView editItem(@RequestParam("itemId") int id, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Pardavejas/konsultantas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
-			ModelAndView model = new ModelAndView("EditItem");
+
+			ModelAndView model;
+			if (emp.getType().equals("Sandelininkas")) {
+				model = new ModelAndView("EditItems");
+			} else {
+				model = new ModelAndView("EditItem");
+			}
 			Item item = itemDao.getItemById(id);
 			model.addObject("item", item);
 			return model;
@@ -70,7 +84,8 @@ public class ItemController {
 
 	@RequestMapping(value = { "/updateItem" })
 	public ModelAndView updateItem(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Pardavejas/konsultantas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
 			ModelAndView model = new ModelAndView("UpdateItem");
@@ -80,7 +95,8 @@ public class ItemController {
 
 	@RequestMapping(value = { "/reviewItems" })
 	public ModelAndView reviewItems(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Pardavejas/konsultantas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
 			List<Item> prekes = itemDao.getAllItems();
@@ -108,7 +124,12 @@ public class ItemController {
 			}
 
 			System.out.println(akiniai.size() + "," + sAkiniai.size() + "," + lesiai.size() + "," + kitka.size());
-			ModelAndView model = new ModelAndView("ReviewItems");
+			ModelAndView model;
+			if (emp.getType().equals("Sandelininkas")) {
+				model = new ModelAndView("ReviewItem");
+			} else {
+				model = new ModelAndView("ReviewItems");
+			}
 			model.addObject("akiniai", akiniai);
 			model.addObject("sAkiniai", sAkiniai);
 			model.addObject("lesiai", lesiai);

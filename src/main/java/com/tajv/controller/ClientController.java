@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tajv.dao.ClientDao;
 import com.tajv.dao.PrescriptionDao;
 import com.tajv.model.Client;
+import com.tajv.model.Employee;
 import com.tajv.model.Prescription;
 
 @Controller
@@ -29,12 +30,18 @@ public class ClientController {
 
 	@RequestMapping(value = { "/clients" })
 	public ModelAndView clients(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Sandelininkas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
 			ArrayList<Client> clients = (ArrayList<Client>) clientDao.getAllClients();
 			System.out.println("clients list size is: " + clients.size());
-			ModelAndView model = new ModelAndView("Clients");
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("Client");
+			} else {
+				model = new ModelAndView("Clients");
+			}
 			model.addObject("clients", clients);
 			return model;
 		}
@@ -42,10 +49,17 @@ public class ClientController {
 
 	@RequestMapping(value = { "/addNewClient" })
 	public ModelAndView addNewClient(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Sandelininkas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
-			ModelAndView model = new ModelAndView("AddNewClient");
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("AddClient");
+			} else {
+				model = new ModelAndView("AddNewClient");
+			}
+
 			return model;
 		}
 	}
@@ -76,10 +90,16 @@ public class ClientController {
 	@RequestMapping(value = { "/editClient" })
 	public ModelAndView editClient(@RequestParam("clientId") int clientId, HttpServletRequest request,
 			HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Sandelininkas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
-			ModelAndView model = new ModelAndView("EditClient");
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("EditClients");
+			} else {
+				model = new ModelAndView("EditClient");
+			}
 			Client client = clientDao.getClientById(clientId);
 			model.addObject("client", client);
 			Prescription prescription = prescriptionDao.getPrescriptionByClientId(clientId);

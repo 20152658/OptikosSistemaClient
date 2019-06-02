@@ -42,9 +42,17 @@ public class EmployeeController {
 
 	@RequestMapping(value = { "/home" })
 	public ModelAndView home(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") != null) {
-			ModelAndView model = new ModelAndView("Home");
-			Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp != null) {
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("Welcome");
+			} else if (emp.getType().equals("Sandelininkas")) {
+				model = new ModelAndView("WelcomeLogedIn");
+			} else {
+				model = new ModelAndView("Home");
+			}
+
 			model.addObject("employee", emp);
 			return model;
 		} else {

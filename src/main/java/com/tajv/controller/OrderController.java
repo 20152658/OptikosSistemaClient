@@ -64,7 +64,8 @@ public class OrderController {
 
 	@RequestMapping(value = { "/newOrder" })
 	public ModelAndView newOrder(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Sandelininkas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
 			List<Item> items = new ArrayList<>();
@@ -72,8 +73,12 @@ public class OrderController {
 			if (items.size() != 0) {
 				items.remove(0);
 			}
-
-			ModelAndView model = new ModelAndView("NewOrder");
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("NewOrders");
+			} else {
+				model = new ModelAndView("NewOrder");
+			}
 			model.addObject("item", items);
 			return model;
 		}
@@ -81,15 +86,20 @@ public class OrderController {
 
 	@RequestMapping(value = { "/reviewOrders" })
 	public ModelAndView reviewOrders(HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Sandelininkas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
 			ArrayList<Sale> sales = (ArrayList<Sale>) saleDao.getAllSales();
 			if (sales == null) {
 				sales = new ArrayList<>();
 			}
-			ModelAndView model = new ModelAndView("ReviewOrders");
-
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("ReviewOrdersList");
+			} else {
+				model = new ModelAndView("ReviewOrders");
+			}
 			SalesFiltered salesFiltered = new SalesFiltered();
 			salesFiltered.setShowCompletedOrders(true);
 			salesFiltered.setShowOrders(true);
@@ -165,11 +175,16 @@ public class OrderController {
 
 	@RequestMapping(value = { "/sellingItem" })
 	public ModelAndView sellingItem(@ModelAttribute Sale newSale, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Sandelininkas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
-			ModelAndView model = new ModelAndView("AddPrescriptionToSale");
-
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("AddOrderToSale");
+			} else {
+				model = new ModelAndView("AddPrescriptionToSale");
+			}
 			ArrayList<Client> clients = new ArrayList<>();
 			clients = (ArrayList<Client>) clientDao.getAllClients();
 			// gal pasisortint pagal abecele pavarde.
@@ -207,12 +222,17 @@ public class OrderController {
 
 	@RequestMapping(value = { "/reviewOrder" })
 	public ModelAndView reviewOrder(@RequestParam("saleId") int id, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Sandelininkas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
-			ModelAndView model = new ModelAndView("ReviewOrder");
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("ReviewExactOrder");
+			} else {
+				model = new ModelAndView("ReviewOrder");
+			}
 			Sale sale = saleDao.getSale(id);
-			Employee emp = employeeDao.getEmployeeByNickname(sale.getSeller());
 			ArrayList<Item> items = new ArrayList<Item>();
 			String[] itemIds = sale.getItems().split(",");
 			Double sum = new Double("0");
@@ -346,7 +366,8 @@ public class OrderController {
 
 	@RequestMapping(value = { "/reviewOrdersFiltered" })
 	public ModelAndView reviewOrder(@ModelAttribute SalesFiltered salesFiltered, HttpSession session) {
-		if (session.getAttribute("Darbuotojas") == null) {
+		Employee emp = (Employee) session.getAttribute("Darbuotojas");
+		if (emp == null || emp.getType().equals("Sandelininkas")) {
 			return new ModelAndView("redirect:/login");
 		} else {
 			ArrayList<Sale> sales = (ArrayList<Sale>) saleDao.getAllSales();
@@ -356,7 +377,12 @@ public class OrderController {
 			String dateFrom = salesFiltered.getDateFrom().trim();
 			String dateTo = salesFiltered.getDateTo().trim();
 			ArrayList<Sale> salesAndOrdersFiltered = new ArrayList<>();
-			ModelAndView model = new ModelAndView("ReviewOrders");
+			ModelAndView model;
+			if (emp.getType().equals("Pardavejas/konsultantas")) {
+				model = new ModelAndView("ReviewOrdersList");
+			} else {
+				model = new ModelAndView("ReviewOrders");
+			}
 			if (salesFiltered.getDateFrom().trim().equals("")) {
 				dateFrom = "1700-01-01";
 			}
